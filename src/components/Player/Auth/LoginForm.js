@@ -4,6 +4,7 @@ import PlayerService from '../../../services/PlayerService';
 import { BsFillEnvelopeFill, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 const LoginForm = ({ toggleForm }) => {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -22,6 +23,9 @@ const LoginForm = ({ toggleForm }) => {
             console.log('JWT:', data.jwt);
             console.log("login success");
             //window.location.href = '/map';
+            //Clear Data
+            setEmail('');
+            setPassword('');
         } catch (err) {
             console.error(err);
             setError('Email ou mot de passe invalide');

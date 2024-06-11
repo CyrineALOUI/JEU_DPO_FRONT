@@ -15,8 +15,20 @@ const login = async (email, password) => {
     }
 };
 
+/* REGISTER PLAYER */
+const register = async (firstName, lastName, email, password) => {
+    try {
+        const response = await axios.post(`${apiUrl}/register`, { firstName, lastName, email, password });
+        return response.data;
+    } catch (error) {
+        console.error('Registration error:', error);
+        throw error;
+    }
+};
+
 export default {
-    login
+    login,
+    register
 };
 
 
