@@ -4,8 +4,8 @@ import './Play.css';
 const Play = () => {
 
     return (
-        <div className="Container">
-            <button className="Button">Jouer</button>
+        <div className="Play-Container">
+            <button className="Play-Button">Jouer</button>
         </div>
     );
 };
