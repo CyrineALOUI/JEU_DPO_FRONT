@@ -91,7 +91,8 @@ const RegisterForm = ({ toggleForm }) => {
         </div>
       </div>
       <br />
-      <button className="Button" type="submit">Créer Un Compte</button>
+      <button className="Button" type="submit"></button>
+      <button type="submit">Créer Compte<span></span></button>
     </form>
   );
 };

@@ -14,16 +14,15 @@
     box-sizing: border-box;
 }
 
-body {
+.auth-container {
     font-family: "Play", sans-serif;
     height: 100vh;
     position: relative;
     background-image: url('../../../assets/back.jpg');
-    background-size: cover;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
 }
 
 .centered-container {
@@ -170,7 +169,6 @@ form h2 {
     outline: none;
     font-size: 1rem;
     color: var(--white);
-    border-radius: 10px;
     color: #006CA5;
     background-color: white;
     cursor: pointer;
@@ -241,11 +239,11 @@ form h2 {
 .Input:focus~.Label,
 .Input:valid~.Label {
     top: -5px;
-    color: #996DCF;
+    color: #51AFF7;
 }
 
 .Input:focus {
-    border-bottom-color: #996DCF;
+    border-bottom-color: #51AFF7;
 }
 
 .Icon {
@@ -258,7 +256,7 @@ form h2 {
 }
 
 .Input:focus~.Icon {
-    color: #996DCF;
+    color: #51AFF7;
 }
 
 .ForgotPassword {
@@ -268,41 +266,58 @@ form h2 {
     border-bottom: 1px solid #006CA5;
 }
 
-.Button {
-    font-family: "Play", sans-serif;
-    padding: 0.75rem 2rem;
-    margin-top: 2rem;
+button {
     border: none;
-    outline: none;
-    font-size: 1rem;
-    color: var(--white);
-    border-radius: 10px;
-    background: linear-gradient(to right, #996DCF, #006CA5);
-    cursor: pointer;
-}
-
-.Button:hover {
-    background: linear-gradient(to right, #006CA5, #996DCF);
-}
-
-#overlayBtn {
-    cursor: pointer;
-    position: absolute;
-    left: 50%;
-    top: 443px;
-    transform: translateX(-50%);
-    width: 10rem;
-    height: 3rem;
-    border: 1px solid var(--white);
+    display: block;
+    position: relative;
+    padding: 0.7em 2.4em;
+    font-size: 16px;
     background: transparent;
-    border-radius: 2rem;
-    background: linear-gradient(to right, #006CA5, #996DCF);
-    border: none;
-    font-size: 1rem;
-    color: var(--white);
-    border-radius: 10px;
-    background: linear-gradient(to right, #996DCF, #006CA5);
     cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+    color: #006CA5;
+    z-index: 1;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+button span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1;
+    border: 3.5px solid #006CA5;
+}
+
+button span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 6%;
+    height: 500%;
+    background: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+    transition: all 0.3s;
+}
+
+button:hover span::before {
+    transform: translate(-50%, -50%) rotate(-90deg);
+    width: 100%;
+    background: #006CA5;
+}
+
+button:hover {
+    color: white;
+}
+
+button:active span::before {
+    background: #006CA5;
 }
 
 .scale__btn-animation {

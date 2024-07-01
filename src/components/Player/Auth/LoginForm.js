@@ -21,9 +21,7 @@ const LoginForm = ({ toggleForm }) => {
         try {
             const data = await PlayerService.login(email, password);
             console.log('JWT:', data.jwt);
-            console.log("login success");
-            //window.location.href = '/map';
-            //Clear Data
+            window.location.href = '/play';
             setEmail('');
             setPassword('');
         } catch (err) {
@@ -66,7 +64,8 @@ const LoginForm = ({ toggleForm }) => {
                 </div>
             </div>
             <br />
-            <button className="Button" type="submit">Se Connecter</button>
+            <br />
+            <button type="submit"> Se Connecter <span></span></button>
             <br />
             <br />
             <a href="#" className="ForgotPassword">Mot de passe oublié?</a>

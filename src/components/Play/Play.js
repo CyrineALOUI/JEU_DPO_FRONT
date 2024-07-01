@@ -5,7 +5,9 @@ const Play = () => {
 
     return (
         <div className="Play-Container">
-            <button className="Play-Button">Jouer</button>
+            <button className="Play-Button">
+                <a>Jouer</a>
+            </button>
         </div>
     );
 };

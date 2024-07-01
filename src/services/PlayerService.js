@@ -33,21 +33,3 @@ export default {
 
 
 
-
-/*const registerPlayer = async (player) => {
-    const response = await fetch(`${apiUrl}/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(player),
-    });
-
-    if (!response.ok) {
-        throw new Error("Email is already in use.");
-    }
-
-    return response.json();
-};*/
-
-
