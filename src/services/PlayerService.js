@@ -26,10 +26,11 @@ const register = async (firstName, lastName, email, password) => {
     }
 };
 
-export default {
+const playerService = {
     login,
     register
-};
-
+  };
+  
+export default playerService;
 
 

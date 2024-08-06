@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
+.Map-Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Play", sans-serif;
+    height: 100vh;
+    position: relative;
+    background-image: url('../../../assets/back.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.flip-card {
+    background-color: transparent;
+    width: 110px;
+    height: 120px;
+    perspective: 1000px;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 30px;
+}
+
+.title {
+    font-size: 1.5em;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.2);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border: 1px solid #006CA5;
+    border-radius: 1rem;
+}
+
+.flip-card-front {
+    background: linear-gradient(120deg, #0090cc 60%, #06b6ff 88%,#06b6ff 40%, #06b6ff 48%);
+    color: #fff;
+}
+
+.flip-card-back {
+    background: linear-gradient(120deg, #0090cc 60%, #06b6ff 88%,#06b6ff 40%, #06b6ff 48%);
+    color: white;
+    transform: rotateY(180deg);
+}

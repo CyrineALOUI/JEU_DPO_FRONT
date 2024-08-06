@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import QuizService from '../../services/QuizService';
+import quizService from '../../../services/QuizService';
 import './Quiz.css';
 
 const Quiz = () => {
   const { id: quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState(new Set());
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const data = await QuizService.getQuizById(quizId);
+        const data = await quizService.getQuizById(quizId);
         setQuiz(data);
       } catch (error) {
         console.error('Error fetching quiz details:', error);
@@ -22,8 +24,26 @@ const Quiz = () => {
     }
   }, [quizId]);
 
-  const handleCheckboxChange = (questionId, answerId) => {
-    console.log(`Question ID: ${questionId}, Answer ID: ${answerId}`);
+  const handleCheckboxChange = (answerId) => {
+    setSelectedAnswers(SelectedAnswers => {
+      const newSelectedAnswers = new Set(SelectedAnswers);
+      if (newSelectedAnswers.has(answerId)) {
+        newSelectedAnswers.delete(answerId);
+      } else {
+        newSelectedAnswers.add(answerId);
+      }
+      setIsButtonDisabled(newSelectedAnswers.size === 0);
+      return newSelectedAnswers;
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await quizService.verifyAnswers(Array.from(selectedAnswers));
+      alert(response ? 'Réponse Correcte' : 'Réponse incorrecte');
+    } catch (error) {
+      console.error('Error verifying answers:', error);
+    }
   };
 
   if (!quiz) {
@@ -42,7 +62,7 @@ const Quiz = () => {
                   <label className="label-container">
                     <input
                       type="checkbox"
-                      onChange={() => handleCheckboxChange(question.id, answer.id)}
+                      onChange={() => handleCheckboxChange(answer.id)}
                     />
                     <div className="checkmark">
                       <div className="answer-text">
@@ -55,7 +75,7 @@ const Quiz = () => {
             </ul>
             <br />
             <br />
-            <button className="button-quiz" type="submit">Répondre</button>
+            <button className="button-quiz" type="button" onClick={handleSubmit} disabled={isButtonDisabled}>Répondre</button>
           </div>
         ))}
       </div>

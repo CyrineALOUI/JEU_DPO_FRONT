@@ -1,3 +1,5 @@
+import Question from './Question';
+
 class Answer {
     constructor(id, answerText, isCorrect, question) {
         this.id = id;
@@ -6,7 +8,5 @@ class Answer {
         this.question = question;
     }
 }
-
 export default Answer;
-
 

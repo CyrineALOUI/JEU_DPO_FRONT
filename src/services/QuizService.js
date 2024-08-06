@@ -12,6 +12,21 @@ const getQuizById = async (id) => {
   }
 };
 
-export default {
-  getQuizById
+const verifyAnswers = async (answerIds) => {
+  try {
+    const response = await instance.post(`${apiUrl}/verifyAnswers`, answerIds);
+    console.log('Response from verifyAnswers:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error verifying answers:', error);
+    throw error;
+  }
 };
+
+const quizService = {
+  getQuizById,
+  verifyAnswers
+};
+
+export default quizService;
+
