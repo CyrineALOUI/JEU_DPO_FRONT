@@ -44,6 +44,7 @@
     font-size: 20px;
     margin-left: 50px;
     align-items: center;
+    white-space: nowrap;
 }
 
 .answer-text input {
@@ -147,6 +148,14 @@
     margin-bottom: 20px;
 }
 
+.label-container.correct .answer-text {
+    color: rgb(10, 236, 10);
+}
+
+.label-container.incorrect .answer-text {
+    color: red;
+}
+
 .checkmark {
     --clr: #51AFF7;
     position: relative;
@@ -205,3 +214,9 @@
         rotate: 0;
     }
 }
+
+.timer {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }

@@ -2,7 +2,7 @@
 
 .Map-Container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     font-family: "Play", sans-serif;
     height: 100vh;
@@ -12,8 +12,16 @@
     background-repeat: no-repeat;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    justify-content: center;
 }
 
+.levels-grid {
+    display: GRID;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
 
 .flip-card {
     background-color: transparent;
@@ -23,6 +31,24 @@
     cursor: pointer;
     border-radius: 20px;
     margin: 30px;
+}
+
+.pagination {
+    margin-top: 50px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #51AFF7;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pagination button.active {
+    background-color: #0090cc;
 }
 
 .title {
@@ -47,7 +73,7 @@
 
 .flip-card-front,
 .flip-card-back {
-    box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 14px 0 rgba(180, 180, 180, 0.2);
     position: absolute;
     display: flex;
     flex-direction: column;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import quizService from '../../../services/QuizService';
+import QuestionTimer from './QuizChrono/QuestionTimer';
 import './Quiz.css';
 
 const Quiz = () => {
@@ -9,6 +10,7 @@ const Quiz = () => {
   const [selectedAnswers, setSelectedAnswers] = useState(new Set());
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answersStatus, setAnswersStatus] = useState({});
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -41,18 +43,39 @@ const Quiz = () => {
   const handleSubmit = async () => {
     try {
       const response = await quizService.verifyAnswers(Array.from(selectedAnswers));
-      alert(response ? 'Réponse Correcte' : 'Réponse incorrecte');
+      console.log('Response from verifyAnswers:', response); // Affichez la réponse pour vérifier
 
-      //Pass question suivante
-      if (currentQuestionIndex < quiz.questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedAnswers(new Set());
-        setIsButtonDisabled(true);
-      } else {
-        alert('Quiz terminé !');
-      }
+      const newAnswersStatus = {};
+      Array.from(selectedAnswers).forEach((answerId) => {
+        newAnswersStatus[answerId] = response ? 'correct' : 'incorrect';
+      });
+      setAnswersStatus(newAnswersStatus);
+
+      // Passe à la question suivante après un délai
+      setTimeout(() => {
+        if (currentQuestionIndex < quiz.questions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedAnswers(new Set());
+          setIsButtonDisabled(true);
+          setAnswersStatus({});
+        } else {
+          alert('Quiz terminé !');
+        }
+      }, 2000); // Change question after 2 seconds
     } catch (error) {
       console.error('Error verifying answers:', error);
+    }
+  };
+
+  const handleTimeUp = () => {
+    console.log('Temps écoulé!');
+    if (currentQuestionIndex < quiz.questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedAnswers(new Set());
+      setIsButtonDisabled(true);
+      setAnswersStatus({});
+    } else {
+      alert('Quiz terminé !');
     }
   };
 
@@ -67,13 +90,20 @@ const Quiz = () => {
       <div className="quiz-content">
         <div key={currentQuestion.id} className="question-container">
           <h3 className="question-text">{currentQuestion.questionText}</h3>
+
+          <QuestionTimer 
+            duration={currentQuestion.duration} 
+            onTimeUp={handleTimeUp} 
+          />
+          
           <ul className="answer-list">
             {currentQuestion.answers.map((answer) => (
               <li key={answer.id}>
-                <label className="label-container">
+                <label className={`label-container ${answersStatus[answer.id]}`}>
                   <input
                     type="checkbox"
                     onChange={() => handleCheckboxChange(answer.id)}
+                    disabled={!!answersStatus[answer.id]}
                   />
                   <div className="checkmark">
                     <div className="answer-text">
