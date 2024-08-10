@@ -1,18 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Play.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Play = () => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+
+    const handlePlayClick = () => {
+        setLoading(true);
+        setTimeout(() => {
+            navigate('/map');
+        }, 4000); 
+    };
 
     return (
         <div className="Play-Container">
-            <Link to="/map" className="Play-Button">
+            <div className="Play-Button" onClick={handlePlayClick}>
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Jouer
-            </Link>
+            </div>
+            {loading && (
+                <div className="loader">
+                    <div className="scanner">
+                        <span>Chargement...</span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import quizService from '../../../services/QuizService';
 import QuestionTimer from './QuizChrono/QuestionTimer';
+import GameHeader from '../../GameHeader/GameHeader';
 import './Quiz.css';
 
 const Quiz = () => {
@@ -87,6 +88,7 @@ const Quiz = () => {
 
   return (
     <div className="quiz-container">
+      <GameHeader />
       <div className="quiz-content">
         <div key={currentQuestion.id} className="question-container">
           <h3 className="question-text">{currentQuestion.questionText}</h3>

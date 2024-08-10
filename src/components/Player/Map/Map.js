@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import LevelModal from './LevelModal';
 import levelService from '../../../services/LevelService';
+import GameHeader from '../../GameHeader/GameHeader';
 import './Map.css';
 
 const Map = () => {
@@ -41,6 +42,7 @@ const Map = () => {
 
   return (
     <div className="Map-Container">
+      <GameHeader />
       <div className="levels-grid">
         {paginatedLevels.map((level) => (
           <div key={level.id} className="flip-card" onClick={() => toggleModal(level.id)}>
