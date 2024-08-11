@@ -1,41 +1,49 @@
 import React from 'react';
 import './GameHeader.css';
+import coinImage from '../../assets/coin.png';
+import heartImage from '../../assets/heart.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
+
 
 const GameHeader = ({ coins }) => {
-
-
   return (
-
     <div className="game-header">
+      {/* Logo */}
+      <div className="game-logo">
+
+      </div>
+
+      {/* Coins and Lives */}
       <div className="game-info">
-        {/*<div class="card">
-          <div class="loader">
-            <p class="coins-text"><span></span></p>
+        <div className="game-coins">
+          <div className="card">
+            <div className="card-info">
+              <img src={coinImage} alt="Coin" className="icon" />
+              <div className="coins-text">{coins || 0}</div>
+            </div>
           </div>
-        </div>*/}
+        </div>
+        <div className="game-lives">
+          <div className="card">
+            <div className="card-info">
+              <img src={heartImage} alt="Lives" className="icon" />
+              <div className="lives-text">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-          <div class="game-info">
-            <div class="game-coins">
-            <div class="card">
-            <div class="card-info">
-              <div class="loader"></div> 
-              <div class="coins-text">100</div>
-              </div>
-              </div>
-       
-            <div class="game-lives">
-            <div class="card">
-            <div class="card-info">
-              <div class="lives-icon"></div> 
-              <div class="lives-text">3</div>
-            </div>
-            </div>
-            </div>
-          </div>
-          <div class="game-settings">
-    
-          </div>
+      {/* Settings Buttons */}
+      <div className="game-settings">
+        <div className="button-container">
+          <a title="Home" href="/map">
+          <FontAwesomeIcon icon={faHome}/>
+          </a>
 
+          <a title="Settings" href="#">
+          <FontAwesomeIcon icon={faCog}/>
+          </a>
         </div>
       </div>
     </div>
