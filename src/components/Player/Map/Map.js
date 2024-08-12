@@ -69,8 +69,7 @@ const Map = () => {
         ))}
       </div>
 
-      <LevelModal show={showModal} onClose={() => setShowModal(false)} id={selectedLevelId}>
-      </LevelModal>
+      <LevelModal show={showModal} onClose={() => setShowModal(false)} id={selectedLevelId}></LevelModal>
     </div>
   );
 };

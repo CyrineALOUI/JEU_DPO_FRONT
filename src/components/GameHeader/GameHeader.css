@@ -5,9 +5,10 @@
   padding: 15px 50px;
   background-color: transparent;
   color: #302886;
-  position: absolute;
+  position: fixed; 
   top: 0;
   width: 100%;
+  z-index: 999; 
 }
 
 .game-logo img {
@@ -35,6 +36,7 @@
 .game-settings {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .game-settings .button-container {
@@ -95,8 +97,8 @@
 }
 
 .button-container a:hover {
-  color: #141042;
-  border-color: #3b82f6; /* light-blue-light */
+  background-color: transparent;
+  border-color: #3b82f6; 
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './GameHeader.css';
 import coinImage from '../../assets/coin.png';
 import heartImage from '../../assets/heart.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
+import SettingsModal from './Settings/settingsModal';
 
 
 const GameHeader = ({ coins }) => {
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSettingsClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+
+
   return (
+
     <div className="game-header">
       {/* Logo */}
       <div className="game-logo">
@@ -38,15 +53,21 @@ const GameHeader = ({ coins }) => {
       <div className="game-settings">
         <div className="button-container">
           <a title="Home" href="/map">
-          <FontAwesomeIcon icon={faHome}/>
+            <FontAwesomeIcon icon={faHome} />
           </a>
 
-          <a title="Settings" href="#">
-          <FontAwesomeIcon icon={faCog}/>
+          <a title="Settings" onClick={handleSettingsClick}>
+            <FontAwesomeIcon icon={faCog} />
           </a>
+
         </div>
+        <SettingsModal show={showModal} onClose={handleCloseModal} />
       </div>
+
+      
     </div>
+    
+
   );
 };
 
