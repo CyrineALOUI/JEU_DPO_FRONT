@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import quizService from '../../../services/QuizService';
 import QuestionTimer from './QuizChrono/QuestionTimer';
 import GameHeader from '../../GameHeader/GameHeader';
-import './Quiz.css';
+import "./Quiz.css"
 
 const Quiz = () => {
   const { id: quizId } = useParams();

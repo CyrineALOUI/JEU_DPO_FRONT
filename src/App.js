@@ -1,12 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Auth from "./components/Player/Auth/Auth";
-import Play from "./components//Player/Play/Play";
-import Quiz from "./components/Player/Quiz/Quiz";
-import PlayerDetails from "./components/Player/PlayerDetails/PlayerDetails";
-//import Level from "./components/Level/Level";
-import Crossword from "./components/Player/Crossword/Crossword";
-import Map from "./components/Player/Map/Map";
+
+
+
+import Play from "./components/Play/Play";
+import Map from "./components/Map/Map";
+import Quiz from "./components/Games/Quiz/Quiz";
+
+
+
+
+import Crossword from "./components/Games/Crossword/Crossword";
+
 
 
 
@@ -20,10 +26,10 @@ const App = () => {
         <Routes>
           <Route path="/auth" element={<Auth />} />
           <Route path="/play" element={<Play />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/crossword/:id" element={<Crossword />} />
-          <Route path="/playerdetails" element={<PlayerDetails />} />
-          <Route path="/map" element={<Map />} />
+          
     
     
         </Routes>

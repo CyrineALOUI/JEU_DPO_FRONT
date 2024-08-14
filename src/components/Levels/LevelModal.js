@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import levelService from '../../../services/LevelService';
+import levelService from '../../services/LevelService';
 import './LevelModal.css';
 
 const LevelModal = ({ show, onClose, id }) => {

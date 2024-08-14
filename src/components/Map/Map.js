@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import LevelModal from './LevelModal';
-import levelService from '../../../services/LevelService';
-import GameHeader from '../../GameHeader/GameHeader';
+import LevelModal from '../Levels/LevelModal';
+import levelService from '../../services/LevelService';
+import GameHeader from '../GameHeader/GameHeader';
 import './Map.css';
 
 const Map = () => {
