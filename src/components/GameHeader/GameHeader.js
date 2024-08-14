@@ -4,7 +4,7 @@ import coinImage from '../../assets/coin.png';
 import heartImage from '../../assets/heart.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
-import SettingsModal from './Settings/settingsModal';
+import SettingsModal from '../Settings/settingsModal';
 
 
 const GameHeader = ({ coins }) => {
