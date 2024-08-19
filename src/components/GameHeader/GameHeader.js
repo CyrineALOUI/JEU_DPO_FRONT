@@ -19,8 +19,6 @@ const GameHeader = ({ coins }) => {
     setShowModal(false);
   };
 
-
-
   return (
 
     <div className="game-header">

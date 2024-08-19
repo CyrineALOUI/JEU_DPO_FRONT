@@ -12,6 +12,7 @@ import Quiz from "./components/Games/Quiz/Quiz";
 
 
 import Crossword from "./components/Games/Crossword/Crossword";
+import ProfileModal from "./components/Settings/Profile/ProfileModal";
 
 
 
@@ -29,6 +30,8 @@ const App = () => {
           <Route path="/map" element={<Map />} />
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/crossword/:id" element={<Crossword />} />
+
+          <Route path="/ProfileModal" element={<ProfileModal />} />
           
     
     
