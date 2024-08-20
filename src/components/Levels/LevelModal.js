@@ -23,7 +23,7 @@ const LevelModal = ({ show, onClose, id }) => {
 
   const handlePlayClick = () => {
     if (level) {
-      console.log('Level:', level); // Ajouter ce log
+      console.log('Level:', level);
       if (level.games && level.games.length > 0) {
         // Trouver le jeu de mots croisés dans les jeux associés
         const quizGame = level.games.find(game => game.id !== undefined);

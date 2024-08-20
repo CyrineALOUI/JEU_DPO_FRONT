@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './SettingsModal.css';
 import ProfileModal from './Profile/ProfileModal';
+import './SettingsModal.css';
 
 const SettingsModal = ({ show, onClose }) => {
   const [currentView, setCurrentView] = useState('settings_main');
@@ -31,7 +31,7 @@ const SettingsModal = ({ show, onClose }) => {
               <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
               <label className="neon-btn" onClick={() => handleNavigation('profile')}>
                 <span className="span"></span>
-                <span className="txt">Mon Profil</span>
+                <span className="txt">Mon Compte</span>
               </label>
 
               <input className="input-btn" type="radio" id="valueIs-2" name="valueIs-radio" value="valueIs-2" />
@@ -39,15 +39,15 @@ const SettingsModal = ({ show, onClose }) => {
                 <span className="span"></span>
                 <span className="txt">Récompenses</span>
               </label>
-
+              
             </div>
           </div>
         )}
         {currentView === 'profile' && <ProfileModal onBack={handleBack} />}
+
       </div>
     </div>
   );
 };
-
 
 export default SettingsModal;

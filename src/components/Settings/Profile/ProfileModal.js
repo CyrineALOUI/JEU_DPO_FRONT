@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditProfile from './EditProfile/EditProfile';
 
-const ProfileModal = ({ onBack }) => (
-  <div className="settings-body">
-    <h1>Mon Profil</h1>
-    <button onClick={onBack}>Retour aux Paramètres</button>
 
-    <div className="settings-container">
+const ProfileModal = ({ onBack }) => {
+  const [currentView, setCurrentView] = useState('profile_main');
 
-              <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
-              <label className="neon-btn" >
-                <span className="span"></span>
-                <span className="txt">données</span>
-              </label>
+  const handleNavigation = (view) => {
+    setCurrentView(view);
+  };
 
-              </div>
-  </div>
-);
+  const handleBack = () => {
+    setCurrentView('profile_main');
+  };
+
+  return (
+
+    <div>
+      {currentView === 'profile_main' && (
+        <div className="settings-body">
+          <h1>Mon Compte</h1>
+          <div className="settings-container">
+
+            <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
+            <label className="neon-btn" onClick={() => handleNavigation('edit_profile')}>
+              <span className="span"></span>
+              <span className="txt">Editer Profil</span>
+            </label>
+
+          </div>
+        </div>
+      )}
+
+      {currentView === 'edit_profile' && <EditProfile onBack={handleBack} />}
+
+    </div>
+
+  );
+};
 
 export default ProfileModal;
- 
