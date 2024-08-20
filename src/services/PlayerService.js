@@ -26,11 +26,28 @@ const register = async (firstName, lastName, email, password) => {
     }
 };
 
+/* UPDATE PROFILE */
+const updateProfile = async (id, firstName, lastName, email) => {
+    try {
+        const response = await axios.put(`${apiUrl}/updateProfile/${id}`, {
+            firstName,
+            lastName,
+            email
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Update profile error:', error);
+        throw error;
+    }
+};
+
+
 const playerService = {
     login,
-    register
-  };
-  
+    register,
+    updateProfile
+};
+
 export default playerService;
 
 

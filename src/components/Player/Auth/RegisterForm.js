@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import './Auth.css';
-import PlayerService from '../../../services/PlayerService';
+import playerService from '../../../services/PlayerService';
 import { BsFillEnvelopeFill, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 const RegisterForm = ({ toggleForm }) => {
@@ -21,7 +21,7 @@ const RegisterForm = ({ toggleForm }) => {
     setError('');
 
     try {
-      const player = await PlayerService.register(firstName, lastName, email, password);
+      const player = await playerService.register(firstName, lastName, email, password);
       console.log('Player registered:', player);
       //Clear data
       setFirstName('');
@@ -30,7 +30,7 @@ const RegisterForm = ({ toggleForm }) => {
       setPassword('');
       toggleForm();
     } catch (err) {
-      console.error(err);
+      console.error(error);
       setError('Registration failed');
     }
   };

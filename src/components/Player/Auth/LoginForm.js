@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import './Auth.css';
-import PlayerService from '../../../services/PlayerService';
+import playerService from '../../../services/PlayerService';
 import { BsFillEnvelopeFill, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 const LoginForm = ({ toggleForm }) => {
@@ -19,7 +19,7 @@ const LoginForm = ({ toggleForm }) => {
         setError('');
 
         try {
-            const data = await PlayerService.login(email, password);
+            const data = await playerService.login(email, password);
             console.log('JWT:', data.jwt);
             window.location.href = '/play';
             setEmail('');
@@ -79,7 +79,7 @@ const LoginForm = ({ toggleForm }) => {
             <button type="submit"> Se Connecter <span></span></button>
             <br />
             <br />
-            <a href="#" className="ForgotPassword">Mot de passe oublié?</a>
+           {/* <a href="#" className="ForgotPassword">Mot de passe oublié?</a>*/}
         </form>
     );
 };
