@@ -1,38 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './EditProfile.css';
 import playerService from '../../../../services/PlayerService';
 
 const EditProfile = ({ playerId, onBack }) => {
-  
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
 
+  useEffect(() => {
+    const fetchPlayerData = async () => {
+      try {
+        const playerData = await playerService.getPlayerData();
+        setFirstName(playerData.firstName);
+        setLastName(playerData.lastName);
+        setEmail(playerData.email);
+      } catch (error) {
+        console.error('Failed to fetch player data:', error);
+      }
+    };
+
+    fetchPlayerData();
+  }, [playerId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await playerService.updateProfile(playerId, firstName, lastName, email);
-    setFirstName('');
-    setLastName('');
-    setEmail('');
+    try {
+      await playerService.updateProfile(firstName, lastName, email);
+      //onBack(); 
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-    <div className="settings-body">
-      <h1>Editer Profil</h1>
+      <div className="settings-body">
+        <h1>Editer Profil</h1>
 
-      <div class="coolinput">
-        <label class="text" for="input">Nom</label>
-        <input class="input" name="input" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
+        <div className="coolinput">
+          <label className="text" htmlFor="firstName">Nom</label>
+          <input className="input" type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
-        <label class="text" for="input">Prénom</label>
-        <input class="input" name="input" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+          <label className="text" htmlFor="lastName">Prénom</label>
+          <input className="input" type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
 
-        <label class="text" for="input">Email</label>
-        <input class="input" name="input" type="text" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <label className="text" htmlFor="email">Email</label>
+          <input className="input" type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <button className="save-button" type="submit">Sauvegarder</button>
       </div>
-      <button className="save-button" type="submit">Sauvegarder</button>
-    </div>
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import apiUrl from '../configuration/config';
 import instance from '../configuration/interceptor';
 
@@ -38,22 +38,17 @@ const getPlayerData = async () => {
     }
 };
 
-
-
 /* UPDATE PROFILE */
-const updateProfile = async (id, firstName, lastName, email) => {
+const updateProfile = async (firstName, lastName, email) => {
     try {
-        const response = await instance.put(`${apiUrl}/updateProfile/${id}`, {
-            firstName,
-            lastName,
-            email
-        });
+        const response = await instance.put(`${apiUrl}/updateProfile`, { firstName, lastName, email });
         return response.data;
     } catch (error) {
         console.error('Update profile error:', error);
         throw error;
     }
 };
+
 
 /* GET PLAYER BY ID*/
 const getPlayerById = async (id) => {
@@ -65,7 +60,6 @@ const getPlayerById = async (id) => {
         throw error;
     }
 };
-
 
 const playerService = {
     login,
