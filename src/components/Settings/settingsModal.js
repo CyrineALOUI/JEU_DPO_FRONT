@@ -39,7 +39,7 @@ const SettingsModal = ({ show, onClose }) => {
                 <span className="span"></span>
                 <span className="txt">Récompenses</span>
               </label>
-              
+
             </div>
           </div>
         )}

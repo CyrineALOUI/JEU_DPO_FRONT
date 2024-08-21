@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import apiUrl from '../configuration/config';
+import instance from '../configuration/interceptor';
 
 /* LOGIN PLAYER */
 const login = async (email, password) => {
@@ -26,10 +27,23 @@ const register = async (firstName, lastName, email, password) => {
     }
 };
 
+/* GET CURRENT PLAYER */
+const getPlayerData = async () => {
+    try {
+        const response = await instance.get(`${apiUrl}/getPlayerData`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch current player:', error);
+        throw error;
+    }
+};
+
+
+
 /* UPDATE PROFILE */
 const updateProfile = async (id, firstName, lastName, email) => {
     try {
-        const response = await axios.put(`${apiUrl}/updateProfile/${id}`, {
+        const response = await instance.put(`${apiUrl}/updateProfile/${id}`, {
             firstName,
             lastName,
             email
@@ -41,11 +55,24 @@ const updateProfile = async (id, firstName, lastName, email) => {
     }
 };
 
+/* GET PLAYER BY ID*/
+const getPlayerById = async (id) => {
+    try {
+        const response = await instance.get(`${apiUrl}/getPlayer/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch player:', error);
+        throw error;
+    }
+};
+
 
 const playerService = {
     login,
     register,
-    updateProfile
+    updateProfile,
+    getPlayerById,
+    getPlayerData
 };
 
 export default playerService;

@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './GameHeader.css';
 import coinImage from '../../assets/coin.png';
 import heartImage from '../../assets/heart.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from '../Settings/settingsModal';
+import playerService from '../../services/PlayerService';
+
 
 
 const GameHeader = ({ coins }) => {
 
   const [showModal, setShowModal] = useState(false);
+  const [playerData, setPlayerData] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSettingsClick = () => {
     setShowModal(true);
@@ -18,6 +22,22 @@ const GameHeader = ({ coins }) => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  useEffect(() => {
+    const fetchPlayerData = async () => {
+      try {
+        const data = await playerService.getPlayerData();
+        setPlayerData(data);
+      } catch (err) {
+        setError('Failed to load player data');
+        console.error('Error fetching player data:', err);
+      }
+    };
+
+    fetchPlayerData();
+  }, []);
+
+  if (error) return <div>{error}</div>;
 
   return (
 
@@ -33,7 +53,7 @@ const GameHeader = ({ coins }) => {
           <div className="card">
             <div className="card-info">
               <img src={coinImage} alt="Coin" className="icon" />
-              <div className="coins-text">{coins || 0}</div>
+              <div className="coins-text">{playerData?.score}</div>
             </div>
           </div>
         </div>
@@ -41,7 +61,7 @@ const GameHeader = ({ coins }) => {
           <div className="card">
             <div className="card-info">
               <img src={heartImage} alt="Lives" className="icon" />
-              <div className="lives-text">3</div>
+              <div className="lives-text">{playerData?.lives}</div>
             </div>
           </div>
         </div>
@@ -62,9 +82,9 @@ const GameHeader = ({ coins }) => {
         <SettingsModal show={showModal} onClose={handleCloseModal} />
       </div>
 
-      
+
     </div>
-    
+
 
   );
 };
