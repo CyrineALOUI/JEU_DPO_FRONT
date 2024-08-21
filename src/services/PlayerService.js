@@ -61,12 +61,24 @@ const getPlayerById = async (id) => {
     }
 };
 
+/* CHANGE PASSWORD */
+const changePassword = async (oldPassword, newPassword, confirmNewPassword) => {
+    try {
+        const response = await instance.put(`${apiUrl}/changePassword`, { oldPassword, newPassword, confirmNewPassword });
+        return response.data;
+    } catch (error) {
+        console.error('Change password error:', error);
+        throw error;
+    }
+};
+
 const playerService = {
     login,
     register,
     updateProfile,
     getPlayerById,
-    getPlayerData
+    getPlayerData,
+    changePassword
 };
 
 export default playerService;

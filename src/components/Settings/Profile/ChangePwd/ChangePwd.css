@@ -29,7 +29,7 @@
     font-style: italic;
 }
 
-.coolinput input[type="text"].input {
+.coolinput input[type="password"].input {
     padding: 12px 10px;
     font-size: 1.1rem;
     border: 2px #03245c solid;
