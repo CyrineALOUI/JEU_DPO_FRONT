@@ -40,6 +40,12 @@ const SettingsModal = ({ show, onClose }) => {
                 <span className="txt">Récompenses</span>
               </label>
 
+              <input className="input-btn" type="radio" id="valueIs-2" name="valueIs-radio" value="valueIs-2" />
+              <label className="neon-btn" onClick={() => handleNavigation('rewards')}>
+                <span className="span"></span>
+                <span className="txt">Se déconnecter</span>
+              </label>
+
             </div>
           </div>
         )}

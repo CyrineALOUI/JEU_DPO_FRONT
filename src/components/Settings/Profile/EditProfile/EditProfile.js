@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './EditProfile.css';
+import "./EditProfile.css"
 import playerService from '../../../../services/PlayerService';
 
 const EditProfile = ({ playerId, onBack }) => {
@@ -36,19 +36,24 @@ const EditProfile = ({ playerId, onBack }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="settings-body">
-        <h1>Editer Profil</h1>
+        <div className="settings-title">
+          <h1>Editer Profil</h1>
 
-        <div className="coolinput">
-          <label className="text" htmlFor="firstName">Nom</label>
-          <input className="input" type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          <div className="coolinput">
 
-          <label className="text" htmlFor="lastName">Prénom</label>
-          <input className="input" type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <label className="text" htmlFor="firstName">Nom</label>
+            <input className="input" type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
-          <label className="text" htmlFor="email">Email</label>
-          <input className="input" type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <label className="text" htmlFor="lastName">Prénom</label>
+            <input className="input" type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+
+            <label className="text" htmlFor="email">Email</label>
+            <input className="input" type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div>
+          <button className="save-button" type="submit">Sauvegarder</button>
+          </div>
         </div>
-        <button className="save-button" type="submit">Sauvegarder</button>
       </div>
     </form>
   );

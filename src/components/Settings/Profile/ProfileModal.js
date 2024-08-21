@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import EditProfile from './EditProfile/EditProfile';
+import ChangePwd from './ChangePwd/ChangePwd';
 
 
 const ProfileModal = ({ onBack }) => {
@@ -27,11 +28,18 @@ const ProfileModal = ({ onBack }) => {
               <span className="txt">Editer Profil</span>
             </label>
 
+            <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
+            <label className="neon-btn" onClick={() => handleNavigation('change_pwd')}>
+              <span className="span"></span>
+              <span className="txt">Changer Mot de Passe</span>
+            </label>
+
           </div>
         </div>
       )}
 
       {currentView === 'edit_profile' && <EditProfile onBack={handleBack} />}
+      {currentView === 'change_pwd' && <ChangePwd onBack={handleBack} />}
 
     </div>
 

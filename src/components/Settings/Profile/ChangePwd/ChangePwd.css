@@ -5,12 +5,13 @@
     width: fit-content;
     position: static;
     width: 350px;
+    
 }
 
 .settings-title h1 {
-    color: #fff;
-    font-size: 35px;
-    margin-bottom: 55px;
+    color: #fff; 
+    font-size: 30px; 
+    margin-bottom: 65px;
     align-items: center;
     margin-top: 15px;
 }
@@ -59,7 +60,6 @@
     display: inline-block;
     cursor: pointer;
     margin-top: 40px;
-    margin-right: 5px;
 }
 
 .save-button:active {
