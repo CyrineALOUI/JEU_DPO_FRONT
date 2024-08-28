@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import levelService from '../../services/LevelService';
 import './LevelModal.css';
+import { playClickSound } from '../Utils/SoundUtils';
+import clickSound from '../../assets/Sound/click-sound.wav'
 
 const LevelModal = ({ show, onClose, id }) => {
   const [level, setLevel] = useState(null);
@@ -20,6 +22,10 @@ const LevelModal = ({ show, onClose, id }) => {
       fetchLevel();
     }
   }, [id]);
+
+  const playSound = () => {
+    playClickSound(clickSound);
+  };
 
   const handlePlayClick = () => {
     if (level) {

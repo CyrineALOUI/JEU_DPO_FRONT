@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import './Play.css';
 import { useNavigate } from 'react-router-dom';
+import { playClickSound } from '../Utils/SoundUtils';
+import clickSound from '../../assets/Sound/click-sound.wav'
 
 const Play = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
+    const playSound = () => {
+        playClickSound(clickSound);
+    };
+
     const handlePlayClick = () => {
+        playSound();
         setLoading(true);
         setTimeout(() => {
             navigate('/map');
-        }, 4000); 
+        }, 4000);
     };
 
     return (

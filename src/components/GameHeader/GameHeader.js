@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './GameHeader.css';
-import coinImage from '../../assets/coin.png';
-import heartImage from '../../assets/heart.png';
+import coinImage from '../../assets/Pictures/coin.png';
+import heartImage from '../../assets/Pictures/heart.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from '../Settings/settingsModal';

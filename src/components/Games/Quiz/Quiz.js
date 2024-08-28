@@ -3,12 +3,17 @@ import { useParams } from 'react-router-dom';
 import quizService from '../../../services/QuizService';
 import QuestionTimer from './QuizChrono/QuestionTimer';
 import GameHeader from '../../GameHeader/GameHeader';
+import { MdDoubleArrow } from "react-icons/md";
+import clickSound from '../../../assets/Sound/click-sound.wav';
+import correctSound from '../../../assets/Sound/correct-sound.mp3';
+import incorrectSound from '../../../assets/Sound/incorrect-sound.mp3';
+import { playClickSound } from '../../Utils/SoundUtils';
 import "./Quiz.css"
 
 const Quiz = () => {
   const { id: quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
-  const [selectedAnswers, setSelectedAnswers] = useState(new Set());
+  const [selectedAnswer, setSelectedAnswer] = useState(null); // Stocke l'ID de la réponse sélectionnée
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
@@ -28,35 +33,33 @@ const Quiz = () => {
     }
   }, [quizId]);
 
-  const handleCheckboxChange = (answerId) => {
-    setSelectedAnswers((selectedAnswers) => {
-      const newSelectedAnswers = new Set(selectedAnswers);
-      if (newSelectedAnswers.has(answerId)) {
-        newSelectedAnswers.delete(answerId);
-      } else {
-        newSelectedAnswers.add(answerId);
-      }
-      setIsButtonDisabled(newSelectedAnswers.size === 0);
-      return newSelectedAnswers;
-    });
+  const playSound = () => {
+    playClickSound(clickSound);
+  };
+
+  const handleRadioChange = (answerId) => {
+    playSound();
+    setSelectedAnswer(answerId);
+    setIsButtonDisabled(false);
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await quizService.verifyAnswers(Array.from(selectedAnswers));
-      console.log('Response from verifyAnswers:', response); // Affichez la réponse pour vérifier
-
-      const newAnswersStatus = {};
-      Array.from(selectedAnswers).forEach((answerId) => {
-        newAnswersStatus[answerId] = response ? 'correct' : 'incorrect';
-      });
+      const response = await quizService.verifyAnswers([selectedAnswer]);
+      const isCorrect = response; 
+      const newAnswersStatus = {
+        [selectedAnswer]: response ? 'correct' : 'incorrect'
+      };
       setAnswersStatus(newAnswersStatus);
+
+      const verifyAnswerSound = isCorrect ? correctSound : incorrectSound;
+      playClickSound(verifyAnswerSound);
 
       // Passe à la question suivante après un délai
       setTimeout(() => {
         if (currentQuestionIndex < quiz.questions.length - 1) {
           setCurrentQuestionIndex(currentQuestionIndex + 1);
-          setSelectedAnswers(new Set());
+          setSelectedAnswer(null); // Réinitialise la réponse sélectionnée
           setIsButtonDisabled(true);
           setAnswersStatus({});
         } else {
@@ -72,7 +75,7 @@ const Quiz = () => {
     console.log('Temps écoulé!');
     if (currentQuestionIndex < quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedAnswers(new Set());
+      setSelectedAnswer(null); // Réinitialise la réponse sélectionnée
       setIsButtonDisabled(true);
       setAnswersStatus({});
     } else {
@@ -81,7 +84,7 @@ const Quiz = () => {
   };
 
   if (!quiz) {
-    return <div>Loading...</div>;
+    return <div>Chargement...</div>;
   }
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
@@ -92,7 +95,7 @@ const Quiz = () => {
       <div className="quiz-content">
         <div key={currentQuestion.id} className="question-container">
           <h3 className="question-text">{currentQuestion.questionText}</h3>
-
+          <h4>< MdDoubleArrow />  Sélectionnez le bon choix puis soumettez votre réponse.</h4>
           <QuestionTimer 
             duration={currentQuestion.duration} 
             onTimeUp={handleTimeUp} 
@@ -103,8 +106,10 @@ const Quiz = () => {
               <li key={answer.id}>
                 <label className={`label-container ${answersStatus[answer.id]}`}>
                   <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange(answer.id)}
+                    type="radio"
+                    name="answer"
+                    onChange={() => handleRadioChange(answer.id)}
+                    checked={selectedAnswer === answer.id}
                     disabled={!!answersStatus[answer.id]}
                   />
                   <div className="checkmark">

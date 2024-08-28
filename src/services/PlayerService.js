@@ -72,13 +72,25 @@ const changePassword = async (oldPassword, newPassword, confirmNewPassword) => {
     }
 };
 
+/* EVALUATE PASSWORD */
+const evaluatePasswordStrength = async (password) => {
+    try {
+        const response = await axios.post(`${apiUrl}/evaluatePasswordStrength`, { password });
+        return response.data;
+    } catch (error) {
+        console.error('Password strength evaluation error:', error);
+        throw error;
+    }
+};
+
 const playerService = {
     login,
     register,
     updateProfile,
     getPlayerById,
     getPlayerData,
-    changePassword
+    changePassword,
+    evaluatePasswordStrength
 };
 
 export default playerService;

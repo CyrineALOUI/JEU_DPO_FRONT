@@ -1,7 +1,6 @@
 import { React, useState } from 'react';
 import './Auth.css';
 import playerService from '../../../services/PlayerService';
-import { BsFillEnvelopeFill, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 
 const RegisterForm = ({ toggleForm }) => {
 
@@ -9,12 +8,7 @@ const RegisterForm = ({ toggleForm }) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState('');
-
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -72,23 +66,17 @@ const RegisterForm = ({ toggleForm }) => {
           required
         />
         <label className="Label">Email</label>
-        <div className="Icon">
-          <BsFillEnvelopeFill />
-        </div>
       </div>
 
       <div className="FormGroup">
         <input
-          type={passwordVisible ? 'text' : 'password'}
+          type="password"
           className="Input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
         <label className="Label">Mot de passe</label>
-        <div className="Icon" onClick={togglePasswordVisibility}>
-          {passwordVisible ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
-        </div>
       </div>
       <br />
       <button className="Button" type="submit"></button>

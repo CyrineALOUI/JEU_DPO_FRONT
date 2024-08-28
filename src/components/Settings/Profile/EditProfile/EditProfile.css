@@ -9,7 +9,7 @@
 
 .settings-title h1 {
     color: #fff;
-    font-size: 35px;
+    font-size: 50px;
     margin-bottom: 55px;
     align-items: center;
     margin-top: 15px;
@@ -25,7 +25,6 @@
     padding: 0 3px;
     background: #006CA5;
     width: fit-content;
-    font-style: italic;
 }
 
 .coolinput input[type="text"].input {
@@ -40,7 +39,6 @@
 .coolinput input[type="text"].input:focus {
     outline: none;
     color: #03245c;
-
 }
 
 .save-button {

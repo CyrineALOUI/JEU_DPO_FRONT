@@ -27,7 +27,7 @@
 
 .settings-content {
   background: #006CA5;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
   width: 500px;
   height: 620px;
@@ -41,8 +41,7 @@
 }
 
 .settings-body {
-  margin-top: 50px;
-  font-style: italic;
+  margin-top: 60px;
   font-weight: bold;
   font-size: 1.2em;
   display: grid;
@@ -52,13 +51,13 @@
 }
 
 .settings-container {
-  font-style: italic;
   font-weight: bold;
   font-size: 1.2em;
   display: grid;
   gap: 1em;
   place-content: center;
   width: 400px;
+  margin-top: 10px;
 }
 
 .settings-container input[type=radio] {

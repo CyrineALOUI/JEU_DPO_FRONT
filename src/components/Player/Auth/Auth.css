@@ -18,7 +18,7 @@
     font-family: "Play", sans-serif;
     height: 100vh;
     position: relative;
-    background-image: url('../../../assets/back.jpg');
+    background-image: url('../../../assets/Pictures/back.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     overflow: hidden;
@@ -280,6 +280,7 @@ button {
     z-index: 1;
     font-family: inherit;
     font-weight: 500;
+    margin-top: 0.75rem;
 }
 
 button span {

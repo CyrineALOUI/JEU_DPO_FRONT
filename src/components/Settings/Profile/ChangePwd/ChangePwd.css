@@ -4,8 +4,7 @@
     flex-direction: column;
     width: fit-content;
     position: static;
-    width: 350px;
-    
+    width: 350px;   
 }
 
 .settings-title h1 {
@@ -26,7 +25,6 @@
     padding: 0 3px;
     background: #006CA5;
     width: fit-content;
-    font-style: italic;
 }
 
 .coolinput input[type="password"].input {
@@ -41,7 +39,6 @@
 .coolinput input[type="text"].input:focus {
     outline: none;
     color: #03245c;
-
 }
 
 .save-button {
@@ -67,3 +64,15 @@
     box-shadow: 0px 0px 0px 0px skyblue;
 }
 
+.Icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    color: #006CA5;
+    cursor: pointer;
+}
+
+.Input:focus~.Icon {
+    color: #51AFF7;
+}

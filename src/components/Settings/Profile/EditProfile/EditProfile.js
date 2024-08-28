@@ -48,7 +48,7 @@ const EditProfile = ({ playerId, onBack }) => {
             <input className="input" type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
 
             <label className="text" htmlFor="email">Email</label>
-            <input className="input" type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input className="input" type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled/>
           </div>
           <div>
           <button className="save-button" type="submit">Sauvegarder</button>

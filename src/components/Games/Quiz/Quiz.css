@@ -2,7 +2,7 @@
     font-family: "Play", sans-serif;
     height: 100vh;
     position: relative;
-    background-image: url('../../../assets/fond_game.jpg');
+    background-image: url('../../../assets/Pictures/fond_game.jpg');
     background-repeat: no-repeat;
     background-size: 100% 110%;
     background-attachment: fixed;
@@ -27,9 +27,15 @@
 .question-text {
     color: white;
     font-size: 27px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
+    margin-top: -15px;
 }
 
+.quiz-content h4 {
+    color: #00DaFF;
+    font-size: 18.5px;
+    margin-bottom: 30px;
+}
 
 .answer-list {
     list-style-type: none;
@@ -57,7 +63,7 @@
 }
 
 .button-quiz {
-    position: relative;
+    position: fixed;
     padding: 10px 30px;
     border-radius: 7px;
     border: 1px solid #51AFF7;
@@ -72,6 +78,7 @@
     -webkit-transition: all 0.2s ease-in;
     -moz-transition: all 0.2s ease-in;
     transition: all 0.2s ease-in;
+    margin-top: -5px;
 }
 
 .button-quiz:hover {
