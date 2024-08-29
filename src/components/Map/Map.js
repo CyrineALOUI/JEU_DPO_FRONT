@@ -2,12 +2,14 @@ import React, { useState, useEffect, useMemo } from 'react';
 import LevelModal from '../Levels/LevelModal';
 import levelService from '../../services/LevelService';
 import GameHeader from '../GameHeader/GameHeader';
+import playerService from '../../services/PlayerService';
 import './Map.css';
 
 const Map = () => {
   const [levels, setLevels] = useState([]);
   const [selectedLevelId, setSelectedLevelId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [unlockedLevel, setUnlockedLevel] = useState(1);  // État pour le niveau débloqué du joueur
   const [currentPage, setCurrentPage] = useState(1);
   const levelsPerPage = 6;
 
@@ -21,7 +23,17 @@ const Map = () => {
       }
     };
 
+    const fetchPlayerData = async () => {
+      try {
+        const playerData = await playerService.getPlayerData();
+        setUnlockedLevel(playerData.unlockedLevel);
+      } catch (error) {
+        console.error('Error fetching player data:', error);
+      }
+    };
+
     fetchLevels();
+    fetchPlayerData();
   }, []);
 
   const toggleModal = (id) => {
@@ -45,12 +57,21 @@ const Map = () => {
       <GameHeader />
       <div className="levels-grid">
         {paginatedLevels.map((level) => (
-          <div key={level.id} className="flip-card" onClick={() => toggleModal(level.id)}>
+          <div
+            key={level.id}
+            className={`flip-card ${level.levelNumber <= unlockedLevel ? '' : 'locked'}`}  
+            onClick={() => level.levelNumber <= unlockedLevel && toggleModal(level.id)}  
+          >
             <div className="flip-card-inner">
               <div className="flip-card-front">
                 <p className="title">{level.title}</p>
               </div>
               <div className="flip-card-back">
+                {level.levelNumber <= unlockedLevel ? (
+                  <p>Débloqué</p>
+                ) : (
+                  <p>Bloqué</p>
+                )}
               </div>
             </div>
           </div>

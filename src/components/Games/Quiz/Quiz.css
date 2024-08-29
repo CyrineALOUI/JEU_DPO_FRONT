@@ -20,13 +20,16 @@
 .question-container {
     background-color: transparent;
     position: absolute;
-    top: 35%;
-    left: 20%;
+    top: 250px;
+    left: 250px;
+    max-width: 60%; 
+    word-wrap: break-word; 
+    word-break: break-word;
 }
 
 .question-text {
     color: white;
-    font-size: 27px;
+    font-size: 25px;
     margin-bottom: 30px;
     margin-top: -15px;
 }
@@ -40,17 +43,23 @@
 .answer-list {
     list-style-type: none;
     padding: 0;
+    max-width: 60%; 
+    word-wrap: break-word; 
+    word-break: break-word;
 }
 
 .answer-text {
     color: white;
-    display: block;
+    display: inline-block; /* Utilisation de inline-block pour permettre un retour à la ligne */
     margin-bottom: 20px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
     margin-left: 50px;
     align-items: center;
-    white-space: nowrap;
+    white-space: nowrap; /* Autoriser les retours à la ligne */
+    word-break: break-word; /* Casser les mots longs */
+    overflow-wrap: break-word; /* Gérer les débordements de mots */
+    max-width: calc(100% - 60px); /* Ajuster la largeur maximale pour tenir compte des marges */
 }
 
 .answer-text input {
@@ -179,7 +188,6 @@
 .label-container input:checked~.checkmark {
     background-color: var(--clr);
     border-radius: .5rem;
-    animation: pulse 500ms ease-in-out;
 }
 
 .checkmark:after {
