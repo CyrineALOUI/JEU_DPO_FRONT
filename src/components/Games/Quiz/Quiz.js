@@ -13,10 +13,11 @@ import "./Quiz.css"
 const Quiz = () => {
   const { id: quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
-  const [selectedAnswer, setSelectedAnswer] = useState(null); // Stocke l'ID de la réponse sélectionnée
+  const [selectedAnswer, setSelectedAnswer] = useState(null); 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -45,12 +46,17 @@ const Quiz = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await quizService.verifyAnswers([selectedAnswer]);
-      const isCorrect = response; 
+      /*const response = await quizService.verifyAnswers([selectedAnswer]);
+      const isCorrect = response; */
+      const isCorrect = await quizService.verifyAnswers([selectedAnswer]);
       const newAnswersStatus = {
-        [selectedAnswer]: response ? 'correct' : 'incorrect'
+        [selectedAnswer]: isCorrect ? 'correct' : 'incorrect'
       };
       setAnswersStatus(newAnswersStatus);
+
+      if(isCorrect) {
+        setScore(score + 50);
+      }
 
       const verifyAnswerSound = isCorrect ? correctSound : incorrectSound;
       playClickSound(verifyAnswerSound);
@@ -59,11 +65,11 @@ const Quiz = () => {
       setTimeout(() => {
         if (currentQuestionIndex < quiz.questions.length - 1) {
           setCurrentQuestionIndex(currentQuestionIndex + 1);
-          setSelectedAnswer(null); // Réinitialise la réponse sélectionnée
+          setSelectedAnswer(null); 
           setIsButtonDisabled(true);
           setAnswersStatus({});
         } else {
-          alert('Quiz terminé !');
+          alert(`Quiz terminé`);
         }
       }, 2000); // Change question after 2 seconds
     } catch (error) {
@@ -75,11 +81,11 @@ const Quiz = () => {
     console.log('Temps écoulé!');
     if (currentQuestionIndex < quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedAnswer(null); // Réinitialise la réponse sélectionnée
+      setSelectedAnswer(null); 
       setIsButtonDisabled(true);
       setAnswersStatus({});
     } else {
-      alert('Quiz terminé !');
+      alert('Quiz terminé');
     }
   };
 
