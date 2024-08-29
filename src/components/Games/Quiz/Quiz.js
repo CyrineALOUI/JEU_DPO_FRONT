@@ -8,6 +8,7 @@ import clickSound from '../../../assets/Sound/click-sound.wav';
 import correctSound from '../../../assets/Sound/correct-sound.mp3';
 import incorrectSound from '../../../assets/Sound/incorrect-sound.mp3';
 import { playClickSound } from '../../Utils/SoundUtils';
+import { useScore } from '../../GameHeader/Score/ScoreContext';
 import "./Quiz.css"
 
 const Quiz = () => {
@@ -17,7 +18,7 @@ const Quiz = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
-  const [score, setScore] = useState(0);
+  const { score, updateScore } = useScore();
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -46,8 +47,6 @@ const Quiz = () => {
 
   const handleSubmit = async () => {
     try {
-      /*const response = await quizService.verifyAnswers([selectedAnswer]);
-      const isCorrect = response; */
       const isCorrect = await quizService.verifyAnswers([selectedAnswer]);
       const newAnswersStatus = {
         [selectedAnswer]: isCorrect ? 'correct' : 'incorrect'
@@ -55,7 +54,7 @@ const Quiz = () => {
       setAnswersStatus(newAnswersStatus);
 
       if(isCorrect) {
-        setScore(score + 50);
+        updateScore(score + 50);
       }
 
       const verifyAnswerSound = isCorrect ? correctSound : incorrectSound;

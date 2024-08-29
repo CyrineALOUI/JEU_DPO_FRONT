@@ -6,11 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from '../Settings/settingsModal';
 import playerService from '../../services/PlayerService';
+import { useScore } from './Score/ScoreContext';
 
 
 
 const GameHeader = ({ coins }) => {
 
+  const { score } = useScore();
   const [showModal, setShowModal] = useState(false);
   const [playerData, setPlayerData] = useState(null);
   const [error, setError] = useState(null);
@@ -53,7 +55,7 @@ const GameHeader = ({ coins }) => {
           <div className="card">
             <div className="card-info">
               <img src={coinImage} alt="Coin" className="icon" />
-              <div className="coins-text">{playerData?.score}</div>
+              <div className="coins-text">{score}</div>
             </div>
           </div>
         </div>
@@ -81,8 +83,6 @@ const GameHeader = ({ coins }) => {
         </div>
         <SettingsModal show={showModal} onClose={handleCloseModal} />
       </div>
-
-
     </div>
 
 
