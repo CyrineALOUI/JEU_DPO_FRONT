@@ -1,0 +1,30 @@
+.hint-container {
+    position: fixed; 
+    top: 315px; 
+    right: 150px; 
+    display: flex;
+    justify-content: flex-end; 
+}
+
+#checkbox-input {
+    display: none;
+    margin-right: 50px;
+}
+
+.switch {
+    width: fit-content;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 50px;
+    z-index: 1;
+    cursor: pointer;
+    display: flex;
+    transition: all 0.7s;
+    border: 7px solid #51AFF7;
+}
+
+#checkbox-input:checked + .switch {
+    background-color: #fff;
+    box-shadow: 0px 0px 100px #fff;
+    border-color: #fff; 
+}

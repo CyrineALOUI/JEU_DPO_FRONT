@@ -9,7 +9,9 @@ import correctSound from '../../../assets/Sound/correct-sound.mp3';
 import incorrectSound from '../../../assets/Sound/incorrect-sound.mp3';
 import { playClickSound } from '../../Utils/SoundUtils';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
+import Hint from '../../Hint/Hint';
 import "./Quiz.css"
+
 
 const Quiz = () => {
   const { id: quizId } = useParams();
@@ -105,6 +107,7 @@ const Quiz = () => {
             duration={currentQuestion.duration} 
             onTimeUp={handleTimeUp} 
           />
+          <Hint />
           
           <ul className="answer-list">
             {currentQuestion.answers.map((answer) => (
@@ -132,8 +135,7 @@ const Quiz = () => {
             className="button-quiz"
             type="button"
             onClick={handleSubmit}
-            disabled={isButtonDisabled}
-          >
+            disabled={isButtonDisabled}>
             Répondre
           </button>
         </div>

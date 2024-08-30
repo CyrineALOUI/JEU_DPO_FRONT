@@ -7,11 +7,13 @@ import Quiz from "./components/Games/Quiz/Quiz";
 import Crossword from "./components/Games/Crossword/Crossword";
 import ProfileModal from "./components/Settings/Profile/ProfileModal";
 import { ScoreProvider } from "./components/GameHeader/Score/ScoreContext";  
+import Hint from "./components/Hint/Hint";
+
 
 const App = () => {
   return (
     <Router>
-      <ScoreProvider>  {/* Envelopper l'application avec ScoreProvider */}
+      <ScoreProvider>  
         <div>
           <Routes>
             <Route path="/auth" element={<Auth />} />
@@ -20,6 +22,7 @@ const App = () => {
             <Route path="/quiz/:id" element={<Quiz />} />
             <Route path="/crossword/:id" element={<Crossword />} />
             <Route path="/ProfileModal" element={<ProfileModal />} />
+            <Route path="/hint" element={<Hint />} />
           </Routes>
         </div>
       </ScoreProvider>
