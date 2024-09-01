@@ -1,6 +1,9 @@
 import { React, useState } from 'react';
 import './Auth.css';
 import playerService from '../../../services/PlayerService';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const RegisterForm = ({ toggleForm }) => {
 
@@ -16,15 +19,19 @@ const RegisterForm = ({ toggleForm }) => {
 
     try {
       const player = await playerService.register(firstName, lastName, email, password);
-      console.log('Player registered:', player);
-      //Clear data
+      toast.success('Compte créé avec succès !', {
+        position: "top-right",
+        autoClose: 5000,
+      });
       setFirstName('');
       setLastName('');
       setEmail('');
       setPassword('');
-      toggleForm();
+      setTimeout(() => {
+        toggleForm();
+      }, 1000);
     } catch (err) {
-      console.error(error);
+      console.error(err);
       setError('Registration failed');
     }
   };
@@ -86,7 +93,3 @@ const RegisterForm = ({ toggleForm }) => {
 };
 
 export default RegisterForm;
-
-
-
-
