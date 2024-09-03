@@ -83,6 +83,32 @@ const evaluatePasswordStrength = async (password) => {
     }
 };
 
+/* FORGOT PASSWORD */
+const forgotPassword = async (email) => {
+    try {
+        const response = await axios.post(`${apiUrl}/forgotPassword`, email, {
+            headers: { 'Content-Type': 'application/json' },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        throw error;
+    }
+};
+
+/* RESET PASSWORD */
+const resetPassword = async (token, newPassword) => {
+    try {
+        const response = await axios.post(`${apiUrl}/resetPassword?token=${token}`, newPassword, {
+            headers: { 'Content-Type': 'application/json' },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Reset password error:', error);
+        throw error;
+    }
+};
+
 const playerService = {
     login,
     register,
@@ -90,7 +116,9 @@ const playerService = {
     getPlayerById,
     getPlayerData,
     changePassword,
-    evaluatePasswordStrength
+    evaluatePasswordStrength,
+    forgotPassword,
+    resetPassword
 };
 
 export default playerService;

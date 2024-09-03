@@ -430,3 +430,13 @@ button:active span::before {
         transform: scale(0.9);
     }
 }
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #006CA5 ;
+    cursor: pointer;
+  }
+  
