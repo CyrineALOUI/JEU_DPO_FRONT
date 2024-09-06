@@ -15,94 +15,108 @@
     justify-content: center;
 }
 
-.levels-grid {
-    display: GRID;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+.glass-box {
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 550px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 108, 165, 0.5), 0 0 10px rgba(0, 108, 165, 0.5), 0 0 20px rgba(0, 108, 165, 0.5), 0 0 40px rgba(0, 108, 165, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 108, 165, 0.5);
+    display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.flip-card {
-    background-color: transparent;
-    width: 120px;
-    height: 120px;
-    perspective: 1000px;
-    cursor: pointer;
-    border-radius: 20px;
-    margin: 30px;
-}
-
-.pagination {
-    margin-top: 50px;
-}
-
-.pagination button {
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: none;
-    background-color: #51AFF7;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.pagination button.active {
-    background-color: #0090cc;
-}
-
-.title {
-    font-size: 1.5em;
-    font-weight: 900;
-    text-align: center;
-    margin: 0;
-}
-
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-}
-
-.flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-.flip-card-front,
-.flip-card-back {
-    box-shadow: 0 8px 14px 0 rgba(180, 180, 180, 0.2);
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border: 1px solid #006CA5;
-    border-radius: 1rem;
-    box-shadow: 0 0 2px rgba(0, 108, 165, 0.5), 0 0 10px rgba(0, 108, 165, 0.5), 0 0 5px rgba(0, 108, 165, 0.5), 0 0 2px rgba(0, 108, 165, 0.5);
-}
-
-.flip-card-front {
-    background: linear-gradient(120deg, #026e9c 30%, #06b6ff 88%,#06b6ff 40%, #06b6ff 48%);
     color: #fff;
+    text-align: center;
+    overflow: hidden;
 }
 
-.flip-card-back {
-    background: linear-gradient(120deg, #026e9c 30%, #06b6ff 88%,#06b6ff 40%, #06b6ff 48%);
-    color: white;
-    transform: rotateY(180deg);
+/* Applique le positionnement absolu aux boutons des niveaux */
+.level-button {
+    position: absolute;
+    appearance: button;
+    background-color: #25769c;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 20px 25px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s, transform .3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
 }
 
-.flip-card.locked {
-opacity: 0.5;  
-pointer-events: none;  
+.level-button:nth-child(1) { top: 80%; left: 7%; } 
+.level-button:nth-child(2) { top: 65%; left: 22%; } 
+.level-button:nth-child(3) { top: 80%; left: 42%; } 
+.level-button:nth-child(4) { top: 40%; left: 33%; } 
+.level-button:nth-child(5) { top: 10%; left: 45%; } 
+.level-button:nth-child(6) { top: 35%; left: 57%; } 
+.level-button:nth-child(7) { top: 60%; left: 65%; } 
+.level-button:nth-child(8) { top: 70%; left: 80%; } 
+.level-button:nth-child(9) { top: 15%; left: 85%; } 
+
+.level-button:after {
+    background-clip: padding-box;
+    background-color: #1CB0F6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
 }
 
-.flip-card.locked .flip-card-back p {
-color: red;  
+.level-button:main,
+.level-button:focus {
+    user-select: auto;
+}
+
+.level-button:hover:not(:disabled) {
+    filter: brightness(1.1);
+}
+
+.level-button:disabled {
+    cursor: auto;
+}
+
+.level-button.locked {
+    background-color: #ccc; 
+    color: #5c5959; 
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.level-button.locked:after {
+    background-color: #aaa;
+}
+
+.level-button:hover:not(.locked) {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }

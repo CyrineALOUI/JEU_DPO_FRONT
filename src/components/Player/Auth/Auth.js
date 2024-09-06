@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import './Auth.css';
+import ForgotPasswordModal from './ForgotPassword/ForgotPasswordModal';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
+  };
+
+  const handleCloseModal = ()  => {
+    setShowForgotPasswordModal(false);
   };
 
   return (
@@ -18,7 +24,7 @@ const Auth = () => {
             <RegisterForm toggleForm={toggleForm} />
           </div>
           <div className="form__container signin__container">
-            <LoginForm toggleForm={toggleForm} />
+            <LoginForm toggleForm={toggleForm} onForgotPasswordClick={() => setShowForgotPasswordModal(true)} />
           </div>
           <div className="overlay__container" id="overlayContainer">
             <div className="overlay__wrapper">
@@ -36,6 +42,9 @@ const Auth = () => {
           </div>
         </div>
       </div>
+      {showForgotPasswordModal && (
+        <ForgotPasswordModal show={showForgotPasswordModal} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };

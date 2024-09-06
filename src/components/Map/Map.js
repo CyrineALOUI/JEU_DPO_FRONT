@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import LevelModal from '../Levels/LevelModal';
 import levelService from '../../services/LevelService';
 import GameHeader from '../GameHeader/GameHeader';
@@ -9,9 +9,7 @@ const Map = () => {
   const [levels, setLevels] = useState([]);
   const [selectedLevelId, setSelectedLevelId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [unlockedLevel, setUnlockedLevel] = useState(1);  // État pour le niveau débloqué du joueur
-  const [currentPage, setCurrentPage] = useState(1);
-  const levelsPerPage = 6;
+  const [unlockedLevel, setUnlockedLevel] = useState(1); // État pour le niveau débloqué du joueur
 
   useEffect(() => {
     const fetchLevels = async () => {
@@ -41,57 +39,26 @@ const Map = () => {
     setShowModal(!showModal);
   };
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const paginatedLevels = useMemo(() => {
-    const startIndex = (currentPage - 1) * levelsPerPage;
-    return levels.slice(startIndex, startIndex + levelsPerPage);
-  }, [levels, currentPage]);
-
-  const totalPages = Math.ceil(levels.length / levelsPerPage);
-
   return (
     <div className="Map-Container">
       <GameHeader />
-      <div className="levels-grid">
-        {paginatedLevels.map((level) => (
-          <div
-            key={level.id}
-            className={`flip-card ${level.levelNumber <= unlockedLevel ? '' : 'locked'}`}  
-            onClick={() => level.levelNumber <= unlockedLevel && toggleModal(level.id)}  
-          >
-            <div className="flip-card-inner">
-              <div className="flip-card-front">
-                <p className="title">{level.title}</p>
-              </div>
-              <div className="flip-card-back">
-                {level.levelNumber <= unlockedLevel ? (
-                  <p>Débloqué</p>
-                ) : (
-                  <p>Bloqué</p>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="pagination">
-        {Array.from({ length: totalPages }).map((_, index) => (
+      <div className="glass-box">
+        {levels.map((level) => (
           <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
-            className={index + 1 === currentPage ? 'active' : ''}
+            key={level.id}
+            className={`level-button ${level.levelNumber <= unlockedLevel ? '' : 'locked'}`} 
+            onClick={() => level.levelNumber <= unlockedLevel && toggleModal(level.id)}
           >
-            {index + 1}
+            {level.levelNumber}
           </button>
         ))}
       </div>
 
-      <LevelModal show={showModal} onClose={() => setShowModal(false)} id={selectedLevelId}></LevelModal>
+      <LevelModal show={showModal} onClose={() => setShowModal(false)} id={selectedLevelId} />
     </div>
+
+
+
   );
 };
 

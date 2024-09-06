@@ -2,7 +2,6 @@
 
 .modal-overlay {
   font-family: "Play", sans-serif;
-  width: 600px;
   background: #006CA5;
   border-radius: 20px;
   display: flex;
@@ -28,11 +27,13 @@
 }
 
 .modal-content {
+  top: 23%;
   position: fixed;
   background: #006CA5;
   padding: 20px;
   border-radius: 8px;
-  width: 650px;
+  width: 600px;
+  height: 450px;
   max-width: 800px;
   display: flex;
   flex-direction: column;
