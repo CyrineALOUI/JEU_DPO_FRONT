@@ -39,7 +39,7 @@ const ForgotPasswordModal = ({ show, onClose }) => {
         <button className="exit-button-password" onClick={handleClose}>
           &times;
         </button>
-        <h2>Réinitialiser votre Mot de Passe</h2>
+        <h2>Mot de Passe Oublié ?</h2>
         <form className="Form" onSubmit={handleForgotPassword}>
           <div className="FormGroup">
             <span className="icon-password">

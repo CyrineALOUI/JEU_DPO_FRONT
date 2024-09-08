@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import EditProfile from './EditProfile/EditProfile';
-import ChangePwd from './ChangePwd/ChangePwd';
+import ChangePassword from './ChangePassword/ChangePassword';
 import clickSound from '../../../assets/Sound/click-sound.wav'
 import { playClickSound } from '../../Utils/SoundUtils';
 
@@ -73,7 +73,7 @@ const ProfileModal = ({ onBack }) => {
       )}
 
       {currentView === 'edit_profile' && <EditProfile onBack={handleBack} />}
-      {currentView === 'change_pwd' && <ChangePwd onBack={handleBack} />}
+      {currentView === 'change_pwd' && <ChangePassword onBack={handleBack} />}
 
     </div>
 

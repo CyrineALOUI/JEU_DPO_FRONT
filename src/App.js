@@ -9,6 +9,7 @@ import ProfileModal from "./components/Settings/Profile/ProfileModal";
 import { ScoreProvider } from "./components/GameHeader/Score/ScoreContext";
 import Hint from "./components/Hint/Hint";
 import { ToastContainer } from "react-toastify";
+import ResetPassword from "./components/Player/Auth/ResetPassword/ResetPassword";
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <ToastContainer />
         <Routes>
           <Route path="/auth" element={<Auth />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
           <Route
             path="/*"
             element={

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './ChangePwd.css';
+import './ChangePassword.css';
 import playerService from '../../../../services/PlayerService';
 
-const ChangePwd = () => {
+const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -51,4 +51,4 @@ const ChangePwd = () => {
   );
 };
 
-export default ChangePwd;
+export default ChangePassword;
