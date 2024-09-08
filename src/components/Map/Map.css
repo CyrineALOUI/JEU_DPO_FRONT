@@ -36,7 +36,6 @@
     overflow: hidden;
 }
 
-/* Applique le positionnement absolu aux boutons des niveaux */
 .level-button {
     position: absolute;
     appearance: button;
@@ -106,7 +105,7 @@
 }
 
 .level-button.locked {
-    background-color: #ccc; 
+    background-color: #6e6d6d; 
     color: #5c5959; 
     cursor: not-allowed;
     pointer-events: none;

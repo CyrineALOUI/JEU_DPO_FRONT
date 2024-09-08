@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   margin: 0 15px;
-
+  position: relative;
 }
 
 .coins-text, .lives-text {
@@ -103,5 +103,79 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.lives {
+  fill: rgb(208, 13, 13);
+  animation: beatingHeart 1.2s infinite;
+}
 
+@keyframes beatingHeart {
+  0% {
+    transform: scale(1);
+  }
 
+  15% {
+    transform: scale(1.15);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.15);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+}
+
+.lives:hover svg {
+  transform: scale(105%);
+  border-color: #ffd8d8;
+  
+}
+
+.coins {
+  transform: translateZ(1px);
+  display: flex;
+  align-items: center; 
+  position: relative;
+}
+
+.coins::after {
+  content: '$';
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36px; 
+  font-size: 21px;
+  font-weight: bold;
+  background: #FFD700;
+  color: #DAA520;
+  border: 4px double;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, .1);
+  animation: coin-flip 4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  order: -1; 
+}
+
+@keyframes coin-flip {
+  0%, 100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(180deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+}
+      
