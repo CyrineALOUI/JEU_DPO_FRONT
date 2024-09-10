@@ -12,7 +12,7 @@ const ForgotPasswordModal = ({ show, onClose }) => {
     e.preventDefault();
     try {
       await playerService.forgotPassword(forgotPasswordEmail);
-      toast.success('Un e-mail de réinitialisation a été envoyé.', {
+      toast.success('Un e-mail de réinitialisation de votre mot de passe a été envoyé avec succès.', {
         position: 'top-right',
         autoClose: 5000,
       });

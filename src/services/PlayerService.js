@@ -83,10 +83,9 @@ const evaluatePasswordStrength = async (password) => {
     }
 };
 
-/* FORGOT PASSWORD */
 const forgotPassword = async (email) => {
     try {
-        const response = await axios.post(`${apiUrl}/forgotPassword`, email, {
+        const response = await axios.post(`${apiUrl}/forgotPassword`, { email }, {
             headers: { 'Content-Type': 'application/json' },
         });
         return response.data;
@@ -97,11 +96,9 @@ const forgotPassword = async (email) => {
 };
 
 /* RESET PASSWORD */
-const resetPassword = async (token, newPassword) => {
+const resetPassword = async (token, newPassword, confirmPassword) => {
     try {
-        const response = await axios.post(`${apiUrl}/resetPassword?token=${token}`, newPassword, {
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const response = await axios.post(`${apiUrl}/resetPassword?token=${token}`, { newPassword, confirmPassword });
         return response.data;
     } catch (error) {
         console.error('Reset password error:', error);

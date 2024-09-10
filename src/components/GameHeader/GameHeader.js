@@ -5,10 +5,11 @@ import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from '../Settings/settingsModal';
 import playerService from '../../services/PlayerService';
 import { useScore } from './Score/ScoreContext';
+import logo from '../../assets/Pictures/logo.png'
 
 
 
-const GameHeader = ({ coins }) => {
+const GameHeader = () => {
 
   const { score } = useScore();
   const [showModal, setShowModal] = useState(false);
@@ -44,7 +45,7 @@ const GameHeader = ({ coins }) => {
     <div className="game-header">
       {/* Logo */}
       <div className="game-logo">
-
+        {/*<img src={logo} alt="Game Logo" className="logo-image" />*/}
       </div>
 
       {/* Coins and Lives */}

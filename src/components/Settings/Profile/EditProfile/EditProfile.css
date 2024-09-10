@@ -1,3 +1,11 @@
+.settings-title h1 {
+    color: #fff;
+    font-size: 50px;
+    margin-bottom: 55px;
+    align-items: center;
+    margin-top: 15px;
+}
+
 .coolinput {
     font-family: "Play", sans-serif;
     display: flex;
@@ -5,14 +13,6 @@
     width: fit-content;
     position: static;
     width: 350px;
-}
-
-.settings-title h1 {
-    color: #fff;
-    font-size: 50px;
-    margin-bottom: 55px;
-    align-items: center;
-    margin-top: 15px;
 }
 
 .coolinput label.text {
@@ -51,12 +51,12 @@
     color: #fff;
     border-radius: 5px;
     transition: all ease 0.1s;
-    box-shadow: 0px 5px 5px 0px skyblue;
+    box-shadow: 1px 3px 1px 1px skyblue;
     letter-spacing: 1px;
     position: relative;
     display: inline-block;
     cursor: pointer;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-right: 5px;
 }
 
