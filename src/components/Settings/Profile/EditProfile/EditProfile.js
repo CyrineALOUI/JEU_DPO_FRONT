@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import "./EditProfile.css"
 import playerService from '../../../../services/PlayerService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditProfile = ({ playerId, onBack }) => {
 
@@ -27,8 +29,15 @@ const EditProfile = ({ playerId, onBack }) => {
     e.preventDefault();
     try {
       await playerService.updateProfile(firstName, lastName, email);
-      //onBack(); 
+      toast.success('Profil mis à jour avec succès !', {
+        position: 'top-right',
+        autoClose: 5000, 
+      });
     } catch (error) {
+      toast.error('Erreur lors de la mise à jour du profil.', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
       console.error('Failed to update profile:', error);
     }
   };
@@ -36,22 +45,39 @@ const EditProfile = ({ playerId, onBack }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="settings-body">
-        <div className="settings-title">
+        <div className="edit-profile-title">
           <h1>Editer Profil</h1>
 
-          <div className="coolinput">
+          <div className="edit-profile-input">
+          <label>Nom</label>
+            <input
+              className="input"
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+            <label>Prénom</label>
+            <input
+              className="input"
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+            <label>Email</label>
+            <input
+              className="input"
+              type="email"
+              placeholder="Prénom"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled
+            />
 
-            <label className="text" htmlFor="firstName">Nom</label>
-            <input className="input" type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-
-            <label className="text" htmlFor="lastName">Prénom</label>
-            <input className="input" type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-
-            <label className="text" htmlFor="email">Email</label>
-            <input className="input" type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled/>
           </div>
           <div>
-          <button className="save-button" type="submit">Sauvegarder</button>
+            <button className="save-button" type="submit">Sauvegarder</button>
           </div>
         </div>
       </div>
