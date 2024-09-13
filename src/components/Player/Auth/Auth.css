@@ -269,8 +269,8 @@ form h2 {
 .ForgotPassword:hover,
 .ForgotPassword:focus,
 .ForgotPassword:active {
-    color: #51AFF7; 
-    background: transparent; 
+    color: #51AFF7;
+    background: transparent;
 }
 
 button {
@@ -443,7 +443,6 @@ button:active span::before {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #006CA5 ;
+    color: #006CA5;
     cursor: pointer;
-  }
-  
+}

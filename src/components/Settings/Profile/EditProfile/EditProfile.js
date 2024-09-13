@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./EditProfile.css"
 import playerService from '../../../../services/PlayerService';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EditProfile = ({ playerId, onBack }) => {
@@ -31,14 +31,14 @@ const EditProfile = ({ playerId, onBack }) => {
       await playerService.updateProfile(firstName, lastName, email);
       toast.success('Profil mis à jour avec succès !', {
         position: 'top-right',
-        autoClose: 5000, 
+        autoClose: 5000,
       });
     } catch (error) {
       toast.error('Erreur lors de la mise à jour du profil.', {
         position: 'top-right',
         autoClose: 3000,
       });
-      console.error('Failed to update profile:', error);
+      console.error('Échec de la mise à jour du profil:', error);
     }
   };
 
@@ -47,9 +47,8 @@ const EditProfile = ({ playerId, onBack }) => {
       <div className="settings-body">
         <div className="edit-profile-title">
           <h1>Editer Profil</h1>
-
           <div className="edit-profile-input">
-          <label>Nom</label>
+            <label>Nom</label>
             <input
               className="input"
               type="text"
@@ -69,12 +68,10 @@ const EditProfile = ({ playerId, onBack }) => {
             <input
               className="input"
               type="email"
-              placeholder="Prénom"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled
             />
-
           </div>
           <div>
             <button className="save-button" type="submit">Sauvegarder</button>

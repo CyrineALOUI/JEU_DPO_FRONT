@@ -58,18 +58,18 @@ const ResetPassword = () => {
                 <h2>Réinitialiser votre Mot de Passe</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="password-input">
-                        <input 
-                            className="input" 
-                            type="password" 
-                            placeholder="Nouveau Mot de Passe" 
+                        <input
+                            className="input"
+                            type="password"
+                            placeholder="Nouveau Mot de Passe"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             required
                         />
-                        <input 
-                            className="input" 
-                            type="password" 
-                            placeholder="Confirmer Mot de Passe" 
+                        <input
+                            className="input"
+                            type="password"
+                            placeholder="Confirmer Mot de Passe"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required

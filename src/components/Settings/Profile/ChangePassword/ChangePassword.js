@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import './ChangePassword.css';
 import playerService from '../../../../services/PlayerService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -17,6 +24,10 @@ const ChangePassword = () => {
 
     try {
       await playerService.changePassword(oldPassword, newPassword, confirmNewPassword);
+      toast.success('Mot de passe modifié avec succès !', {
+        position: 'top-right',
+        autoClose: 5000,
+      });
       setOldPassword('');
       setNewPassword('');
       setConfirmNewPassword('');
@@ -26,28 +37,64 @@ const ChangePassword = () => {
     }
   };
 
+  const toggleShowOldPassword = () => setShowOldPassword(prev => !prev);
+  const toggleShowNewPassword = () => setShowNewPassword(prev => !prev);
+  const toggleShowConfirmNewPassword = () => setShowConfirmNewPassword(prev => !prev);
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="settings-body">
-        <div className="settings-title">
+        <div className="change-password-title">
           <h1>Changer Mot de Passe</h1>
-          <div className="coolinput">
+          {error && <p className="error-pwd-message">{error}</p>}
+          <br />
+          <div className="change-password-input">
+            <div className="input-wrapper">
+              <input
+                className="input"
+                type={showOldPassword ? 'text' : 'password'}
+                placeholder="Ancien Mot de Passe"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                required
+              />
+              <span className="eye-icon" onClick={toggleShowOldPassword}>
+                <FontAwesomeIcon icon={showOldPassword ? faEye : faEyeSlash} />
+              </span>
+            </div>
 
-            <label className="text" htmlFor="oldPassword">Ancien Mot de Passe</label>    
-            <input className="input" type="password" id="oldPassword" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required/>
+            <div className="input-wrapper">
+              <input
+                className="input"
+                type={showNewPassword ? 'text' : 'password'}
+                placeholder="Nouveau Mot de Passe"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+              <span className="eye-icon" onClick={toggleShowNewPassword}>
+                <FontAwesomeIcon icon={showNewPassword ? faEye : faEyeSlash} />
+              </span>
+            </div>
 
-            <label className="text" htmlFor="newPassword">Nouveau Mot de Passe</label>
-            <input className="input" type="password" id="newPassword" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required/>
-
-            <label className="text" htmlFor="confirmNewPassword">Confirmer Mot de Passe</label>
-            <input className="input" type="password" id="confirmNewPassword" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} required/>
-
+            <div className="input-wrapper">
+              <input
+                className="input"
+                type={showConfirmNewPassword ? 'text' : 'password'}
+                placeholder="Confirmer Nouveau Mot de Passe"
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                required
+              />
+              <span className="eye-icon" onClick={toggleShowConfirmNewPassword}>
+                <FontAwesomeIcon icon={showConfirmNewPassword ? faEye : faEyeSlash} />
+              </span>
+            </div>
           </div>
           <button className="save-button" type="submit">Sauvegarder</button>
         </div>
       </div>
-    </form>
+    </form >
   );
 };
 
