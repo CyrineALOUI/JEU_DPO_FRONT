@@ -82,7 +82,7 @@ const LoginForm = ({ onForgotPasswordClick }) => {
                         </label>
                     </div>
                 </div>
-                <button type="submit"> Se Connecter <span></span></button>
+                <button type="submit" className="form-button"> Se Connecter <span></span></button>
                 <br />
                 <button
                     type="button"

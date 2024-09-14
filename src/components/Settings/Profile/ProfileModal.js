@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import EditProfile from './EditProfile/EditProfile';
 import ChangePassword from './ChangePassword/ChangePassword';
+import DeleteAccount from './DeleteAccount/DeleteAccount';
 import clickSound from '../../../assets/Sound/click-sound.wav'
 import { playClickSound } from '../../Utils/SoundUtils';
 
@@ -42,7 +43,7 @@ const ProfileModal = ({ onBack }) => {
             <label className="neon-btn"
               onClick={() => {
                 playSound();
-                handleNavigation('change_pwd');
+                handleNavigation('change_password');
               }}>
               <span className="span"></span>
               <span className="txt">Changer Mot de Passe</span>
@@ -62,7 +63,7 @@ const ProfileModal = ({ onBack }) => {
             <label className="neon-btn"
               onClick={() => {
                 playSound();
-                handleNavigation('change_pwd');
+                handleNavigation('delete_account');
               }}>
               <span className="span"></span>
               <span className="txt">Supprimer Compte</span>
@@ -73,7 +74,8 @@ const ProfileModal = ({ onBack }) => {
       )}
 
       {currentView === 'edit_profile' && <EditProfile onBack={handleBack} />}
-      {currentView === 'change_pwd' && <ChangePassword onBack={handleBack} />}
+      {currentView === 'change_password' && <ChangePassword onBack={handleBack} />}
+      {currentView === 'delete_account' && <DeleteAccount onBack={handleBack} />}
 
     </div>
 
