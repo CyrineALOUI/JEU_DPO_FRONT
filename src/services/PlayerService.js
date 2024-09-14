@@ -106,6 +106,19 @@ const resetPassword = async (token, newPassword, confirmPassword) => {
     }
 };
 
+/* DELETE ACCOUNT */
+const deleteAccount = async (id, password) => {
+    try {
+        const response = await instance.delete(`${apiUrl}/deleteAccountPlayer/${id}`, {
+            params: { password }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Delete account error:', error);
+        throw error;
+    }
+};
+
 const playerService = {
     login,
     register,
@@ -115,7 +128,8 @@ const playerService = {
     changePassword,
     evaluatePasswordStrength,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    deleteAccount
 };
 
 export default playerService;

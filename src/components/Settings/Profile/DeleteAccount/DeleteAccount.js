@@ -1,36 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./DeleteAccount.css"
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import deleteIcon from '../../../../assets/Pictures/delete-icon.png';
+import playerService from '../../../../services/PlayerService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const DeleteAccount = () => {
 
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [id, setId] = useState(null);
+  const navigate = useNavigate();
 
-
-  {/*  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchPlayerData = async () => {
     try {
-      await playerService.updateProfile(firstName, lastName, email);
-      toast.success('Profil mis à jour avec succès !', {
+      const playerData = await playerService.getPlayerData();
+      setId(playerData.id);
+    } catch (error) {
+      console.error('Failed to fetch player data:', error);
+    }
+  };
+
+  // Appel initial pour récupérer l'ID au montage du composant
+  useEffect(() => {
+    fetchPlayerData();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await playerService.deleteAccount(id, password);
+      toast.success('Compte supprimé avec succès !', {
         position: 'top-right',
         autoClose: 5000,
       });
+      navigate('/auth');
     } catch (error) {
-      toast.error('Erreur lors de la mise à jour du profil.', {
+      toast.error('Mot de Passe incorrecte.', {
         position: 'top-right',
-        autoClose: 3000,
+        autoClose: 5000,
       });
-      console.error('Échec de la mise à jour du profil:', error);
     }
-  }; */}
+  };
 
   const toggleShowPassword = () => setShowPassword(prev => !prev);
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="settings-body">
         <div className="delete-account-title">
           <h1>Supprimer Compte</h1>
@@ -45,8 +65,11 @@ const DeleteAccount = () => {
           <div className="delete-account-input">
             <input
               className="input"
-              type="email"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Entrez votre Mot de Passe"
+              required
             />
             <span className="eye-icon" onClick={toggleShowPassword}>
               <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
