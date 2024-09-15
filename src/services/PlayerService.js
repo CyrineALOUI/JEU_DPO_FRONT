@@ -11,10 +11,15 @@ const login = async (email, password) => {
         }
         return response.data;
     } catch (error) {
-        console.error('Login error:', error);
-        throw error;
+        if (error.response) {
+            // Récupère le message d'erreur renvoyé par le backend
+            throw new Error(error.response.data || 'An error occurred');
+        } else {
+            throw new Error('Network error');
+        }
     }
 };
+
 
 /* REGISTER PLAYER */
 const register = async (firstName, lastName, email, password) => {

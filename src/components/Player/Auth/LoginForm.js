@@ -24,7 +24,15 @@ const LoginForm = ({ onForgotPasswordClick }) => {
             setPassword('');
         } catch (err) {
             console.error(err);
-            setError('Email ou mot de passe invalide');
+            const errorMessage = err.message || 'An error occurred';
+
+            if (errorMessage.includes('Player not found')) {
+                setError('Joueur inexistant.');
+            } else if (errorMessage.includes('Invalid email or password')) {
+                setError('Email ou mot de passe invalide.');
+            } else {
+                setError('Une erreur est survenue. Veuillez réessayer.');
+            }
         }
     };
 
