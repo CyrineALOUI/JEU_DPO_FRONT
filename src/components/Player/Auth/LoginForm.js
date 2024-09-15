@@ -5,7 +5,7 @@ import playerService from '../../../services/PlayerService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-const LoginForm = ({ onForgotPasswordClick }) => {
+const LoginForm = ({ onForgotPasswordClick, onActivateAccountClick }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +32,14 @@ const LoginForm = ({ onForgotPasswordClick }) => {
             } else if (errorMessage.includes('Invalid email or password')) {
                 setError('Email ou mot de passe invalide.');
             } else if (errorMessage.includes('Your account is deactivated')) {
-                setError('Votre compte est désactivé.');
+                setError(
+                    <>
+                        Votre compte est désactivé.
+                        <button type="button" className="activateButton" onClick={onActivateAccountClick}>
+                            Activez le
+                        </button>
+                    </>
+                );
             } else {
                 setError('Une erreur est survenue. Veuillez réessayer.');
             }
@@ -95,11 +102,7 @@ const LoginForm = ({ onForgotPasswordClick }) => {
                 </div>
                 <button type="submit" className="form-button"> Se Connecter <span></span></button>
                 <br />
-                <button
-                    type="button"
-                    className="ForgotPassword"
-                    onClick={onForgotPasswordClick}
-                >
+                <button type="button" className="ForgotPassword" onClick={onForgotPasswordClick}>
                     Mot de passe oublié?
                 </button>
             </form>

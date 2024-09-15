@@ -3,17 +3,23 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import './Auth.css';
 import ForgotPasswordModal from './ForgotPassword/ForgotPasswordModal';
+import ActivateAccountModal from './ActivateAccount/ActivateAccountModal';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+  const [showActivateAccountModal, setShowActivateAccountModal] = useState(false);
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
   };
 
-  const handleCloseModal = ()  => {
+  const handleCloseModal = () => {
     setShowForgotPasswordModal(false);
+  };
+
+  const handleCloseActivateModal = () => {
+    setShowActivateAccountModal(false);
   };
 
   return (
@@ -24,7 +30,10 @@ const Auth = () => {
             <RegisterForm toggleForm={toggleForm} />
           </div>
           <div className="form__container signin__container">
-            <LoginForm toggleForm={toggleForm} onForgotPasswordClick={() => setShowForgotPasswordModal(true)} />
+            <LoginForm
+              onForgotPasswordClick={() => setShowForgotPasswordModal(true)}
+              onActivateAccountClick={() => setShowActivateAccountModal(true)} 
+            />
           </div>
           <div className="overlay__container" id="overlayContainer">
             <div className="overlay__wrapper">
@@ -44,6 +53,9 @@ const Auth = () => {
       </div>
       {showForgotPasswordModal && (
         <ForgotPasswordModal show={showForgotPasswordModal} onClose={handleCloseModal} />
+      )}
+      {showActivateAccountModal && (
+        <ActivateAccountModal show={showActivateAccountModal} onClose={handleCloseActivateModal} />
       )}
     </div>
   );
