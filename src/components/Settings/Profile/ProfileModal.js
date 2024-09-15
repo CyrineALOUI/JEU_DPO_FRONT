@@ -4,6 +4,7 @@ import ChangePassword from './ChangePassword/ChangePassword';
 import DeleteAccount from './DeleteAccount/DeleteAccount';
 import clickSound from '../../../assets/Sound/click-sound.wav'
 import { playClickSound } from '../../Utils/SoundUtils';
+import DeactivateAccount from './DeactivateAccount/DeactivateAccount';
 
 
 const ProfileModal = ({ onBack }) => {
@@ -53,7 +54,7 @@ const ProfileModal = ({ onBack }) => {
             <label className="neon-btn"
               onClick={() => {
                 playSound();
-                handleNavigation('change_pwd');
+                handleNavigation('deactivate_account');
               }}>
               <span className="span"></span>
               <span className="txt">Désactiver Compte</span>
@@ -76,6 +77,7 @@ const ProfileModal = ({ onBack }) => {
       {currentView === 'edit_profile' && <EditProfile onBack={handleBack} />}
       {currentView === 'change_password' && <ChangePassword onBack={handleBack} />}
       {currentView === 'delete_account' && <DeleteAccount onBack={handleBack} />}
+      {currentView === 'deactivate_account' && <DeactivateAccount onBack={handleBack} />}
 
     </div>
 

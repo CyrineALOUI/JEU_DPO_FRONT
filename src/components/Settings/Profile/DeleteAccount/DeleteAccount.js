@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./DeleteAccount.css"
+import "./DeleteAccount.css";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import deleteIcon from '../../../../assets/Pictures/delete-icon.png';
@@ -54,8 +54,8 @@ const DeleteAccount = () => {
       <div className="settings-body">
         <div className="delete-account-title">
           <h1>Supprimer Compte</h1>
-          <div className="trash-image">
-            <img src={deleteIcon} alt="trash" />
+          <div className="delete-image">
+            <img src={deleteIcon} alt="delete-icon" />
           </div>
           <h5>Êtes-vous certain de vouloir supprimer définitivement votre compte ?</h5>
           <p>

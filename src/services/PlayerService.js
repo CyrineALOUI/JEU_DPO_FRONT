@@ -20,7 +20,6 @@ const login = async (email, password) => {
     }
 };
 
-
 /* REGISTER PLAYER */
 const register = async (firstName, lastName, email, password) => {
     try {
@@ -53,7 +52,6 @@ const updateProfile = async (firstName, lastName, email) => {
         throw error;
     }
 };
-
 
 /* GET PLAYER BY ID*/
 const getPlayerById = async (id) => {
@@ -88,6 +86,8 @@ const evaluatePasswordStrength = async (password) => {
     }
 };
 
+
+/* FORGOT PASSWORD */
 const forgotPassword = async (email) => {
     try {
         const response = await axios.post(`${apiUrl}/forgotPassword`, { email }, {
@@ -119,10 +119,21 @@ const deleteAccount = async (id, password) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Delete account error:', error);
+        console.error('Delete account failed:', error);
         throw error;
     }
 };
+
+/* DEACTIVATE PLAYER ACCOUNT */
+const deactivateAccount = async (id) => {
+    try {
+      const response = await instance.post(`${apiUrl}/deleteAccountPlayer/${id}`);
+      return response.data;
+    } catch (error) {
+        console.error('Deactivate account failed:', error);
+        throw error;
+    }
+  };
 
 const playerService = {
     login,
@@ -134,7 +145,8 @@ const playerService = {
     evaluatePasswordStrength,
     forgotPassword,
     resetPassword,
-    deleteAccount
+    deleteAccount,
+    deactivateAccount
 };
 
 export default playerService;
