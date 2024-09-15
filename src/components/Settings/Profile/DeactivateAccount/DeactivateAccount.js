@@ -20,7 +20,6 @@ const DeactivateAccount = () => {
     }
   };
 
-  // Récupérer les données du joueur au montage du composant
   useEffect(() => {
     fetchPlayerData();
   }, []);
