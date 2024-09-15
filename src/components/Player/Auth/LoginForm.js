@@ -23,13 +23,16 @@ const LoginForm = ({ onForgotPasswordClick }) => {
             setEmail('');
             setPassword('');
         } catch (err) {
-            console.error(err);
+            console.error('Error details:', err);
+
             const errorMessage = err.message || 'An error occurred';
 
             if (errorMessage.includes('Player not found')) {
                 setError('Joueur inexistant.');
             } else if (errorMessage.includes('Invalid email or password')) {
                 setError('Email ou mot de passe invalide.');
+            } else if (errorMessage.includes('Your account is deactivated')) {
+                setError('Votre compte est désactivé.');
             } else {
                 setError('Une erreur est survenue. Veuillez réessayer.');
             }

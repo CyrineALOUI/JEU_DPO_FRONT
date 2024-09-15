@@ -127,7 +127,7 @@ const deleteAccount = async (id, password) => {
 /* DEACTIVATE PLAYER ACCOUNT */
 const deactivateAccount = async (id) => {
     try {
-      const response = await instance.post(`${apiUrl}/deactivateAccount/${id}`);
+      const response = await instance.put(`${apiUrl}/deactivateAccount/${id}`);
       return response.data;
     } catch (error) {
         console.error('Deactivate account failed:', error);
