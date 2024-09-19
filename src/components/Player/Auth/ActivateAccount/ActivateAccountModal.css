@@ -61,35 +61,39 @@
     color: #0a2b58;
 }
 
-.input-password {
-    width: 350px;
-    height: 50px;
-    background: transparent;
-    border: none;
+.input-fields {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+.input-fields input {
+    height: 2.5em;
+    width: 2.5em;
     outline: none;
-    font-size: 15px;
-    color: #fff;
-    font-weight: 600;
-    border-bottom: 2px solid #fff;
-    transition: border-bottom-color 0.3s;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #000;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    margin-top: 5px;
 }
 
-.icon-password {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 10px;
-    color: #fff;
-    cursor: pointer;
+.input-fields input:focus {
+    border: 1px solid rgb(3, 3, 81);
+    box-shadow: inset 10px 10px 10px (0, 0, 0, .20);
+    transform: scale(1.05);
+    transition: 0.5s;
 }
 
-.input-password::placeholder {
-    font-family: "Play", sans-serif;
-    color: #D3D3D3;
-    font-size: 1.1rem;
+.action-btns {
+    display: flex;
+    gap: 1rem;
 }
 
-.button-password {
+.button-activate {
     border: none;
     display: block;
     position: relative;
@@ -103,10 +107,10 @@
     z-index: 1;
     font-family: inherit;
     font-weight: 500;
-    margin-top: 2.5rem;
+    margin-top: 1.6rem;
 }
 
-.button-password span {
+.button-activate span {
     position: absolute;
     left: 0;
     top: 0;
@@ -117,7 +121,7 @@
     border: 3.5px solid #fff;
 }
 
-.button-password span::before {
+.button-activate span::before {
     content: "";
     display: block;
     position: absolute;
@@ -130,17 +134,17 @@
     transition: all 0.3s;
 }
 
-.button-password:hover span::before {
+.button-activate:hover span::before {
     transform: translate(-50%, -50%) rotate(-90deg);
     width: 100%;
     background: #fff;
 }
 
-.button-password:hover {
+.button-activate:hover {
     color: #006CA5;
 }
 
-.button-password:active span::before {
+.button-activate:active span::before {
     background: #fff;
 }
 
@@ -162,30 +166,76 @@
     }
 }
 
-
-
-.input-fields {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 45px;
+.button-clear {
+    border: none;
+    display: block;
+    position: relative;
+    padding: 0.7em 2.4em;
+    font-size: 16px;
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+    color: rgb(170, 13, 13);
+    z-index: 1;
+    font-family: inherit;
+    font-weight: 500;
+    margin-top: 1.6rem;
 }
 
-.input-fields input {
-    height: 2.5em;
-    width: 2.5em;
-    outline: none;
-    text-align: center;
-    font-size: 1.5rem;
-    color: #000;
-    border-radius: 5px;
-    border: 1px solid #fff;
-    background-color: #fff;
+.button-clear span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1;
+    border: 3.5px solid rgb(170, 13, 13);
 }
 
-.input-fields input:focus {
-    border: 1px solid rgb(3, 3, 81);
-    box-shadow: inset 10px 10px 10px rgba(0, 0, 0, .15);
-    transform: scale(1.05);
-    transition: 0.5s;
+.button-clear span::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 6%;
+    height: 500%;
+    background: #006CA5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-60deg);
+    transition: all 0.3s;
 }
+
+.button-clear:hover span::before {
+    transform: translate(-50%, -50%) rotate(-90deg);
+    width: 100%;
+    background: #fff;
+}
+
+.button-clear:hover {
+    color: rgb(170, 13, 13);
+}
+
+.button-clear:active span::before {
+    background: #fff;
+}
+
+.scale__btn-animation {
+    animation: scale-animation 0.6s;
+}
+
+@keyframes scale-animation {
+    0% {
+        width: 10rem;
+    }
+
+    50% {
+        width: 20rem;
+    }
+
+    100% {
+        width: 10rem;
+    }
+}
+

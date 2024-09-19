@@ -35,7 +35,7 @@ const LoginForm = ({ onForgotPasswordClick, onActivateAccountClick }) => {
                 setError(
                     <>
                         Votre compte est désactivé.
-                        <button type="button" className="activateButton" onClick={onActivateAccountClick}>
+                        <button type="button" className="activateButton" onClick={() => onActivateAccountClick(email)} >
                             Activez le
                         </button>
                     </>

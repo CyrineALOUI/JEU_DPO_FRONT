@@ -4,11 +4,40 @@ import RegisterForm from './RegisterForm';
 import './Auth.css';
 import ForgotPasswordModal from './ForgotPassword/ForgotPasswordModal';
 import ActivateAccountModal from './ActivateAccount/ActivateAccountModal';
+import playerService from '../../../services/PlayerService';
+import { toast } from 'react-toastify';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [showActivateAccountModal, setShowActivateAccountModal] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const handleActivateAccount = async (email) => {
+    try {
+      if (!email || typeof email !== 'string') {
+        console.error('Format de l’email invalide');
+        toast.error("L'email fourni est invalide.", {
+          position: 'top-right',
+          autoClose: 5000,
+        });
+        return;
+      }
+      await playerService.sendReactivationEmail(email);
+      toast.success("Un e-mail de réactivation de votre compte a été envoyé avec succès.", {
+        position: 'top-right',
+        autoClose: 5000,
+      });
+      setShowActivateAccountModal(true);
+      setEmail(''); 
+    } catch (error) {
+      console.error("Échec de l’envoi de l’e-mail de réactivation.", error);
+      toast.error("Une erreur est survenue lors de l'envoi de l'e-mail de réactivation.", {
+        position: 'top-right',
+        autoClose: 5000,
+      });
+    }
+  };
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -32,7 +61,7 @@ const Auth = () => {
           <div className="form__container signin__container">
             <LoginForm
               onForgotPasswordClick={() => setShowForgotPasswordModal(true)}
-              onActivateAccountClick={() => setShowActivateAccountModal(true)} 
+              onActivateAccountClick={(email) => handleActivateAccount(email)}
             />
           </div>
           <div className="overlay__container" id="overlayContainer">
@@ -54,8 +83,9 @@ const Auth = () => {
       {showForgotPasswordModal && (
         <ForgotPasswordModal show={showForgotPasswordModal} onClose={handleCloseModal} />
       )}
+
       {showActivateAccountModal && (
-        <ActivateAccountModal show={showActivateAccountModal} onClose={handleCloseActivateModal} />
+        <ActivateAccountModal show={showActivateAccountModal} onClose={handleCloseActivateModal} email={email} />
       )}
     </div>
   );

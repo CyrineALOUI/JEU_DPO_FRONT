@@ -90,9 +90,7 @@ const evaluatePasswordStrength = async (password) => {
 /* FORGOT PASSWORD */
 const forgotPassword = async (email) => {
     try {
-        const response = await axios.post(`${apiUrl}/forgotPassword`, { email }, {
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const response = await axios.post(`${apiUrl}/forgotPassword`, { email });
         return response.data;
     } catch (error) {
         console.error('Forgot password error:', error);
@@ -127,13 +125,36 @@ const deleteAccount = async (id, password) => {
 /* DEACTIVATE PLAYER ACCOUNT */
 const deactivateAccount = async (id) => {
     try {
-      const response = await instance.put(`${apiUrl}/deactivateAccount/${id}`);
-      return response.data;
+        const response = await instance.put(`${apiUrl}/deactivateAccount/${id}`);
+        return response.data;
     } catch (error) {
         console.error('Deactivate account failed:', error);
         throw error;
     }
-  };
+};
+
+/* SEND REACTIVATION EMAIL */
+const sendReactivationEmail = async (email) => {
+    try {
+        const response = await axios.post(`${apiUrl}/sendReactivationEmail`, { email });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to send reactivation email:', error);
+        throw error;
+    }
+};
+
+/* VERIFY REACTIVATION CODE */
+const verifyReactivationCode = async (code) => {
+    try {
+        const response = await axios.post(`${apiUrl}/verifyReactivationCode`, { code });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to verify reactivation code:', error);
+        throw error;
+    }
+};
+
 
 const playerService = {
     login,
@@ -146,7 +167,9 @@ const playerService = {
     forgotPassword,
     resetPassword,
     deleteAccount,
-    deactivateAccount
+    deactivateAccount,
+    sendReactivationEmail,
+    verifyReactivationCode
 };
 
 export default playerService;

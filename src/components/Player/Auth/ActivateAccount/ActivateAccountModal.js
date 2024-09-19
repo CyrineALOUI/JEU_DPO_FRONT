@@ -6,26 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const ActivateAccountModal = ({ show, onClose }) => {
-  {/*const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
-
-  const handleForgotPassword = async (e) => {
-    e.preventDefault();
-    try {
-      await playerService.forgotPassword(forgotPasswordEmail);
-      toast.success('Un e-mail de réinitialisation de votre mot de passe a été envoyé avec succès.', {
-        position: 'top-right',
-        autoClose: 5000,
-      });
-      setForgotPasswordEmail('');
-      onClose();
-    } catch (err) {
-      console.error('Erreur de réinitialisation du mot de passe:', err);
-      toast.error("L'e-mail n'existe pas dans notre base de données.", {
-        position: 'top-right',
-        autoClose: 5000,
-      });
-    }
-  }; */}
 
   const handleClose = () => {
     onClose();
@@ -42,18 +22,23 @@ const ActivateAccountModal = ({ show, onClose }) => {
         <h2>Activez votre Compte</h2>
         <p>Un e-mail contenant votre code d'activation de compte a été envoyé, veuillez vérifier votre boîte de réception pour finaliser cette étape.</p>
         <form className="activate-form">
-          <div class="input-fields">
-            <input placeholder="" type="tel" maxlength="1" />
-              <input placeholder="" type="tel" maxlength="1" />
-                <input placeholder="" type="tel" maxlength="1" />
-                  <input placeholder="" type="tel" maxlength="1" />
-                  </div>
-
-                </form>
-              </div>
-              
+          <div className="input-fields">
+            <input placeholder="" type="tel" maxLength="1" />
+            <input placeholder="" type="tel" maxLength="1" />
+            <input placeholder="" type="tel" maxLength="1" />
+            <input placeholder="" type="tel" maxLength="1" />
           </div>
-          );
+
+          <div className="action-btns">
+          <button className="button-activate" type="submit"> Vérifier <span></span></button>
+          <button className="button-clear" type="submit"> Effacer <span></span></button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  );
 };
 
-          export default ActivateAccountModal;
+export default ActivateAccountModal;
