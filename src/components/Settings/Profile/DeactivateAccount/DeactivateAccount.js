@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import "./DeactivateAccount.css";
 import { toast } from 'react-toastify';
 import deactivateIcon from '../../../../assets/Pictures/deactivate-icon.png';
@@ -8,42 +8,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
 
 const DeactivateAccount = () => {
-  const [id, setId] = useState(null);
+
   const navigate = useNavigate();
 
-  const fetchPlayerData = async () => {
+  const handleDeactivateAccount = async () => {
     try {
-      const playerData = await playerService.getPlayerData();
-      setId(playerData.id);
-    } catch (error) {
-      console.error('Failed to fetch player data:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPlayerData();
-  }, []);
-
-  const handleDeactivate = async (e) => {
-    e.preventDefault();
-
-    try {
-      await playerService.deactivateAccount(id);
-      toast.success('Compte désactivé avec succès !', {
-        position: 'top-right',
-        autoClose: 5000,
-      });
+      await playerService.deactivateAccount(); 
+      toast.success('Votre compte a été désactivé avec succès.');
+      localStorage.clear(); 
       navigate('/auth');
     } catch (error) {
-      toast.error('Une erreur est survenue lors de la désactivation.', {
-        position: 'top-right',
-        autoClose: 5000,
-      });
+      toast.error(`Erreur: ${error.response ? error.response.data : 'Une erreur est survenue.'}`);
     }
   };
 
   return (
-    <form onSubmit={handleDeactivate}>
+    <form>
       <div className="settings-body">
         <div className="deactivate-account-title">
           <h1>Désactiver Compte</h1>
@@ -56,7 +36,7 @@ const DeactivateAccount = () => {
             vous le réactiviez via l'espace d'authentification, veuillez confirmer votre décision en cliquant sur le bouton "Désactiver".
           </p>
           <div>
-            <button type="submit" className="deactivate-button">
+            <button type="button" className="deactivate-button" onClick={handleDeactivateAccount}>
               <span className="deactivate-button__text">Désactiver</span>
               <span className="deactivate-button__icon">
                 <FontAwesomeIcon icon={faBan} />

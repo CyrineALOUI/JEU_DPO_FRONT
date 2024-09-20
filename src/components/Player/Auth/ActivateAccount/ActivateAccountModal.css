@@ -29,8 +29,8 @@
 }
 
 .activate-account-content h2 {
-    margin-top: 40px;
-    font-size: 1.9rem;
+    margin-top: 30px;
+    font-size: 2rem;
     color: #fff;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
@@ -74,11 +74,12 @@
     outline: none;
     text-align: center;
     font-size: 1.5rem;
-    color: #000;
+    color: #0a2b58;
     border-radius: 5px;
     border: 1px solid #fff;
     background-color: #fff;
-    margin-top: 5px;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
 .input-fields input:focus {
@@ -239,3 +240,9 @@
     }
 }
 
+.countdown-timer {
+    font-size: 30px;
+    color: rgb(180, 14, 14);
+    margin-top: 5px;
+    margin-bottom: -35px;
+}

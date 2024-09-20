@@ -53,17 +53,6 @@ const updateProfile = async (firstName, lastName, email) => {
     }
 };
 
-/* GET PLAYER BY ID*/
-const getPlayerById = async (id) => {
-    try {
-        const response = await instance.get(`${apiUrl}/getPlayer/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error('Failed to fetch player:', error);
-        throw error;
-    }
-};
-
 /* CHANGE PASSWORD */
 const changePassword = async (oldPassword, newPassword, confirmNewPassword) => {
     try {
@@ -110,11 +99,9 @@ const resetPassword = async (token, newPassword, confirmPassword) => {
 };
 
 /* DELETE ACCOUNT */
-const deleteAccount = async (id, password) => {
+const deletePlayerAccount = async (email, password) => {
     try {
-        const response = await instance.delete(`${apiUrl}/deleteAccountPlayer/${id}`, {
-            params: { password }
-        });
+        const response = await instance.delete(`${apiUrl}/deletePlayerAccount`, { params: { password } });
         return response.data;
     } catch (error) {
         console.error('Delete account failed:', error);
@@ -123,12 +110,12 @@ const deleteAccount = async (id, password) => {
 };
 
 /* DEACTIVATE PLAYER ACCOUNT */
-const deactivateAccount = async (id) => {
+const deactivateAccount = async () => {
     try {
-        const response = await instance.put(`${apiUrl}/deactivateAccount/${id}`);
+        const response = await instance.put(`${apiUrl}/deactivateAccount`);
         return response.data;
     } catch (error) {
-        console.error('Deactivate account failed:', error);
+        console.error('Failed to deactivate account:', error);
         throw error;
     }
 };
@@ -145,31 +132,29 @@ const sendReactivationEmail = async (email) => {
 };
 
 /* VERIFY REACTIVATION CODE */
-const verifyReactivationCode = async (code) => {
+const reactivateAccount = async (verificationCode) => {
     try {
-        const response = await axios.post(`${apiUrl}/verifyReactivationCode`, { code });
+        const response = await axios.post(`${apiUrl}/reactivateAccount`, null, { params: { verificationCode }});
         return response.data;
     } catch (error) {
-        console.error('Failed to verify reactivation code:', error);
+        console.error('Reactivation failed:', error);
         throw error;
     }
 };
-
 
 const playerService = {
     login,
     register,
     updateProfile,
-    getPlayerById,
     getPlayerData,
     changePassword,
     evaluatePasswordStrength,
     forgotPassword,
     resetPassword,
-    deleteAccount,
+    deletePlayerAccount,
     deactivateAccount,
     sendReactivationEmail,
-    verifyReactivationCode
+    reactivateAccount
 };
 
 export default playerService;

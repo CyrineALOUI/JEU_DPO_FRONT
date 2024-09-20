@@ -36,7 +36,7 @@ const LoginForm = ({ onForgotPasswordClick, onActivateAccountClick }) => {
                     <>
                         Votre compte est désactivé.
                         <button type="button" className="activateButton" onClick={() => onActivateAccountClick(email)} >
-                            Activez le
+                            Activez-le
                         </button>
                     </>
                 );

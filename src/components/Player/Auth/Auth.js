@@ -29,7 +29,7 @@ const Auth = () => {
         autoClose: 5000,
       });
       setShowActivateAccountModal(true);
-      setEmail(''); 
+      setEmail('');
     } catch (error) {
       console.error("Échec de l’envoi de l’e-mail de réactivation.", error);
       toast.error("Une erreur est survenue lors de l'envoi de l'e-mail de réactivation.", {
@@ -87,6 +87,7 @@ const Auth = () => {
       {showActivateAccountModal && (
         <ActivateAccountModal show={showActivateAccountModal} onClose={handleCloseActivateModal} email={email} />
       )}
+
     </div>
   );
 };
