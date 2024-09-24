@@ -6,14 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const RegisterForm = ({ toggleForm }) => {
-
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(null);
   const [error, setError] = useState('');
 
   const handleRegister = async (e) => {
@@ -36,6 +35,35 @@ const RegisterForm = ({ toggleForm }) => {
     } catch (err) {
       console.error(err);
       setError('Cette adresse mail est déjà utilisée');
+    }
+  };
+
+  const evaluateStrength = async (password) => {
+    try {
+      const strength = await playerService.evaluatePasswordStrength(password);
+      const strengthDisplay = {
+        'tres-faible': 'Très faible',
+        'faible': 'Faible',
+        'moyen': 'Moyen',
+        'fort': 'Fort',
+        'tres-fort': 'Très fort',
+      };
+      setPasswordStrength({ 
+        display: strengthDisplay[strength] || strength, // Version Accents
+        className: strength // Version sans Accents
+      });
+    } catch (err) {
+      console.error('Erreur lors de l\'évaluation de la force du mot de passe:', err);
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    if (newPassword) {
+      evaluateStrength(newPassword);
+    } else {
+      setPasswordStrength(null);
     }
   };
 
@@ -91,7 +119,7 @@ const RegisterForm = ({ toggleForm }) => {
           type={showPassword ? 'text' : 'password'}
           className="Input"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           required
         />
         <label className="Label">Mot de passe</label>
@@ -99,6 +127,14 @@ const RegisterForm = ({ toggleForm }) => {
           <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
         </span>
       </div>
+      {password && (
+        <>
+          <div className={`password-strength-bar ${passwordStrength?.className}`}>
+            <div className="password-strength-progress"></div>
+          </div>
+          <p className="password-strength-label">Mot de Passe : {passwordStrength?.display}</p>
+        </>
+      )}
       <br />
       <br />
       <button className="form-button" type="submit">Créer Compte<span></span></button>

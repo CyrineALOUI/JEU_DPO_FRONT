@@ -66,15 +66,9 @@ const changePassword = async (oldPassword, newPassword, confirmNewPassword) => {
 
 /* EVALUATE PASSWORD */
 const evaluatePasswordStrength = async (password) => {
-    try {
         const response = await axios.post(`${apiUrl}/evaluatePasswordStrength`, { password });
         return response.data;
-    } catch (error) {
-        console.error('Password strength evaluation error:', error);
-        throw error;
-    }
 };
-
 
 /* FORGOT PASSWORD */
 const forgotPassword = async (email) => {

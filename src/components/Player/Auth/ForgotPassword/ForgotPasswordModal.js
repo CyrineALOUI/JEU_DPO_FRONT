@@ -20,7 +20,7 @@ const ForgotPasswordModal = ({ show, onClose }) => {
       onClose();
     } catch (err) {
       console.error('Erreur de réinitialisation du mot de passe:', err);
-      toast.error("L'e-mail n'existe pas dans notre base de données.", {
+      toast.error("Adresse mail introuvable", {
         position: 'top-right',
         autoClose: 5000,
       });

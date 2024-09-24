@@ -57,12 +57,12 @@
     gap: 20px;
 }
 
-
 form h2 {
     font-size: 2.3rem;
     color: #006CA5;
+    margin-top: 25px;
+    margin-bottom: 15px;
 }
-
 
 .signup__container {
     opacity: 0;
@@ -161,8 +161,7 @@ form h2 {
     line-height: 2rem;
 }
 
-.overlay__panel 
-button {
+.overlay__panel button {
     font-family: "Play", sans-serif;
     padding: 0.75rem 2rem;
     margin-top: 2rem;
@@ -212,7 +211,7 @@ button {
     position: relative;
     width: 100%;
     height: 50px;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
 .Input {
@@ -250,7 +249,7 @@ button {
 
 .Icon {
     position: absolute;
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
     right: 10px;
     color: #006CA5;
@@ -292,7 +291,7 @@ button {
     z-index: 1;
     font-family: inherit;
     font-weight: 500;
-    margin-top: 0.75rem;
+    margin-top: 15%;
 }
 
 .form-button span {
@@ -446,7 +445,7 @@ button {
 .eye-icon {
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
     color: #006CA5;
     cursor: pointer;
@@ -467,4 +466,61 @@ button {
 .activateButton:active {
     color: #51AFF7;
     background: transparent;
+}
+
+/*.password-strength {
+    margin-top: 10px;
+}
+
+.password-strength-bar {
+    height: 6px;
+    background-color: #ff4d4d;
+    border-radius: 3px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.password-strength p {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #666;
+}*/
+
+.password-strength-bar {
+    width: 100%;
+    height: 8px;
+    background-color: lightgray;
+    border-radius: 4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.password-strength-progress {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.password-strength-bar.tres-faible .password-strength-progress {
+    width: 20%;
+    background-color: red;
+}
+
+.password-strength-bar.faible .password-strength-progress {
+    width: 40%;
+    background-color: orange;
+}
+
+.password-strength-bar.moyen .password-strength-progress {
+    width: 60%;
+    background-color: yellow;
+}
+
+.password-strength-bar.fort .password-strength-progress {
+    width: 80%;
+    background-color: lightgreen;
+}
+
+.password-strength-bar.tres-fort .password-strength-progress {
+    width: 100%;
+    background-color: green;
 }
