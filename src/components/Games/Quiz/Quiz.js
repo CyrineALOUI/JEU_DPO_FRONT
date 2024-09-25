@@ -7,10 +7,11 @@ import { MdDoubleArrow } from "react-icons/md";
 import clickSound from '../../../assets/Sound/click-sound.wav';
 import correctSound from '../../../assets/Sound/correct-sound.mp3';
 import incorrectSound from '../../../assets/Sound/incorrect-sound.mp3';
-import { playClickSound } from '../../Utils/SoundUtils';
+import { playClickSound, textAudios } from '../../Utils/SoundUtils';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
 import Hint from '../../Hint/Hint';
 import "./Quiz.css";
+
 
 const Quiz = () => {
   const { id: quizId } = useParams();
@@ -20,7 +21,7 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
   const { score, updateScore } = useScore();
-  const [showIntroduction, setShowIntroduction] = useState(true); 
+  const [showIntroduction, setShowIntroduction] = useState(true);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -72,7 +73,7 @@ const Quiz = () => {
         } else {
           alert(`Quiz terminé`);
         }
-      }, 2000); // Change question after 2 seconds
+      }, 2000);
     } catch (error) {
       console.error('Error verifying answers:', error);
     }
@@ -91,7 +92,17 @@ const Quiz = () => {
   };
 
   const handleStartQuiz = () => {
-    setShowIntroduction(false); // Masque l'introduction et affiche les questions
+    setShowIntroduction(false);
+  };
+
+  
+  const handlePlayAudio = () => {
+    const audioFile = textAudios[quizId];  
+    if (audioFile) {
+      playClickSound(audioFile);
+    } else {
+      console.error('Aucun fichier audio disponible pour ce quiz.');
+    }
   };
 
   if (!quiz) {
@@ -100,17 +111,28 @@ const Quiz = () => {
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
 
+  const formattedText = quiz && quiz.introductionText ? quiz.introductionText.split('.').map((sentence, index) => (
+    <p key={index}>
+      {sentence.trim()}
+    </p>
+  )) : null;
+
   return (
     <div className="quiz-container">
       <GameHeader />
       <div className="quiz-content">
-        {showIntroduction ? ( 
-          <div className="question-container">
-            <h2>Introduction</h2>
-            <p>{quiz.introductionText}</p>
-            <button className="button-start" onClick={handleStartQuiz}>
-              Commencer le Quiz
-            </button>
+        {showIntroduction ? (
+          <div className="text-container">
+            <h2>{quiz.titleText}</h2>
+            <div>{formattedText}</div>
+            <div className="button-group">
+              <button className="button-text" onClick={handleStartQuiz}>
+                Commencer le Quiz
+              </button>
+              <button className="button-text" onClick={handlePlayAudio}>
+                Lire
+              </button>
+            </div>
           </div>
         ) : (
           <div key={currentQuestion.id} className="question-container">

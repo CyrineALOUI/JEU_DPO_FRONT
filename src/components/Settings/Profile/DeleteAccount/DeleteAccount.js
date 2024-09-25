@@ -6,7 +6,7 @@ import deleteIcon from '../../../../assets/Pictures/delete-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import playerService from '../../../../services/PlayerService'; // Assurez-vous que le chemin est correct
+import playerService from '../../../../services/PlayerService'; 
 
 const DeleteAccount = () => {
   const [password, setPassword] = useState('');
