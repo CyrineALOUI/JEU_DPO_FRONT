@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import quizService from '../../../services/QuizService';
 import QuestionTimer from './QuizChrono/QuestionTimer';
@@ -12,7 +12,6 @@ import { useScore } from '../../GameHeader/Score/ScoreContext';
 import Hint from '../../Hint/Hint';
 import "./Quiz.css";
 
-
 const Quiz = () => {
   const { id: quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
@@ -22,6 +21,8 @@ const Quiz = () => {
   const [answersStatus, setAnswersStatus] = useState({});
   const { score, updateScore } = useScore();
   const [showIntroduction, setShowIntroduction] = useState(true);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const audioRef = useRef(new Audio(textAudios[quizId]));
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -95,15 +96,23 @@ const Quiz = () => {
     setShowIntroduction(false);
   };
 
-  
   const handlePlayAudio = () => {
-    const audioFile = textAudios[quizId];  
-    if (audioFile) {
-      playClickSound(audioFile);
+    if (audioRef.current.paused) {
+      audioRef.current.play();
+      setIsAudioPlaying(true);
     } else {
-      console.error('Aucun fichier audio disponible pour ce quiz.');
+      audioRef.current.pause();
+      setIsAudioPlaying(false);
     }
   };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, []);
 
   if (!quiz) {
     return <div>Chargement...</div>;
@@ -130,7 +139,7 @@ const Quiz = () => {
                 Commencer le Quiz
               </button>
               <button className="button-text" onClick={handlePlayAudio}>
-                Lire
+                {isAudioPlaying ? "Pause" : "Lire"}
               </button>
             </div>
           </div>
