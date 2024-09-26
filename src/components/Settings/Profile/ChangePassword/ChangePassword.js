@@ -13,6 +13,7 @@ const ChangePassword = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(null);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -34,6 +35,25 @@ const ChangePassword = () => {
       setError('');
     } catch (error) {
       setError('Ancien Mot de passe incorrect');
+    }
+  };
+
+  const evaluateStrength = async (password) => {
+    try {
+      const strength = await playerService.evaluatePasswordStrength(password);
+      const strengthDisplay = {
+        'tres-faible': 'Très faible',
+        'faible': 'Faible',
+        'moyen': 'Moyen',
+        'fort': 'Fort',
+        'tres-fort': 'Très fort',
+      };
+      setPasswordStrength({
+        display: strengthDisplay[strength] || strength, // Version Accents
+        className: strength // Version sans Accents
+      });
+    } catch (err) {
+      console.error('Erreur lors de l\'évaluation de la force du mot de passe:', err);
     }
   };
 
@@ -69,14 +89,24 @@ const ChangePassword = () => {
                 type={showNewPassword ? 'text' : 'password'}
                 placeholder="Nouveau Mot de Passe"
                 value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  evaluateStrength(e.target.value);
+                }}
                 required
               />
               <span className="eye-icon" onClick={toggleShowNewPassword}>
                 <FontAwesomeIcon icon={showNewPassword ? faEye : faEyeSlash} />
               </span>
             </div>
-
+            {newPassword && (
+              <>
+                <div className={`password-strength-bar-settings ${passwordStrength?.className}`}>
+                  <div className="password-strength-progress-settings"></div>
+                </div>
+                <p className="password-strength-label">Mot de Passe : {passwordStrength?.display}</p>
+              </>
+            )}
             <div className="input-wrapper">
               <input
                 className="input"
