@@ -7,8 +7,6 @@ import playerService from '../../services/PlayerService';
 import { useScore } from './Score/ScoreContext';
 import logo from '../../assets/Pictures/logo.png'
 
-
-
 const GameHeader = () => {
 
   const { score } = useScore();
@@ -41,11 +39,10 @@ const GameHeader = () => {
   if (error) return <div>{error}</div>;
 
   return (
-
+   
     <div className="game-header">
-      {/* Logo */}
       <div className="game-logo">
-        {/*<img src={logo} alt="Game Logo" className="logo-image" />*/}
+        <img src={logo} alt="Game Logo" className="logo-image" />
       </div>
 
       {/* Coins and Lives */}

@@ -29,7 +29,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     background-size: cover;
 }
 
@@ -507,3 +506,11 @@ form h2 {
     width: 100%;
     background-color: green;
 }
+
+.logo-image-auth {
+    height: 80px;
+    width: 150px;
+    margin-bottom: -15px;
+    margin-top: 6px;
+    margin-left: 10px;
+  }

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 50px;
+  padding: 6px 10px;
   background-color: transparent;
   color: #302886;
   position: fixed; 
@@ -12,20 +12,19 @@
 }
 
 .logo-image {
-  height: 120px;
+  height: 80px;
   width: 150px;
 }
 
-
 .game-info {
   display: flex;
-  margin-left: 220px;
+  margin-right: 0px;
 }
 
 .game-coins, .game-lives {
   display: flex;
   align-items: center;
-  margin: 0 15px;
+  margin: 0 10px;
   position: relative;
 }
 

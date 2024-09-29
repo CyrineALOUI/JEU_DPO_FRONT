@@ -6,6 +6,7 @@ import ForgotPasswordModal from './ForgotPassword/ForgotPasswordModal';
 import ActivateAccountModal from './ActivateAccount/ActivateAccountModal';
 import playerService from '../../../services/PlayerService';
 import { toast } from 'react-toastify';
+import logo from '../../../assets/Pictures/logo.png'
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -53,6 +54,7 @@ const Auth = () => {
 
   return (
     <div className="auth-container">
+      <img src={logo} alt="Game Logo" className="logo-image-auth" />
       <div className="centered-container">
         <div className={`container ${isLogin ? '' : 'right__panel__active'}`} id="container">
           <div className="form__container signup__container">

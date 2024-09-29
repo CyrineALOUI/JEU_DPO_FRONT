@@ -180,7 +180,7 @@ const Quiz = () => {
     <div className="Map-Container">
       <GameHeader />
       <div className="glass-box-quiz">
-        <div className="quiz-content">
+        <div className="text-content">
           {showIntroduction ? (
             <div className="text-container">
               <h2>{quiz.titleText}</h2>
@@ -197,11 +197,6 @@ const Quiz = () => {
           ) : (
             <div key={currentQuestion.id} className="question-container">
               <h3 className="question-text">{currentQuestion.questionText}</h3>
-
-
-              <div class="image-container">
-                <img src={require('../../../assets/Pictures/question.jpg')} alt="question" width={300} className='transparent-image' />
-              </div>
               <h4>
                 <MdDoubleArrow /> Sélectionnez le bon choix puis soumettez votre
                 réponse.
