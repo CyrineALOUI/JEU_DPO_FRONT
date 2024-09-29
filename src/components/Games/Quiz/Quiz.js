@@ -23,12 +23,17 @@ const Quiz = () => {
   const [showIntroduction, setShowIntroduction] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const audioRef = useRef(new Audio(textAudios[quizId]));
+  const [karaokeText, setKaraokeText] = useState('');
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
 
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
         const data = await quizService.getQuizById(quizId);
         setQuiz(data);
+        if (data.introductionText) {
+          setKaraokeText(data.introductionText.replace(/\s+/g, ' ').trim());
+        }
       } catch (error) {
         console.error('Error fetching quiz details:', error);
       }
@@ -94,6 +99,9 @@ const Quiz = () => {
 
   const handleStartQuiz = () => {
     setShowIntroduction(false);
+    //Arreter l'audio
+    audioRef.current.pause();
+    setIsAudioPlaying(false);
   };
 
   const handlePlayAudio = () => {
@@ -107,12 +115,60 @@ const Quiz = () => {
   };
 
   useEffect(() => {
+    let interval;
+
+    if (isAudioPlaying) {
+      const durationPerLetter = audioRef.current.duration / karaokeText.length;
+      interval = setInterval(() => {
+        const currentTime = audioRef.current.currentTime;
+        const newHighlightedIndex = Math.floor(currentTime / durationPerLetter);
+
+        if (newHighlightedIndex < karaokeText.length) {
+          setHighlightedIndex(newHighlightedIndex);
+        } else {
+          clearInterval(interval);
+        }
+      }, 100);
+    }
+
     const audio = audioRef.current;
-    return () => {
-      audio.pause();
-      audio.currentTime = 0;
-    };
-  }, []);
+    audio.addEventListener('ended', () => {
+      setIsAudioPlaying(false);
+    });
+
+    return () => clearInterval(interval);
+  }, [isAudioPlaying, karaokeText]);
+
+  const renderKaraokeText = () => {
+    let totalLetters = 0;
+  
+    return (
+      <div>
+        {karaokeText.split('.').map((sentence, index) => {
+          const startIndex = totalLetters;
+          totalLetters += sentence.length;
+  
+          return (
+            <p key={index}>
+              {sentence.split('').map((letter, letterIndex) => {
+                const globalIndex = startIndex + letterIndex;
+                return (
+                  <span
+                    key={letterIndex}
+                    className={globalIndex <= highlightedIndex ? 'highlighted' : 'unhighlighted'}
+                  >
+                    {letter}
+                  </span>
+                );
+              })}
+            </p>
+          );
+        })}
+      </div>
+    );
+  };
+  
+
 
   if (!quiz) {
     return <div>Chargement...</div>;
@@ -120,69 +176,70 @@ const Quiz = () => {
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
 
-  const formattedText = quiz && quiz.introductionText ? quiz.introductionText.split('.').map((sentence, index) => (
-    <p key={index}>
-      {sentence.trim()}
-    </p>
-  )) : null;
-
   return (
-    <div className="quiz-container">
+    <div className="Map-Container">
       <GameHeader />
-      <div className="quiz-content">
-        {showIntroduction ? (
-          <div className="text-container">
-            <h2>{quiz.titleText}</h2>
-            <div>{formattedText}</div>
-            <div className="button-group">
-              <button className="button-text" onClick={handleStartQuiz}>
-                Commencer le Quiz
-              </button>
-              <button className="button-text" onClick={handlePlayAudio}>
-                {isAudioPlaying ? "Pause" : "Lire"}
+      <div className="glass-box-quiz">
+        <div className="quiz-content">
+          {showIntroduction ? (
+            <div className="text-container">
+              <h2>{quiz.titleText}</h2>
+              <div>{renderKaraokeText()}</div>
+              <div className="button-group">
+                <button className="button-text" onClick={handleStartQuiz}>
+                  Commencez le Quiz
+                </button>
+                <button className="button-text" onClick={handlePlayAudio}>
+                  {isAudioPlaying ? "Pause" : "Lire"}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div key={currentQuestion.id} className="question-container">
+              <h3 className="question-text">{currentQuestion.questionText}</h3>
+
+
+              <div class="image-container">
+                <img src={require('../../../assets/Pictures/question.jpg')} alt="question" width={300} className='transparent-image' />
+              </div>
+              <h4>
+                <MdDoubleArrow /> Sélectionnez le bon choix puis soumettez votre
+                réponse.
+              </h4>
+              <QuestionTimer duration={currentQuestion.duration} onTimeUp={handleTimeUp} />
+              <Hint />
+
+              <ul className="answer-list">
+                {currentQuestion.answers.map((answer) => (
+                  <li key={answer.id}>
+                    <label className={`label-container ${answersStatus[answer.id]}`}>
+                      <input
+                        type="radio"
+                        name="answer"
+                        onChange={() => handleRadioChange(answer.id)}
+                        checked={selectedAnswer === answer.id}
+                        disabled={!!answersStatus[answer.id]}
+                      />
+                      <div className="checkmark">
+                        <div className="answer-text">{answer.answerText}</div>
+                      </div>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              <br />
+              <br />
+              <button
+                className="button-quiz"
+                type="button"
+                onClick={handleSubmit}
+                disabled={isButtonDisabled}
+              >
+                Répondre
               </button>
             </div>
-          </div>
-        ) : (
-          <div key={currentQuestion.id} className="question-container">
-            <h3 className="question-text">{currentQuestion.questionText}</h3>
-            <h4>
-              <MdDoubleArrow /> Sélectionnez le bon choix puis soumettez votre
-              réponse.
-            </h4>
-            <QuestionTimer duration={currentQuestion.duration} onTimeUp={handleTimeUp} />
-            <Hint />
-
-            <ul className="answer-list">
-              {currentQuestion.answers.map((answer) => (
-                <li key={answer.id}>
-                  <label className={`label-container ${answersStatus[answer.id]}`}>
-                    <input
-                      type="radio"
-                      name="answer"
-                      onChange={() => handleRadioChange(answer.id)}
-                      checked={selectedAnswer === answer.id}
-                      disabled={!!answersStatus[answer.id]}
-                    />
-                    <div className="checkmark">
-                      <div className="answer-text">{answer.answerText}</div>
-                    </div>
-                  </label>
-                </li>
-              ))}
-            </ul>
-            <br />
-            <br />
-            <button
-              className="button-quiz"
-              type="button"
-              onClick={handleSubmit}
-              disabled={isButtonDisabled}
-            >
-              Répondre
-            </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

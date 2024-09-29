@@ -22,7 +22,7 @@ const Play = () => {
 
     return (
         <div className="Play-Container">
-            <div className="Play-Button" onClick={handlePlayClick}>
+            {/*} <div className="Play-Button" onClick={handlePlayClick}>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -35,7 +35,7 @@ const Play = () => {
                         <span>Chargement...</span>
                     </div>
                 </div>
-            )}
+            )}*/}
         </div>
     );
 };
