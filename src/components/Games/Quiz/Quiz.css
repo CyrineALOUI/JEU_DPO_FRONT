@@ -20,13 +20,13 @@
 
 .question-container {
     display: flex;
-    flex-direction: column; /* Empiler les éléments verticalement */
-    align-items: center; /* Centrer horizontalement */
+    flex-direction: column; 
+    align-items: center;
     background-color: transparent;
     position: absolute;
     top: 250px;
     left: 50%;
-    transform: translateX(-50%); /* Centrer sur l'axe horizontal */
+    transform: translateX(-50%);
     max-width: 60%;
     word-wrap: break-word;
     word-break: break-word;

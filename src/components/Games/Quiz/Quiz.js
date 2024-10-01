@@ -3,21 +3,19 @@ import { useParams } from 'react-router-dom';
 import quizService from '../../../services/QuizService';
 import QuestionTimer from './QuizChrono/QuestionTimer';
 import GameHeader from '../../GameHeader/GameHeader';
-import { MdDoubleArrow } from "react-icons/md";
-import clickSound from '../../../assets/Sound/click-sound.wav';
 import correctSound from '../../../assets/Sound/correct-sound.mp3';
 import incorrectSound from '../../../assets/Sound/incorrect-sound.mp3';
-import { playClickSound, textAudios } from '../../Utils/SoundUtils';
+import { textAudios } from '../../Utils/SoundUtils';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
 import Hint from '../../Hint/Hint';
 import "./Quiz.css";
-import questionImage from '../../../assets/Pictures/question.png'
+import questionImage from '../../../assets/Pictures/question.png';
+import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
   const { id: quizId } = useParams();
   const [quiz, setQuiz] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
   const { score, updateScore } = useScore();
@@ -26,6 +24,7 @@ const Quiz = () => {
   const audioRef = useRef(new Audio(textAudios[quizId]));
   const [karaokeText, setKaraokeText] = useState('');
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -45,40 +44,33 @@ const Quiz = () => {
     }
   }, [quizId]);
 
-  const playSound = () => {
-    playClickSound(clickSound);
-  };
 
-  const handleRadioChange = (answer) => {
-    playSound();
-    setSelectedAnswer(answer); // 'answer' will be either true (Oui) or false (Non)
-    setIsButtonDisabled(false); // Enable submit button once a choice is selected
-  };
+  const correctAudioRef = useRef(new Audio(correctSound));
+  const incorrectAudioRef = useRef(new Audio(incorrectSound));
 
-  const handleSubmit = async () => {
+  const handleAnswerSubmit = async (answer) => {
+    setSelectedAnswer(answer);
+
     try {
-      const currentQuestion = quiz.questions[currentQuestionIndex];
-      const isCorrect = currentQuestion.correctAnswer === selectedAnswer; // Compare with correct answer
-      setAnswersStatus({
-        [selectedAnswer ? 'yes' : 'no']: isCorrect ? 'correct' : 'incorrect',
-      });
+      const response = await quizService.verifyAnswer(currentQuestion.id, answer ? 'oui' : 'non');
+      const isCorrect = response === "Correct answer!";
+      setAnswersStatus({ [answer ? 'yes' : 'no']: isCorrect ? 'correct' : 'incorrect' });
 
       if (isCorrect) {
         updateScore(score + 50);
+        correctAudioRef.current.play();
+      } else {
+        incorrectAudioRef.current.play();
       }
 
-      const verifyAnswerSound = isCorrect ? correctSound : incorrectSound;
-      playClickSound(verifyAnswerSound);
-
-      // Move to the next question after a delay
+      //Passer à la question suivante 
       setTimeout(() => {
         if (currentQuestionIndex < quiz.questions.length - 1) {
           setCurrentQuestionIndex(currentQuestionIndex + 1);
           setSelectedAnswer(null);
-          setIsButtonDisabled(true);
           setAnswersStatus({});
         } else {
-          alert(`Quiz terminé`);
+          navigate('/map');
         }
       }, 2000);
     } catch (error) {
@@ -91,16 +83,14 @@ const Quiz = () => {
     if (currentQuestionIndex < quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
-      setIsButtonDisabled(true);
       setAnswersStatus({});
     } else {
-      alert('Quiz terminé');
+      navigate('/map');
     }
   };
 
   const handleStartQuiz = () => {
     setShowIntroduction(false);
-    //Arreter l'audio
     audioRef.current.pause();
     setIsAudioPlaying(false);
   };
@@ -169,8 +159,6 @@ const Quiz = () => {
     );
   };
 
-
-
   if (!quiz) {
     return <div>Chargement...</div>;
   }
@@ -202,34 +190,28 @@ const Quiz = () => {
             </div>
           ) : (
             <div key={currentQuestion.id} className="question-container">
-            
-
               <h3 className="question-title">{currentQuestion.questionTitle}</h3>
               <h4 className="answer-style">{currentQuestion.answer}</h4>
 
               <QuestionTimer duration={currentQuestion.duration} onTimeUp={handleTimeUp} />
               <Hint />
-              
-              {/* Affiche les boutons Oui/Non */}
+
               <div className="answer-list">
-                <button className="button-quiz">
+                <button
+                  className={`button-quiz ${selectedAnswer === true ? (answersStatus.yes === 'correct' ? 'correct' : 'incorrect') : ''}`}
+                  onClick={() => handleAnswerSubmit(true)}
+                >
                   Oui
                 </button>
-                <button className="button-quiz">
+                <button
+                  className={`button-quiz ${selectedAnswer === false ? (answersStatus.no === 'correct' ? 'correct' : 'incorrect') : ''}`}
+                  onClick={() => handleAnswerSubmit(false)}
+                >
                   Non
                 </button>
               </div>
-
               <br />
               <br />
-              {/*<button
-                className="button-quiz"
-                type="button"
-                onClick={handleSubmit}
-                disabled={isButtonDisabled}
-              >
-                Répondre
-              </button>*/}
             </div>
           )}
         </div>
