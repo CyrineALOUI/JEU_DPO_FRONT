@@ -11,6 +11,7 @@ import { playClickSound, textAudios } from '../../Utils/SoundUtils';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
 import Hint from '../../Hint/Hint';
 import "./Quiz.css";
+import questionImage from '../../../assets/Pictures/question.png'
 
 const Quiz = () => {
   const { id: quizId } = useParams();
@@ -48,19 +49,19 @@ const Quiz = () => {
     playClickSound(clickSound);
   };
 
-  const handleRadioChange = (answerId) => {
+  const handleRadioChange = (answer) => {
     playSound();
-    setSelectedAnswer(answerId);
-    setIsButtonDisabled(false);
+    setSelectedAnswer(answer); // 'answer' will be either true (Oui) or false (Non)
+    setIsButtonDisabled(false); // Enable submit button once a choice is selected
   };
 
   const handleSubmit = async () => {
     try {
-      const isCorrect = await quizService.verifyAnswers([selectedAnswer]);
-      const newAnswersStatus = {
-        [selectedAnswer]: isCorrect ? 'correct' : 'incorrect',
-      };
-      setAnswersStatus(newAnswersStatus);
+      const currentQuestion = quiz.questions[currentQuestionIndex];
+      const isCorrect = currentQuestion.correctAnswer === selectedAnswer; // Compare with correct answer
+      setAnswersStatus({
+        [selectedAnswer ? 'yes' : 'no']: isCorrect ? 'correct' : 'incorrect',
+      });
 
       if (isCorrect) {
         updateScore(score + 50);
@@ -69,7 +70,7 @@ const Quiz = () => {
       const verifyAnswerSound = isCorrect ? correctSound : incorrectSound;
       playClickSound(verifyAnswerSound);
 
-      // Passe à la question suivante après un délai
+      // Move to the next question after a delay
       setTimeout(() => {
         if (currentQuestionIndex < quiz.questions.length - 1) {
           setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -141,13 +142,13 @@ const Quiz = () => {
 
   const renderKaraokeText = () => {
     let totalLetters = 0;
-  
+
     return (
       <div>
         {karaokeText.split('.').map((sentence, index) => {
           const startIndex = totalLetters;
           totalLetters += sentence.length;
-  
+
           return (
             <p key={index}>
               {sentence.split('').map((letter, letterIndex) => {
@@ -167,7 +168,7 @@ const Quiz = () => {
       </div>
     );
   };
-  
+
 
 
   if (!quiz) {
@@ -180,6 +181,11 @@ const Quiz = () => {
     <div className="Map-Container">
       <GameHeader />
       <div className="glass-box-quiz">
+        {!showIntroduction && (
+          <div className="question-image">
+            <img src={questionImage} alt="question-icon" />
+          </div>
+        )}
         <div className="text-content">
           {showIntroduction ? (
             <div className="text-container">
@@ -196,42 +202,34 @@ const Quiz = () => {
             </div>
           ) : (
             <div key={currentQuestion.id} className="question-container">
-              <h3 className="question-text">{currentQuestion.questionText}</h3>
-              <h4>
-                <MdDoubleArrow /> Sélectionnez le bon choix puis soumettez votre
-                réponse.
-              </h4>
+            
+
+              <h3 className="question-title">{currentQuestion.questionTitle}</h3>
+              <h4 className="answer-style">{currentQuestion.answer}</h4>
+
               <QuestionTimer duration={currentQuestion.duration} onTimeUp={handleTimeUp} />
               <Hint />
+              
+              {/* Affiche les boutons Oui/Non */}
+              <div className="answer-list">
+                <button className="button-quiz">
+                  Oui
+                </button>
+                <button className="button-quiz">
+                  Non
+                </button>
+              </div>
 
-              <ul className="answer-list">
-                {currentQuestion.answers.map((answer) => (
-                  <li key={answer.id}>
-                    <label className={`label-container ${answersStatus[answer.id]}`}>
-                      <input
-                        type="radio"
-                        name="answer"
-                        onChange={() => handleRadioChange(answer.id)}
-                        checked={selectedAnswer === answer.id}
-                        disabled={!!answersStatus[answer.id]}
-                      />
-                      <div className="checkmark">
-                        <div className="answer-text">{answer.answerText}</div>
-                      </div>
-                    </label>
-                  </li>
-                ))}
-              </ul>
               <br />
               <br />
-              <button
+              {/*<button
                 className="button-quiz"
                 type="button"
                 onClick={handleSubmit}
                 disabled={isButtonDisabled}
               >
                 Répondre
-              </button>
+              </button>*/}
             </div>
           )}
         </div>
