@@ -20,21 +20,37 @@
     top: 54%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 1000px;
+    width: 1150px;
     height: 550px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(4, 4, 4, 0.2);
     border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 108, 165, 0.5), 0 0 10px rgba(0, 108, 165, 0.5), 0 0 20px rgba(0, 108, 165, 0.5), 0 0 40px rgba(0, 108, 165, 0.5);
+    box-shadow: 0 0 10px rgba(2, 139, 212, 0.5), 0 0 10px rgba(2, 139, 212, 0.5), 0 0 20px rgba(2, 139, 212, 0.5), 0 0 40px rgba(2, 139, 212, 0.5);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(0, 108, 165, 0.5);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     color: #fff;
     text-align: center;
-    overflow: hidden;
+    overflow-y: auto; 
+    padding: 20px;
 }
+
+.glass-box::-webkit-scrollbar {
+    width: 10px; 
+    height: 8px;
+}
+
+.glass-box::-webkit-scrollbar-thumb {
+    background: rgba(2, 139, 212, 0.5); 
+    border-radius: 10px;
+}
+
+.glass-box::-webkit-scrollbar-thumb:hover {
+    background: rgba(2, 139, 212, 0.8); 
+}
+
 
 .level-button {
     position: absolute;
@@ -75,6 +91,9 @@
 .level-button:nth-child(7) { top: 60%; left: 65%; } 
 .level-button:nth-child(8) { top: 70%; left: 80%; } 
 .level-button:nth-child(9) { top: 15%; left: 85%; } 
+.level-button:nth-child(10) { top: 15%; left: 100%; } 
+.level-button:nth-child(11) { top: 40%; left: 120%; } 
+.level-button:nth-child(12) { top: 70%; left: 140%; } 
 
 .level-button:after {
     background-clip: padding-box;

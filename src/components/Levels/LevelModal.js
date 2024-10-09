@@ -63,7 +63,6 @@ const LevelModal = ({ show, onClose, id }) => {
               ⭐⭐⭐
             </div>
             <p>{level.description}</p>
-            <p>Diificulté : {level.difficulty}</p>
             <button className="play-button" onClick={handlePlayClick}>
               Jouer
             </button>

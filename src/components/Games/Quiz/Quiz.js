@@ -18,7 +18,8 @@ const Quiz = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
-  const { score, updateScore } = useScore();
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const {score, updateScore} = useScore();
   const [showIntroduction, setShowIntroduction] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const audioRef = useRef(new Audio(textAudios[quizId]));
@@ -58,6 +59,7 @@ const Quiz = () => {
 
       if (isCorrect) {
         updateScore(score + 50);
+        setCorrectAnswersCount(correctAnswersCount + 1); 
         correctAudioRef.current.play();
       } else {
         incorrectAudioRef.current.play();
@@ -70,11 +72,21 @@ const Quiz = () => {
           setSelectedAnswer(null);
           setAnswersStatus({});
         } else {
-          navigate('/map');
+          handleSubmitQuiz();
         }
       }, 2000);
     } catch (error) {
       console.error('Error verifying answers:', error);
+    }
+  };
+
+  const handleSubmitQuiz = async () => {
+    try {
+      const result = await quizService.submitQuiz(quizId, correctAnswersCount);
+      console.log(result);
+      navigate('/map'); 
+    } catch (error) {
+      console.error('Error submitting quiz:', error);
     }
   };
 

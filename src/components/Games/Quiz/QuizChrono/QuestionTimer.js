@@ -23,9 +23,9 @@ const QuestionTimer = ({ duration, onTimeUp }) => {
   };
 
   return (
-    <div class="timer-container">
-      <div class="timer" style={{ backgroundColor: getBackgroundColor() }}>
-        <div class="numbers">
+    <div className="timer-container">
+      <div className="timer" style={{ backgroundColor: getBackgroundColor() }}>
+        <div className="numbers">
           {timeLeft}
         </div>
       </div>

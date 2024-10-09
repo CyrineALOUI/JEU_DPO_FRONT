@@ -23,9 +23,21 @@ const verifyAnswer = async (questionId, givenAnswer) => {
   }
 };
 
+const submitQuiz = async (quizId, correctAnswers) => {
+  try {
+    const response = await instance.post(`${apiUrl}/submitQuiz/${quizId}`, null, { params: { correctAnswers } });
+    console.log('Response from submitQuiz:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error(`Error submitting quiz with id ${quizId}:`, error);
+    throw error;
+  }
+};
+
 const quizService = {
   getQuizById,
-  verifyAnswer
+  verifyAnswer,
+  submitQuiz
 };
 
 export default quizService;

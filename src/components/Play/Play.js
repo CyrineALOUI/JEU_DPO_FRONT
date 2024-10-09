@@ -1,33 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Play.css';
 import { useNavigate } from 'react-router-dom';
-import { playClickSound } from '../Utils/SoundUtils';
-import clickSound from '../../assets/Sound/click-sound.wav'
+import logoPlay from '../../assets/Pictures/logo.png';
 
 const Play = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [logoVisible, setLogoVisible] = useState(true);
 
-    const playSound = () => {
-        playClickSound(clickSound);
-    };
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(true);
+        }, 2000);
 
-    const handlePlayClick = () => {
-        playSound();
-        setLoading(true);
-        setTimeout(() => {
+        const redirectTimer = setTimeout(() => {
             navigate('/map');
-        }, 4000);
-    };
+        }, 6000);
+
+        return () => {
+            clearTimeout(timer);
+            clearTimeout(redirectTimer);
+        };
+    }, [navigate]);
 
     return (
         <div className="Play-Container">
-             <div className="Play-Button" onClick={handlePlayClick}>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                Jouer
+            <div className="play-image">
+                <img src={logoPlay} alt="logo" />
             </div>
             {loading && (
                 <div className="loader">
