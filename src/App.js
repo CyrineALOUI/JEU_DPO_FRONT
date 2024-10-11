@@ -10,7 +10,7 @@ import { ScoreProvider } from "./components/GameHeader/Score/ScoreContext";
 import Hint from "./components/Hint/Hint";
 import { ToastContainer } from "react-toastify";
 import ResetPassword from "./components/Player/Auth/ResetPassword/ResetPassword";
-
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
   return (
@@ -25,12 +25,12 @@ const App = () => {
             element={
               <ScoreProvider>
                 <Routes>
-                  <Route path="/play" element={<Play />} />
-                  <Route path="/map" element={<Map />} />
-                  <Route path="/quiz/:id" element={<Quiz />} />
-                  <Route path="/crossword/:id" element={<Crossword />} />
-                  <Route path="/ProfileModal" element={<ProfileModal />} />
-                  <Route path="/hint" element={<Hint />} />
+                  <Route path="/play" element={<PrivateRoute element={<Play />} />} />
+                  <Route path="/map" element={<PrivateRoute element={<Map />} />} />
+                  <Route path="/quiz/:id" element={<PrivateRoute element={<Quiz />} />} />
+                  <Route path="/crossword/:id" element={<PrivateRoute element={<Crossword />} />} />
+                  <Route path="/ProfileModal" element={<PrivateRoute element={<ProfileModal />} />} />
+                  <Route path="/hint" element={<PrivateRoute element={<Hint />} />} />
                 </Routes>
               </ScoreProvider>
             }

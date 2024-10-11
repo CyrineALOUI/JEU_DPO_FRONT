@@ -28,6 +28,9 @@
   width: 600px;
   height: 350px;
   animation: blurZoom 1.5s forwards;
+  image-rendering: crisp-edges; 
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering:optimizeQuality;
 }
 
 @keyframes blurZoom {

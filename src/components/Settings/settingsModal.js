@@ -28,6 +28,11 @@ const SettingsModal = ({ show, onClose }) => {
     onClose();    
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.href = "/auth";
+  };
+
   return (
     <div className="settings-modal">
       <div className="settings-content">
@@ -63,7 +68,7 @@ const SettingsModal = ({ show, onClose }) => {
               <label className="neon-btn"
                 onClick={() => {
                   playSound();
-                  handleNavigation('rewards');
+                  handleLogout();
                 }}>
                 <span className="span"></span>
                 <span className="txt">Se déconnecter</span>
