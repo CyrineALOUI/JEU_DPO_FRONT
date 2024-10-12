@@ -5,9 +5,10 @@ import DeleteAccount from './DeleteAccount/DeleteAccount';
 import clickSound from '../../../assets/Sound/click-sound.wav'
 import { playClickSound } from '../../Utils/SoundUtils';
 import DeactivateAccount from './DeactivateAccount/DeactivateAccount';
+import { FaArrowLeft } from "react-icons/fa";
+import './ProfileModal.css';
 
-
-const ProfileModal = ({ onBack }) => {
+const ProfileModal = ({ onBackToSettings }) => {
   const [currentView, setCurrentView] = useState('profile_main');
 
   const handleNavigation = (view) => {
@@ -26,10 +27,10 @@ const ProfileModal = ({ onBack }) => {
 
     <div>
       {currentView === 'profile_main' && (
-        <div className="settings-body">
-          <h1>Mon Compte</h1>
-          <div className="settings-container">
-
+        <div className="settings-body-profile">
+          <button class="return-button" onClick={onBackToSettings}><FaArrowLeft /></button>
+          <div class="form-title-profile"><h1>Mon Compte</h1></div>
+          <div className="settings-container-profile">
             <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
             <label className="neon-btn"
               onClick={() => {
@@ -69,7 +70,6 @@ const ProfileModal = ({ onBack }) => {
               <span className="span"></span>
               <span className="txt">Supprimer Compte</span>
             </label>
-
           </div>
         </div>
       )}

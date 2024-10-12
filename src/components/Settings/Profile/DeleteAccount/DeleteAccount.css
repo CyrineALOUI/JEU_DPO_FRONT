@@ -1,19 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
 .delete-account-title h1 {
-    color: #fff;
-    font-size: 40px;
-    margin-bottom: 40px;
+    font-size: 2.3rem;
+    line-height: 3rem;
+    font-weight: 600;
+    text-align: center;
+    color: #4090b5;
+    text-shadow: 1.5px 1.5px 1px #ffcc53;
     margin-top: -20px;
-    align-items: center;
-    font-style: italic;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
 
 .delete-image {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 30px;
 }
 
 .delete-image img {

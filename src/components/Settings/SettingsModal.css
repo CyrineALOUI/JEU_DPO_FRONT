@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000; 
+  z-index: 1000;
   color: #fff;
 }
 
@@ -25,11 +25,18 @@
 }
 
 .settings-content {
-  background: #006CA5;
+  background: linear-gradient(14deg,
+      rgba(2, 0, 36, 0.8) 20%,
+      rgba(24, 24, 65, 0.7) 50%,
+      rgb(20, 76, 99) 100%),
+    radial-gradient(circle,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(32, 15, 53, 1) 65%,
+      rgba(14, 29, 28, 0.9) 100%);
   padding: 30px;
   border-radius: 8px;
-  width: 500px;
-  height: 620px;
+  width: 480px;
+  height: 615px;
   max-width: 800px;
   display: flex;
   flex-direction: column;
@@ -38,23 +45,55 @@
   box-shadow: 0 0 10px rgba(0, 108, 165, 0.5), 0 0 10px rgba(0, 108, 165, 0.5), 0 0 20px rgba(0, 108, 165, 0.5), 0 0 40px rgba(0, 108, 165, 0.5);
   position: relative;
   cursor: default;
+  border: 1px solid rgba(0, 108, 165);
+}
+
+.exit-button {
+  padding: 5px;
+  border-radius: 100%;
+  box-shadow: 0px 0px 5px 5px #1475ec73;
+  background-color: rgba(0, 108, 165);
+  color: #ffcc53;
+  font-size: 40px;
+  right: -50px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; 
+  height: 60px;
+  cursor: pointer;
+}
+
+.exit-button:active {
+  border-radius: 100%;
+  box-shadow: inset 0px 0px 10px 0px #ffcc53;
 }
 
 .settings-body {
   margin-top: 60px;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.29em;
   display: grid;
   gap: 3em;
   place-content: center;
   width: 400px;
 }
 
+.form-title {
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: #4090b5;
+  text-shadow: 1.5px 1.5px 1px #ffcc53;
+}
+
 .settings-container {
   font-weight: bold;
   font-size: 1.2em;
   display: grid;
-  gap: 1em;
+  gap: 1.2em;
   place-content: center;
   width: 400px;
   margin-top: 10px;
@@ -66,20 +105,20 @@
 
 .settings-modal .neon-btn .txt {
   color: rgb(255, 255, 255);
-  text-shadow: 2px 4px 1px #9e30a9, 2px 2px 1px #4090b5, 0 0 20px rgba(255, 255, 255, 0.616);
+  text-shadow: 1px 1px 1px #ffcc53, 1px 1px 1px #4090b5, 0 0 1px rgba(255, 255, 255, 0.616);
 }
 
-.input-btn:is(:checked) + .neon-btn .txt { 
-  text-shadow: 2px 4px 1px #9e30a9, 2px 2px 1px #4090b5, 0 0 20px rgba(255, 255, 255, 0.616);
+.input-btn:is(:checked)+.neon-btn .txt {
+  text-shadow: 1px 1px 1px #ffcc53, 1px 1px 1px #4090b5, 0 0 1px rgba(255, 255, 255, 0.616);
   color: rgb(255, 255, 255);
-  animation: colorchange 0.3s ease; 
+  animation: colorchange 0.3s ease;
 }
 
-.input-btn:is(:checked) + .neon-btn::before {
+.input-btn:is(:checked)+.neon-btn::before {
   animation-duration: 1s;
 }
 
-.input-btn:is(:checked) + .neon-btn::after {
+.input-btn:is(:checked)+.neon-btn::after {
   animation-duration: 1s;
 }
 
@@ -129,9 +168,9 @@
   position: absolute;
   height: 300px;
   aspect-ratio: 1.5/1;
-  box-shadow: -17px -19px 20px #9e30a9;
-  background-image: conic-gradient(#9e30a9, transparent, transparent, transparent, transparent, transparent, transparent, #9e30a9);
-  animation: rotate 4s linear infinite -2s; 
+  box-shadow: -17px -19px 20px #ffcc53;
+  background-image: conic-gradient(#ffcc53, transparent, transparent, transparent, transparent, transparent, transparent, #ffcc53);
+  animation: rotate 4s linear infinite -2s;
 }
 
 .neon-btn::after {

@@ -42,7 +42,7 @@
   box-shadow: 0 0 10px rgba(0, 108, 165, 0.5), 0 0 10px rgba(0, 108, 165, 0.5), 0 0 20px rgba(0, 108, 165, 0.5), 0 0 40px rgba(0, 108, 165, 0.5);
 }
 
-.exit-button {
+/*.exit-button {
   position: absolute;
   top: -22px;
   right: -1px;
@@ -55,7 +55,7 @@
 
 .exit-button:hover {
   color: #0a2b58;
-}
+}*/
 
 .modal-body {
   margin-top: 20px;

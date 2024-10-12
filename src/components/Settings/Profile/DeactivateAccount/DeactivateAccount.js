@@ -6,8 +6,9 @@ import playerService from '../../../../services/PlayerService';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { FaArrowLeft } from "react-icons/fa";
 
-const DeactivateAccount = () => {
+const DeactivateAccount = ({onBack}) => {
 
   const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ const DeactivateAccount = () => {
   return (
     <form>
       <div className="settings-body">
+      <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
         <div className="deactivate-account-title">
           <h1>Désactiver Compte</h1>
           <div className="deactivate-image">

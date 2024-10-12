@@ -3,6 +3,7 @@ import "./EditProfile.css"
 import playerService from '../../../../services/PlayerService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaArrowLeft } from "react-icons/fa";
 
 const EditProfile = ({ playerId, onBack }) => {
 
@@ -45,8 +46,8 @@ const EditProfile = ({ playerId, onBack }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="settings-body">
-        <div className="edit-profile-title">
-          <h1>Editer Profil</h1>
+        <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
+          <div class="form-title-profile"><h1>Editer Profil</h1></div>
           <div className="edit-profile-input">
             <label>Nom</label>
             <input
@@ -76,7 +77,6 @@ const EditProfile = ({ playerId, onBack }) => {
           <div>
             <button className="save-button" type="submit">Sauvegarder</button>
           </div>
-        </div>
       </div>
     </form>
   );

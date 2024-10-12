@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import playerService from '../../../../services/PlayerService'; 
+import { FaArrowLeft } from "react-icons/fa";
 
-const DeleteAccount = () => {
+const DeleteAccount = ({onBack}) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const DeleteAccount = () => {
   return (
     <form onSubmit={handleDeleteAccount}>
       <div className="settings-body">
+      <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
         <div className="delete-account-title">
           <h1>Supprimer Compte</h1>
           <div className="delete-image">

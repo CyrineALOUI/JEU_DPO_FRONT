@@ -3,6 +3,7 @@ import ProfileModal from './Profile/ProfileModal';
 import './SettingsModal.css';
 import clickSound from '../../assets/Sound/click-sound.wav';
 import { playClickSound } from '../Utils/SoundUtils';
+import { IoCloseSharp } from "react-icons/io5";
 
 const SettingsModal = ({ show, onClose }) => {
   const [currentView, setCurrentView] = useState('settings_main');
@@ -15,7 +16,7 @@ const SettingsModal = ({ show, onClose }) => {
     setCurrentView(view);
   };
 
-  const handleBack = () => {
+  const handleBackToSettings = () => {
     setCurrentView('settings_main');
   };
 
@@ -24,8 +25,8 @@ const SettingsModal = ({ show, onClose }) => {
   };
 
   const handleClose = () => {
-    playSound();  
-    onClose();    
+    playSound();
+    onClose();
   };
 
   const handleLogout = () => {
@@ -36,12 +37,10 @@ const SettingsModal = ({ show, onClose }) => {
   return (
     <div className="settings-modal">
       <div className="settings-content">
-        <button className="exit-button" onClick={handleClose}>
-          &times;
-        </button>
+      <button class="exit-button" onClick={handleClose}><IoCloseSharp /></button>
         {currentView === 'settings_main' && (
           <div className="settings-body">
-            <h1>Paramètres</h1>
+            <div class="form-title"><h1>Paramètres</h1></div>
             <div className="settings-container">
 
               <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
@@ -77,7 +76,8 @@ const SettingsModal = ({ show, onClose }) => {
             </div>
           </div>
         )}
-        {currentView === 'profile' && <ProfileModal onBack={handleBack} />}
+
+        {currentView === 'profile' && <ProfileModal onBackToSettings={handleBackToSettings} />}
 
       </div>
     </div>

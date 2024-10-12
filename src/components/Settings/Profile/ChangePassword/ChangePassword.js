@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaArrowLeft } from "react-icons/fa";
 
-const ChangePassword = () => {
+const ChangePassword = ({ onBack }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -64,10 +65,11 @@ const ChangePassword = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="settings-body">
+        <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
         <div className="change-password-title">
           <h1>Changer Mot de Passe</h1>
-          {error && <p className="error-pwd-message">{error}</p>}
           <br />
+          {error && <p className="error-pwd-message">{error}</p>}
           <div className="change-password-input">
             <div className="input-wrapper">
               <input

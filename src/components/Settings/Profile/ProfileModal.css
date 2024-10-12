@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+
+.settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    color: #fff;
+}
+
+.settings-modal:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.settings-content {
+    background: linear-gradient(14deg,
+            rgba(2, 0, 36, 0.8) 20%,
+            rgba(24, 24, 65, 0.7) 50%,
+            rgb(20, 76, 99) 100%),
+        radial-gradient(circle,
+            rgba(2, 0, 36, 1) 0%,
+            rgba(32, 15, 53, 1) 65%,
+            rgba(14, 29, 28, 0.9) 100%);
+    padding: 30px;
+    border-radius: 8px;
+    width: 480px;
+    height: 615px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 108, 165, 0.5), 0 0 10px rgba(0, 108, 165, 0.5), 0 0 20px rgba(0, 108, 165, 0.5), 0 0 40px rgba(0, 108, 165, 0.5);
+    position: relative;
+    cursor: default;
+    border: 1px solid rgba(0, 108, 165);
+}
+
+.exit-button {
+    padding: 5px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px 5px #1475ec73;
+    background-color: rgba(0, 108, 165);
+    color: #ffcc53;
+    font-size: 50px;
+    left: 435px;
+    top: -20px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px; 
+    height: 60px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.exit-button:active {
+    border-radius: 100%;
+    box-shadow: inset 0px 0px 10px 0px #ffcc53;
+}
+
+.return-button {
+    padding: 5px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px 5px #1475ec73;
+    background-color: rgba(0, 108, 165);
+    color: #ffcc53;
+    font-size: 25px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: absolute;
+    left: -15px;
+    top: -20px;
+}
+
+.return-button:active {
+    border-radius: 100%;
+    box-shadow: inset 0px 0px 10px 0px #ffcc53;
+}
+
+.settings-body-profile {
+    margin-top: 60px;
+    font-weight: bold;
+    font-size: 1.29em;
+    display: grid;
+    gap: 2.5em;
+    place-content: center;
+    width: 400px;
+}
+
+.form-title-profile {
+    font-size: 1.3rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    color: #4090b5;
+    text-shadow: 1.5px 1.5px 1px #ffcc53;
+}
+
+.settings-container-profile {
+    font-weight: bold;
+    font-size: 1.1em;
+    display: grid;
+    gap: 1.2em;
+    place-content: center;
+    width: 400px;
+    margin-top: 10px;
+}
+
+.settings-container-profile input[type=radio] {
+    display: none;
+}
+
+.settings-modal .neon-btn .txt {
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 1px #ffcc53, 1px 1px 1px #4090b5, 0 0 1px rgba(255, 255, 255, 0.616);
+}
+
+.input-btn:is(:checked)+.neon-btn .txt {
+    text-shadow: 1px 1px 1px #ffcc53, 1px 1px 1px #4090b5, 0 0 1px rgba(255, 255, 255, 0.616);
+    color: rgb(255, 255, 255);
+    animation: colorchange 0.3s ease;
+}
+
+.input-btn:is(:checked)+.neon-btn::before {
+    animation-duration: 1s;
+}
+
+.input-btn:is(:checked)+.neon-btn::after {
+    animation-duration: 1s;
+}
+
+.neon-btn {
+    width: 300px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em 5em;
+    text-align: right;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: all 2s ease-in-out;
+    -webkit-clip-path: polygon(6% 0, 93% 0, 100% 8%, 100% 86%, 90% 89%, 88% 100%, 5% 100%, 0% 85%);
+    clip-path: polygon(6% 0, 93% 0, 100% 8%, 100% 86%, 90% 89%, 88% 100%, 5% 100%, 0% 85%);
+}
+
+.neon-btn .span {
+    display: flex;
+    -webkit-clip-path: polygon(6% 0, 93% 0, 100% 8%, 100% 86%, 90% 89%, 88% 100%, 5% 100%, 0% 85%);
+    clip-path: polygon(6% 0, 93% 0, 100% 8%, 100% 86%, 90% 89%, 88% 100%, 5% 100%, 0% 85%);
+    position: absolute;
+    inset: 2.5px;
+    background-color: hsl(215, 61%, 10%);
+    z-index: 1;
+    inset: 2px;
+    background-color: #4090b5;
+    background: repeating-linear-gradient(to bottom, transparent 0%, #82cafa 1px, #82cafa 3px, #82cafa 5px, #82cafa 4px, transparent 0.5%), repeating-linear-gradient(to left, hsl(295, 60%, 12%) 100%, hsl(295, 60%, 12%) 100%);
+    box-shadow: inset 0 40px 20px hsl(215, 61%, 10%);
+}
+
+.neon-btn .txt {
+    text-align: right;
+    position: relative;
+    z-index: 2;
+    color: aliceblue;
+    font-size: 1em;
+    transition: all ease-in-out 2s linear;
+    white-space: nowrap;
+}
+
+.neon-btn::before {
+    content: "";
+    position: absolute;
+    height: 300px;
+    aspect-ratio: 1.5/1;
+    box-shadow: -17px -19px 20px #ffcc53;
+    background-image: conic-gradient(#ffcc53, transparent, transparent, transparent, transparent, transparent, transparent, #ffcc53);
+    animation: rotate 4s;
+}
+
+.neon-btn::after {
+    content: "";
+    position: absolute;
+    height: 300px;
+    aspect-ratio: 1.5/1;
+    box-shadow: -17px -19px 10px #fff;
+    background-image: conic-gradient(#fff, transparent, transparent, transparent, transparent, transparent, transparent, transparent, #fff);
+    animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes colorchange {
+    0% {
+        text-shadow: 0px 0px 0px #9e30a9, 0px 0px 0px #4090b5, 0 0 0px rgba(255, 255, 255, 0.616);
+    }
+
+    50% {
+        text-shadow: -6px 5px 1px #9e30a9, 5px 11px 1px #4090b5, 0 0 20px rgba(255, 255, 255, 0.616);
+    }
+
+    to {
+        text-shadow: 2px 4px 1px #9e30a9, 2px 2px 1px #4090b5, 0 0 20px rgba(255, 255, 255, 0.616);
+    }
+}
+
+@keyframes backgroundchange {
+    0% {
+        background-color: transparent;
+    }
+
+    50% {
+        background-color: #4090b5;
+    }
+
+    to {
+        background-color: transparent;
+    }
+}
+
+.submit-btn {
+    position: absolute;
+    border-radius: 10px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    background-color: #ffcc53;
+    color: #07013d;
+    padding: 14px 30px;
+    display: inline-block;
+    font-size: 19px;
+    font-weight: bold;
+    right: -10px;
+    bottom: 20px;
+    cursor: pointer;
+    transition: all .25s ease;
+    box-shadow: -5px 6px 20px 0px rgba(26, 26, 26, 0.4);
+}
+
+.submit-btn::after {
+    content: "";
+    position: absolute;
+    left: 112px;
+    bottom: 49px;
+    border-left: 0 solid transparent;
+    border-right: 10.39px solid transparent;
+    border-bottom: 10px solid #ffcc53;
+    width: 0;
+    height: 0;
+}
+
+.submit-btn:hover {
+    background-color: #ffcc53;
+    box-shadow: -5px 6px 20px 0px rgba(88, 88, 88, 0.569);
+}

@@ -1,8 +1,6 @@
 .edit-profile-title h1 {
     color: #fff;
     font-size: 40px;
-    margin-bottom: 50px;
-    margin-top: -15px;
     align-items: center;
     font-style: italic;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
@@ -15,7 +13,6 @@
     width: fit-content;
     position: static;
     width: 400px;
-    margin-top: 10px;
 }
 
 .input {
