@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import levelService from '../../services/LevelService';
+import playerService from '../../services/PlayerService';
 import './LevelModal.css';
 import { playClickSound } from '../Utils/SoundUtils';
 import clickSound from '../../assets/Sound/click-sound.wav'
+import NoLivesModal from '../NoLives/NoLivesModal';
 
 const LevelModal = ({ show, onClose, id }) => {
   const [level, setLevel] = useState(null);
   const [error, setError] = useState(null);
+  const [lives, setLives] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -19,7 +22,17 @@ const LevelModal = ({ show, onClose, id }) => {
         }
       };
 
+      const fetchPlayerLives = async () => {
+        try {
+          const playerData = await playerService.getPlayerData();
+          setLives(playerData.lives);
+        } catch (error) {
+          setError('Failed to fetch player lives');
+        }
+      };
+
       fetchLevel();
+      fetchPlayerLives();
     }
   }, [id]);
 
@@ -48,10 +61,14 @@ const LevelModal = ({ show, onClose, id }) => {
     return null;
   }
 
+  if (lives === 0) {
+    return <NoLivesModal onClose={onClose} />;
+  }
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="exit-button" onClick={onClose}>
+        <button className="exit-button-level" onClick={onClose}>
           &times;
         </button>
         {error && <div>{error}</div>}

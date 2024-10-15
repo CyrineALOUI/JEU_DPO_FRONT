@@ -1,0 +1,53 @@
+.modal-body h2 {
+    margin: 50px 0 110px 0;
+    font-size: 2rem;
+    line-height: 0.5rem;
+    font-weight: 600;
+    text-align: center;
+    color: #cc0000;
+    text-shadow: 1.5px 1.5px 1px #000;
+    margin-bottom: 35px;
+}
+
+.nolives-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nolives-image img {
+    width: 140px;
+}
+
+.card-nolives {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 45px;
+    padding: 2px;
+    border-radius: 0.7rem;
+    background: linear-gradient(to right, #7790ea 0%, #079bf1 100%);
+}
+
+.card-info-nolives {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.8rem;
+    background: #f3f4f6;
+}
+
+.card-nolives:hover .card-info-nolives {
+    color: #302886;
+}
+
+.lives {
+    width: 32px;
+    height: 32px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath d='M0 0H24V24H0z' fill='none'/%3E%3Cpath d='M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z' fill='red'/%3E%3Ccircle cx='17' cy='8' r='2.5' fill='white' opacity='0.5'/%3E%3Ccircle cx='16' cy='6' r='1.5' fill='white' opacity='0.75'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}

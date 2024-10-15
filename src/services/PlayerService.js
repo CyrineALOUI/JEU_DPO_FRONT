@@ -136,6 +136,17 @@ const reactivateAccount = async (verificationCode) => {
     }
 };
 
+/* RECOVER LIFE */
+const recoverLife = async () => {
+    try {
+        const response = await instance.post(`${apiUrl}/recoverLife`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to recover life:', error);
+        throw error;
+    }
+};
+
 const playerService = {
     login,
     register,
@@ -148,7 +159,8 @@ const playerService = {
     deletePlayerAccount,
     deactivateAccount,
     sendReactivationEmail,
-    reactivateAccount
+    reactivateAccount,
+    recoverLife
 };
 
 export default playerService;
