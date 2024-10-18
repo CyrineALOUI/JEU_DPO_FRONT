@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Caramel&family=Lavishly+Yours&display=swap');
+
+.modal-body {
+    position: relative;
+}
+
 .modal-body h2 {
-    margin: 50px 0 110px 0;
+    margin: 40px 0 110px 0;
     font-size: 2rem;
     line-height: 0.5rem;
     font-weight: 600;
@@ -16,7 +22,7 @@
 }
 
 .nolives-image img {
-    width: 140px;
+    width: 150px;
 }
 
 .card-nolives {
@@ -40,8 +46,24 @@
     background: #f3f4f6;
 }
 
-.card-nolives:hover .card-info-nolives {
+.lives-text {
     color: #302886;
+}
+
+.lives-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 15vh;
+}
+
+.game-nolives,
+.buy-lives {
+    display: flex;
+    align-items: center;
+    margin: 10px 25px;
+    position: relative;
 }
 
 .lives {
@@ -50,4 +72,31 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath d='M0 0H24V24H0z' fill='none'/%3E%3Cpath d='M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z' fill='red'/%3E%3Ccircle cx='17' cy='8' r='2.5' fill='white' opacity='0.5'/%3E%3Ccircle cx='16' cy='6' r='1.5' fill='white' opacity='0.75'/%3E%3C/svg%3E");
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+.timer-label {
+    font-family: "Caramel", serif;
+    color: #ffcc53;
+    font-size: 2em;
+    position: absolute;
+    top: 275px;
+    left: 26%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.buy-lives-button {
+    padding: 12px 30px;
+    background-color: #079bf1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.buy-lives-button:hover {
+    background-color: #ffcc53;
 }

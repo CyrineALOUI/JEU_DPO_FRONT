@@ -66,8 +66,8 @@ const changePassword = async (oldPassword, newPassword, confirmNewPassword) => {
 
 /* EVALUATE PASSWORD */
 const evaluatePasswordStrength = async (password) => {
-        const response = await axios.post(`${apiUrl}/evaluatePasswordStrength`, { password });
-        return response.data;
+    const response = await axios.post(`${apiUrl}/evaluatePasswordStrength`, { password });
+    return response.data;
 };
 
 /* FORGOT PASSWORD */
@@ -128,7 +128,7 @@ const sendReactivationEmail = async (email) => {
 /* VERIFY REACTIVATION CODE */
 const reactivateAccount = async (verificationCode) => {
     try {
-        const response = await axios.post(`${apiUrl}/reactivateAccount`, null, { params: { verificationCode }});
+        const response = await axios.post(`${apiUrl}/reactivateAccount`, null, { params: { verificationCode } });
         return response.data;
     } catch (error) {
         console.error('Reactivation failed:', error);
@@ -142,8 +142,28 @@ const recoverLife = async () => {
         const response = await instance.post(`${apiUrl}/recoverLife`);
         return response.data;
     } catch (error) {
-        console.error('Failed to recover life:', error);
-        throw error;
+        if (error.response && error.response.data) {
+            // Affiche le message d'erreur du backend
+            throw new Error(error.response.data); 
+        } else {
+            console.error('Failed to recover life:', error);
+            throw error;
+        }
+    }
+};
+
+/* BUY LIVES */
+const buyLives = async () => {
+    try {
+        const response = await instance.post(`${apiUrl}/buyLives`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data) {
+            throw new Error(error.response.data); 
+        } else {
+            console.error('Failed to buy lives:', error);
+            throw error;
+        }
     }
 };
 
@@ -160,7 +180,8 @@ const playerService = {
     deactivateAccount,
     sendReactivationEmail,
     reactivateAccount,
-    recoverLife
+    recoverLife,
+    buyLives
 };
 
 export default playerService;

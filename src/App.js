@@ -7,6 +7,7 @@ import Quiz from "./components/Games/Quiz/Quiz";
 import Crossword from "./components/Games/Crossword/Crossword";
 import ProfileModal from "./components/Settings/Profile/ProfileModal";
 import { ScoreProvider } from "./components/GameHeader/Score/ScoreContext";
+import { LifeTimerProvider } from "./components/GameHeader/LifeTimer/LifeTimerContext";
 import Hint from "./components/Hint/Hint";
 import { ToastContainer } from "react-toastify";
 import ResetPassword from "./components/Player/Auth/ResetPassword/ResetPassword";
@@ -23,6 +24,7 @@ const App = () => {
           <Route
             path="/*"
             element={
+              <LifeTimerProvider>
               <ScoreProvider>
                 <Routes>
                   <Route path="/play" element={<PrivateRoute element={<Play />} />} />
@@ -33,6 +35,7 @@ const App = () => {
                   <Route path="/hint" element={<PrivateRoute element={<Hint />} />} />
                 </Routes>
               </ScoreProvider>
+              </LifeTimerProvider>
             }
           />
         </Routes>
