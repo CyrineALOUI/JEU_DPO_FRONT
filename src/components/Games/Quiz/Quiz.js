@@ -11,6 +11,7 @@ import Hint from '../../Hint/Hint';
 import "./Quiz.css";
 import questionImage from '../../../assets/Pictures/question.png';
 import { useNavigate } from 'react-router-dom';
+import GameControl from '../../GameControl/GameControl';
 
 const Quiz = () => {
   const { id: quizId } = useParams();
@@ -48,6 +49,16 @@ const Quiz = () => {
 
   const correctAudioRef = useRef(new Audio(correctSound));
   const incorrectAudioRef = useRef(new Audio(incorrectSound));
+
+  const handlePause = () => {
+    console.log('Game paused');
+    // Logique pour mettre en pause le jeu
+  };
+
+  const handlePlay = () => {
+    console.log('Game resumed');
+    // Logique pour reprendre le jeu
+  };
 
   const handleAnswerSubmit = async (answer) => {
     setSelectedAnswer(answer);
@@ -179,6 +190,7 @@ const Quiz = () => {
 
   return (
     <div className="Map-Container">
+      <GameControl onPause={handlePause} onPlay={handlePlay} />
       <GameHeader />
       <div className="glass-box-quiz">
         {!showIntroduction && (
