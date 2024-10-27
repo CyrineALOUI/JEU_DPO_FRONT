@@ -5,7 +5,7 @@ import { playClickSound } from '../../Utils/SoundUtils';
 import { IoCloseSharp } from "react-icons/io5";
 import QuitLevel from '../QuitLevel/QuitLevel';
 
-const GameControlModal = ({ show, onClose }) => {
+const GameControlModal = ({ show, onClose, onResume }) => {
   const [currentView, setCurrentView] = useState('game-main');
 
   if (!show) {
@@ -29,6 +29,12 @@ const GameControlModal = ({ show, onClose }) => {
     setCurrentView('game-main');
   };
 
+  const handleResume = () => {
+    playSound();
+    onResume(); 
+    onClose(); 
+  };
+
   return (
     <div className="pause-game-modal">
       <div className="modal-content">
@@ -41,12 +47,8 @@ const GameControlModal = ({ show, onClose }) => {
             <div className="pause-title"><h1>Pause</h1></div>
             <div className="game-container">
 
-              {/* Bouton Jouer */}
-              <button className="settings-buttons"
-                onClick={() => {
-                  playSound();
-                  handleNavigation('play');
-                }}>
+              {/* Bouton Reprendre */}
+              <button className="settings-buttons" onClick={handleResume}>
                 Reprendre
               </button>
 
@@ -59,7 +61,7 @@ const GameControlModal = ({ show, onClose }) => {
                 Rejouer
               </button>
 
-              {/* Bouton Abandonner */}
+              {/* Bouton Quitter */}
               <button className="settings-buttons"
                 onClick={() => {
                   playSound();

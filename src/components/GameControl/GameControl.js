@@ -10,13 +10,18 @@ const GameControl = ({ isPaused, setIsPaused }) => {
     setIsPaused(nextPlayingState);
 
     if (nextPlayingState) {
-      setIsModalOpen(true); // Ouvrir le modal si le jeu est en pause
+      setIsModalOpen(true);
     }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setIsPaused(false); // Reprendre le jeu
+    setIsPaused(false);
+  };
+
+  const handleResume = () => {
+    setIsPaused(false);
+    setIsModalOpen(false);
   };
 
   return (
@@ -32,7 +37,7 @@ const GameControl = ({ isPaused, setIsPaused }) => {
       <div className={`pause-icon ${isPaused ? '' : 'hidden'}`}>
         <span></span>
       </div>
-      <GameControlModal show={isModalOpen} onClose={handleCloseModal} />
+      <GameControlModal show={isModalOpen} onClose={handleCloseModal} onResume={handleResume} />
     </div>
   );
 };
