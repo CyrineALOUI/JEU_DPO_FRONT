@@ -3,9 +3,10 @@ import './GameControlModal.css';
 import clickSound from '../../../assets/Sound/click-sound.wav';
 import { playClickSound } from '../../Utils/SoundUtils';
 import { IoCloseSharp } from "react-icons/io5";
+import QuitLevel from '../QuitLevel/QuitLevel';
 
 const GameControlModal = ({ show, onClose }) => {
-  const [currentView, setCurrentView] = useState('game_main');
+  const [currentView, setCurrentView] = useState('game-main');
 
   if (!show) {
     return null;
@@ -24,60 +25,54 @@ const GameControlModal = ({ show, onClose }) => {
     onClose();
   };
 
+  const handleBack = () => {
+    setCurrentView('game-main');
+  };
+
   return (
-    <div className="game-modal">
-      <div className="game-content">
-        <button className="exit-button" onClick={handleClose}>
+    <div className="pause-game-modal">
+      <div className="modal-content">
+        <button className="exit-button-level" onClick={handleClose}>
           <IoCloseSharp />
         </button>
 
-        {currentView === 'game_main' && (
-          <div className="game-body">
-            <div className="form-title"><h1>Jeu</h1></div>
+        {currentView === 'game-main' && (
+          <div className="modal-body">
+            <div className="pause-title"><h1>Pause</h1></div>
             <div className="game-container">
-              
+
               {/* Bouton Jouer */}
-              <label className="neon-btn" 
+              <button className="settings-buttons"
                 onClick={() => {
                   playSound();
                   handleNavigation('play');
                 }}>
-                <span className="span"></span>
-                <span className="txt">Jouer</span>
-              </label>
+                Reprendre
+              </button>
 
               {/* Bouton Rejouer */}
-              <label className="neon-btn" 
+              <button className="settings-buttons"
                 onClick={() => {
                   playSound();
                   handleNavigation('replay');
                 }}>
-                <span className="span"></span>
-                <span className="txt">Rejouer</span>
-              </label>
+                Rejouer
+              </button>
 
               {/* Bouton Abandonner */}
-              <label className="neon-btn" 
+              <button className="settings-buttons"
                 onClick={() => {
                   playSound();
                   handleNavigation('quit');
                 }}>
-                <span className="span"></span>
-                <span className="txt">Abandonner</span>
-              </label>
-
-              {/* Bouton Quitter */}
-              <label className="neon-btn" 
-                onClick={() => {
-                  playSound();
-                  handleClose();
-                }}>
-                <span className="span"></span>
-                <span className="txt">Quitter</span>
-              </label>
+                Quitter
+              </button>
             </div>
           </div>
         )}
+
+        {currentView === 'quit' && <QuitLevel onBack={handleBack} />}
+
       </div>
     </div>
   );

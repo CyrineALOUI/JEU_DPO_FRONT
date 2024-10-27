@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import './GameControl.css';
 import GameControlModal from './GameControlModal/GameControlModal';
 
-const GameControl = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+const GameControl = ({ isPaused, setIsPaused }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-    if (!isPlaying) {
-      setIsModalOpen(true);
+    const nextPlayingState = !isPaused;
+    setIsPaused(nextPlayingState);
+
+    if (nextPlayingState) {
+      setIsModalOpen(true); // Ouvrir le modal si le jeu est en pause
     }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsPaused(false); // Reprendre le jeu
   };
 
   return (
@@ -23,24 +25,14 @@ const GameControl = () => {
         type="checkbox" 
         className="play-btn" 
         id="playPause" 
-        checked={isPlaying} 
-        onChange={togglePlay} 
+        checked={isPaused} 
+        onChange={togglePlay}
       />
-      
-      {/* Icône Play */}
-      <label 
-        htmlFor="playPause" 
-        className={`play-icon ${isPlaying ? 'hidden' : ''}`}
-      ></label>
-
-      {/* Icône Pause */}
-      <div className={`pause-icon ${isPlaying ? '' : 'hidden'}`}>
+      <label htmlFor="playPause" className={`play-icon ${isPaused ? 'hidden' : ''}`}></label>
+      <div className={`pause-icon ${isPaused ? '' : 'hidden'}`}>
         <span></span>
       </div>
-
-      {/* Modal si le jeu est en pause */}
-      {isModalOpen && <GameControlModal onClose={handleCloseModal} />}
-
+      <GameControlModal show={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };

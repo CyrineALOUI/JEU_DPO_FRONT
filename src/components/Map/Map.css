@@ -44,7 +44,8 @@
     font-family: "Dancing Script", cursive;
     margin-top: 10px;
     font-size: 90px;
-    text-shadow: 3px 3px 2px rgba(255, 204, 83, 0.7);
+    color: #ffcc53;
+    text-shadow: 2.5px 2px 1.5px rgba(133, 220, 250, 0.7);
 }
 
 .levels-grid {
@@ -133,7 +134,7 @@
 .level-button .drop1, .level-button .drop2 {
     content: "";
     position: absolute;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 100%);
+    background: radial-gradient(circle, #a3d1e7 0%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 100%);
     border-radius: 50%;
     z-index: 2;
 }
@@ -221,8 +222,8 @@
     z-index: 2;
     padding: 8px 16px;
     transform: translateY(0);
-    color: #fff;
-    background-image: linear-gradient(145deg, #4635c7, #1CB0F6);
+    color: #ffcc53;
+    background-image: linear-gradient(145deg, rgb(25, 68, 117), #1CB0F6);
     text-shadow: 0 -1px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     transition: transform 0.3s, border-radius 0.3s, background 10s;
@@ -231,7 +232,7 @@
 .button-3d:active .button-top {
     border-radius: 10px 10px 8px 8px / 8px;
     transform: translateY(2px);
-    background-image: linear-gradient(145deg, #1CB0F6, #4635c7);
+    background-image: linear-gradient(145deg, #1CB0F6, rgb(25, 68, 117));
 }
 
 .button-bottom {
@@ -243,8 +244,8 @@
     padding-top: 6px;
     width: calc(100% - 8px);
     height: calc(100% - 10px);
-    background-image: linear-gradient(145deg, #1CB0F6, #4635c7);
-    box-shadow: 0px 1px 1px 0px white;
+    background-image: linear-gradient(145deg, #1CB0F6, rgb(25, 68, 117));
+    box-shadow: 0px 2px 1px 0px rgb(25, 68, 117);
     transition: border-radius 0.2s, padding-top 0.2s;
 }
 
@@ -256,9 +257,6 @@
 .button-3d:active .button-base {
     border-radius: 10px 10px 8px 8px / 8px;
 }
-
-
-
 
 
 

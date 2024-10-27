@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./QuestionTimer.css";
 
-const QuestionTimer = ({ duration, onTimeUp }) => {
+const QuestionTimer = ({ duration, onTimeUp, isPaused }) => {
   const [timeLeft, setTimeLeft] = useState(duration);
 
   useEffect(() => {
@@ -9,12 +9,14 @@ const QuestionTimer = ({ duration, onTimeUp }) => {
       onTimeUp();
     }
 
+    if (isPaused) return; 
+
     const timer = setInterval(() => {
-      setTimeLeft(prevTime => prevTime - 1);
+      setTimeLeft((prevTime) => prevTime - 1);
     }, 1000);
 
-    return () => clearInterval(timer);  
-  }, [timeLeft, onTimeUp]);
+    return () => clearInterval(timer);
+  }, [timeLeft, onTimeUp, isPaused]);
 
   const getBackgroundColor = () => {
     if (timeLeft > duration / 2) return "green";

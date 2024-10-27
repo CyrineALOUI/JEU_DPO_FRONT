@@ -4,7 +4,6 @@ import levelService from '../../services/LevelService';
 import GameHeader from '../GameHeader/GameHeader';
 import playerService from '../../services/PlayerService';
 import './Map.css';
-import GameControl from '../GameControl/GameControl';
 import lockIcon from '../../assets/Pictures/lock-icon.png';
 
 const Map = () => {
@@ -71,7 +70,6 @@ const Map = () => {
   return (
     <div className="Map-Container">
       <GameHeader />
-      <GameControl />
       <div className="glass-box">
         <h2>Carte</h2>
         <div className={`levels-grid ${scrollDirection}`}>

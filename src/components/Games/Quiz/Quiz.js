@@ -7,7 +7,6 @@ import correctSound from '../../../assets/Sound/correct-sound.mp3';
 import incorrectSound from '../../../assets/Sound/incorrect-sound.mp3';
 import { textAudios } from '../../Utils/SoundUtils';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
-import Hint from '../../Hint/Hint';
 import "./Quiz.css";
 import questionImage from '../../../assets/Pictures/question.png';
 import { useNavigate } from 'react-router-dom';
@@ -20,13 +19,15 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
-  const {score, updateScore} = useScore();
+  const { score, updateScore } = useScore();
   const [showIntroduction, setShowIntroduction] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const audioRef = useRef(new Audio(textAudios[quizId]));
   const [karaokeText, setKaraokeText] = useState('');
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const navigate = useNavigate();
+  const [isPaused, setIsPaused] = useState(false);
+
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -50,16 +51,6 @@ const Quiz = () => {
   const correctAudioRef = useRef(new Audio(correctSound));
   const incorrectAudioRef = useRef(new Audio(incorrectSound));
 
-  const handlePause = () => {
-    console.log('Game paused');
-    // Logique pour mettre en pause le jeu
-  };
-
-  const handlePlay = () => {
-    console.log('Game resumed');
-    // Logique pour reprendre le jeu
-  };
-
   const handleAnswerSubmit = async (answer) => {
     setSelectedAnswer(answer);
 
@@ -70,7 +61,7 @@ const Quiz = () => {
 
       if (isCorrect) {
         updateScore(score + 50);
-        setCorrectAnswersCount(correctAnswersCount + 1); 
+        setCorrectAnswersCount(correctAnswersCount + 1);
         correctAudioRef.current.play();
       } else {
         incorrectAudioRef.current.play();
@@ -95,7 +86,7 @@ const Quiz = () => {
     try {
       const result = await quizService.submitQuiz(quizId, correctAnswersCount);
       console.log(result);
-      navigate('/map'); 
+      navigate('/map');
     } catch (error) {
       console.error('Error submitting quiz:', error);
     }
@@ -190,8 +181,8 @@ const Quiz = () => {
 
   return (
     <div className="Map-Container">
-      <GameControl onPause={handlePause} onPlay={handlePlay} />
       <GameHeader />
+      <GameControl isPaused={isPaused} setIsPaused={setIsPaused} />
       <div className="glass-box-quiz">
         {!showIntroduction && (
           <div className="question-image">
@@ -217,8 +208,11 @@ const Quiz = () => {
               <h3 className="question-title">{currentQuestion.questionTitle}</h3>
               <h4 className="answer-style">{currentQuestion.answer}</h4>
 
-              <QuestionTimer duration={currentQuestion.duration} onTimeUp={handleTimeUp} />
-              <Hint />
+              <QuestionTimer
+                duration={currentQuestion.duration}
+                onTimeUp={handleTimeUp}
+                isPaused={isPaused}
+              />
 
               <div className="answer-list">
                 <button

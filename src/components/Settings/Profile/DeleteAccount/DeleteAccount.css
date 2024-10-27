@@ -7,7 +7,7 @@
     text-align: center;
     color: #4090b5;
     text-shadow: 1.5px 1.5px 1px #ffcc53;
-    margin-top: -20px;
+    margin-top: -30px;
 }
 
 .delete-image {
@@ -48,7 +48,7 @@
     --bg-color: #cc0000;
     --main-color: #fff;
     position: relative;
-    border-radius: 6px;
+    border-radius: 15px;
     width: 180px;
     height: 45px;
     cursor: pointer;
@@ -118,8 +118,8 @@
 
 .delete-account-input .eye-icon {
     position: absolute;
-    right: 60px;
-    top: 499px;
+    right: 50px;
+    top: 485px;
     transform: translateY(-50%);
     color: #006CA5;
     cursor: pointer;

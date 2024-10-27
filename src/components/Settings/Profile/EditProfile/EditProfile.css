@@ -7,18 +7,19 @@
 }
 
 .edit-profile-input {
-    font-family: "Play", sans-serif;
+    font-family: "Leckerli One", cursive;
     display: flex;
     flex-direction: column;
     width: fit-content;
     position: static;
     width: 400px;
+    margin-top: -20px;
 }
 
 .input {
-    font-family: "Play", sans-serif;
+    color: #051a38;
     height: 50px;
-    border-radius: 8px;
+    border-radius: 15px;
     border: 2px solid #0f3467;
     outline: none;
     transition: 200ms ease-in;
@@ -33,7 +34,7 @@
 }
 
 .edit-profile-input label {
-    font-size: 19px;
+    font-size: 17px;
     color: #fff;
     font-weight: bold;
     min-width: 80px; 

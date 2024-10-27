@@ -5,6 +5,7 @@
 }
 
 .modal-body h2 {
+    font-family: "Leckerli One", cursive;
     margin: 40px 0 110px 0;
     font-size: 2rem;
     line-height: 0.5rem;
@@ -47,6 +48,7 @@
 }
 
 .lives-text {
+    font-family: "Leckerli One", cursive;
     color: #302886;
 }
 

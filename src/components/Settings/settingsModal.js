@@ -37,41 +37,35 @@ const SettingsModal = ({ show, onClose }) => {
   return (
     <div className="settings-modal">
       <div className="settings-content">
-      <button class="exit-button" onClick={handleClose}><IoCloseSharp /></button>
+        <button class="exit-button" onClick={handleClose}><IoCloseSharp /></button>
         {currentView === 'settings_main' && (
           <div className="settings-body">
             <div class="form-title"><h1>Paramètres</h1></div>
             <div className="settings-container">
 
-              <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
-              <label className="neon-btn"
+              <button className="settings-buttons"
                 onClick={() => {
                   playSound();
                   handleNavigation('profile');
                 }}>
-                <span className="span"></span>
-                <span className="txt">Mon Compte</span>
-              </label>
+                Mon compte
+              </button>
 
-              <input className="input-btn" type="radio" id="valueIs-2" name="valueIs-radio" value="valueIs-2" />
-              <label className="neon-btn"
+              <button className="settings-buttons"
                 onClick={() => {
                   playSound();
                   handleNavigation('rewards');
                 }}>
-                <span className="span"></span>
-                <span className="txt">Récompenses</span>
-              </label>
+                Badges
+              </button>
 
-              <input className="input-btn" type="radio" id="valueIs-2" name="valueIs-radio" value="valueIs-2" />
-              <label className="neon-btn"
+              <button className="settings-buttons"
                 onClick={() => {
                   playSound();
                   handleLogout();
                 }}>
-                <span className="span"></span>
-                <span className="txt">Se déconnecter</span>
-              </label>
+                Se déconnecter
+              </button>
 
             </div>
           </div>

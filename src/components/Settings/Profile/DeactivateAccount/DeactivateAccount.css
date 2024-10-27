@@ -6,6 +6,7 @@
     color: #4090b5;
     text-shadow: 1.5px 1.5px 1px #ffcc53;
     margin-bottom: 30px;
+    margin-top: -15px;
 }
 
 .deactivate-image {
@@ -45,7 +46,7 @@
     --bg-color: #cc0000;
     --main-color: #fff;
     position: relative;
-    border-radius: 6px;
+    border-radius: 15px;
     width: 180px;
     height: 45px;
     cursor: pointer;

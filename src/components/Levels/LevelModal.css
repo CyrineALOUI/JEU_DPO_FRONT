@@ -79,6 +79,7 @@
 }
 
 .modal-body h1 {
+  font-family: "Leckerli One", cursive;
   margin: 50px 0 110px 0;
   font-size: 3rem;
   line-height: 1.75rem;
@@ -99,30 +100,74 @@
 }
 
 .play-button {
-  padding: 10px 50px;
-  border: 0;
-  border-radius: 0.5em;
-  background-color: #2ba8fb;
-  color: #ffffff;
-  font-weight: Bold;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
+  font-family: "Leckerli One", cursive;
+  background-color: #0780b8;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #ffcc53;
   cursor: pointer;
-  font-size: 22px;
-  letter-spacing: 1px;
-  margin-top: 10px;
-}
-
-.play-button:hover {
-  background-color: #6fc5ff;
-  box-shadow: 0 0 15px #6fc5ff50;
-  transform: scale(1.1);
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 50px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-shadow: 1.5px 1.5px 1px rgb(7, 7, 120);
+  position: relative;
+  box-shadow: 0 3px 1px rgb(4, 87, 136);
 }
 
 .play-button:active {
-  background-color: #3d94cf;
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  box-shadow: none;
-  transform: scale(0.98);
+  padding-bottom: 10px;
+  box-shadow: 0 3px 1px rgb(4, 87, 136); 
+}
+
+.play-button::before,
+.play-button::after {
+  content: '';
+  position: absolute;
+  width: 11px;
+  height: 15px;
+  background-color: #a3d1e7;
+  border-radius: 50% 50% 50% 50%;
+  top: 10px;
+  transition: all 0.3s ease;
+}
+
+.play-button::before {
+  left: 14px;
+  top: 8px;
+  transform: rotate(45deg);
+}
+
+.play-button::after {
+  width: 8px;
+  height: 8px;
+  left: 10px;
+  top: 25px;
+  transform: rotate(45deg);
+}
+
+.play-button:hover::before,
+.play-button:hover::after {
+  transform: translateY(5px) rotate(0deg);
+}
+
+.play-button:active::before,
+.play-button:active::after {
+  transform: translateY(10px) scale(0.9);
 }

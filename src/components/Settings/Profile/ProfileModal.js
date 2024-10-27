@@ -31,45 +31,39 @@ const ProfileModal = ({ onBackToSettings }) => {
           <button class="return-button" onClick={onBackToSettings}><FaArrowLeft /></button>
           <div class="form-title-profile"><h1>Mon Compte</h1></div>
           <div className="settings-container-profile">
-            <input className="input-btn" type="radio" id="valueIs-1" name="valueIs-radio" value="valueIs-1" />
-            <label className="neon-btn"
+
+            <button className="settings-buttons"
               onClick={() => {
                 playSound();
                 handleNavigation('edit_profile');
               }}>
-              <span className="span"></span>
-              <span className="txt">Editer Profil</span>
-            </label>
+              Editer Profil
+            </button>
 
-            <input className="input-btn" type="radio" id="valueIs-2" name="valueIs-radio" value="valueIs-2" />
-            <label className="neon-btn"
+            <button className="settings-buttons"
               onClick={() => {
                 playSound();
                 handleNavigation('change_password');
               }}>
-              <span className="span"></span>
-              <span className="txt">Changer Mot de Passe</span>
-            </label>
+              Changer Mot de Passe
+            </button>
 
-            <input className="input-btn" type="radio" id="valueIs-3" name="valueIs-radio" value="valueIs-3" />
-            <label className="neon-btn"
+            <button className="settings-buttons"
               onClick={() => {
                 playSound();
                 handleNavigation('deactivate_account');
               }}>
-              <span className="span"></span>
-              <span className="txt">Désactiver Compte</span>
-            </label>
+              Désactiver Compte
+            </button>
 
-            <input className="input-btn" type="radio" id="valueIs-4" name="valueIs-radio" value="valueIs-4" />
-            <label className="neon-btn"
+            <button className="settings-buttons"
               onClick={() => {
                 playSound();
                 handleNavigation('delete_account');
               }}>
-              <span className="span"></span>
-              <span className="txt">Supprimer Compte</span>
-            </label>
+              Supprimer Compte
+            </button>
+            
           </div>
         </div>
       )}

@@ -113,13 +113,14 @@
     text-align: center;
     color: #4090b5;
     text-shadow: 1.5px 1.5px 1px #ffcc53;
+    margin-bottom: 5px;
 }
 
 .settings-container-profile {
     font-weight: bold;
     font-size: 1.1em;
     display: grid;
-    gap: 1.2em;
+    gap: 1.5em;
     place-content: center;
     width: 400px;
     margin-top: 10px;
