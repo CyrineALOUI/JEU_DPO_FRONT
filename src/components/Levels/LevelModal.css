@@ -171,3 +171,22 @@
 .play-button:active::after {
   transform: translateY(10px) scale(0.9);
 }
+
+.stars{
+  margin-top: -60px;
+  margin-bottom: 40px;
+}
+
+.star {
+  font-size: 60px;
+  margin: 0 7px;
+}
+
+.yellow {
+  color: #ffc745;
+}
+
+.grey {
+  color: grey; 
+}
+

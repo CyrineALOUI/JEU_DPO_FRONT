@@ -3,13 +3,16 @@ import levelService from '../../services/LevelService';
 import playerService from '../../services/PlayerService';
 import './LevelModal.css';
 import { playClickSound } from '../Utils/SoundUtils';
-import clickSound from '../../assets/Sound/click-sound.wav'
+import clickSound from '../../assets/Sound/click-sound.wav';
 import NoLivesModal from '../NoLives/NoLivesModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const LevelModal = ({ show, onClose, id }) => {
   const [level, setLevel] = useState(null);
   const [error, setError] = useState(null);
   const [lives, setLives] = useState(null);
+  const [stars, setStars] = useState(0);
 
   useEffect(() => {
     if (id) {
@@ -17,6 +20,10 @@ const LevelModal = ({ show, onClose, id }) => {
         try {
           const data = await levelService.getLevelById(id);
           setLevel(data);
+          
+          //Recuperation des etoiles pour chaque joueur / chaque level
+          const playerStars = await levelService.getStarsForPlayer(id);
+          setStars(playerStars);
         } catch (error) {
           setError('Failed to fetch level');
         }
@@ -44,7 +51,7 @@ const LevelModal = ({ show, onClose, id }) => {
     if (level) {
       console.log('Level:', level);
       if (level.games && level.games.length > 0) {
-        // Trouver le jeu de mots croisés dans les jeux associés
+        // Types de jeux (Quiz, Crossword)
         const quizGame = level.games.find(game => game.id !== undefined);
         const crosswordGame = level.games.find(game => game.gridSize !== undefined);
 
@@ -76,8 +83,13 @@ const LevelModal = ({ show, onClose, id }) => {
           <div className="modal-body">
             <h1>{level.title}</h1>
             <div className="stars">
-              {/* Replace with actual stars component or icons */}
-              ⭐⭐⭐
+              {[...Array(3)].map((_, index) => (
+                <FontAwesomeIcon
+                  key={index}
+                  icon={faStar}
+                  className={`star ${index < stars ? 'yellow' : 'grey'}`}
+                />
+              ))}
             </div>
             <p>{level.description}</p>
             <button className="play-button" onClick={handlePlayClick}>
