@@ -172,6 +172,8 @@
 }
 
 
+
+
 .label-container input {
     position: absolute;
     opacity: 0;
@@ -426,7 +428,7 @@
 }
 
 .incorrect {
-    background-color: #F44336;
+    background-color: #F44336; 
 }
 
 .question-image {

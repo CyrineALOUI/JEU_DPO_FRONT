@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import quizService from '../../../services/QuizService';
 import QuestionTimer from './QuizChrono/QuestionTimer';
 import GameHeader from '../../GameHeader/GameHeader';
@@ -9,7 +9,6 @@ import { textAudios } from '../../Utils/SoundUtils';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
 import "./Quiz.css";
 import questionImage from '../../../assets/Pictures/question.png';
-import { useNavigate } from 'react-router-dom';
 import GameControl from '../../GameControl/GameControl';
 
 const Quiz = () => {
@@ -27,7 +26,6 @@ const Quiz = () => {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const navigate = useNavigate();
   const [isPaused, setIsPaused] = useState(false);
-
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -47,34 +45,36 @@ const Quiz = () => {
     }
   }, [quizId]);
 
-
   const correctAudioRef = useRef(new Audio(correctSound));
   const incorrectAudioRef = useRef(new Audio(incorrectSound));
 
   const handleAnswerSubmit = async (answer) => {
     setSelectedAnswer(answer);
+    const answerKey = answer ? 'yes' : 'no';
+
+    let newCorrectAnswersCount = correctAnswersCount;
 
     try {
       const response = await quizService.verifyAnswer(currentQuestion.id, answer ? 'oui' : 'non');
       const isCorrect = response === "Correct answer!";
-      setAnswersStatus({ [answer ? 'yes' : 'no']: isCorrect ? 'correct' : 'incorrect' });
+      setAnswersStatus({ [answerKey]: isCorrect ? 'correct' : 'incorrect' });
 
       if (isCorrect) {
         updateScore(score + 50);
-        setCorrectAnswersCount(correctAnswersCount + 1);
+        newCorrectAnswersCount += 1;
         correctAudioRef.current.play();
       } else {
         incorrectAudioRef.current.play();
       }
 
-      //Passer à la question suivante 
       setTimeout(() => {
         if (currentQuestionIndex < quiz.questions.length - 1) {
-          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
           setSelectedAnswer(null);
           setAnswersStatus({});
+          setCorrectAnswersCount(newCorrectAnswersCount);
         } else {
-          handleSubmitQuiz();
+          handleSubmitQuiz(newCorrectAnswersCount);
         }
       }, 2000);
     } catch (error) {
@@ -82,9 +82,10 @@ const Quiz = () => {
     }
   };
 
-  const handleSubmitQuiz = async () => {
+  const handleSubmitQuiz = async (finalCorrectAnswersCount) => {
     try {
-      const result = await quizService.submitQuiz(quizId, correctAnswersCount);
+      console.log("Submitting quiz with correct answers count:", finalCorrectAnswersCount);
+      const result = await quizService.submitQuiz(quizId, finalCorrectAnswersCount);
       console.log(result);
       navigate('/map');
     } catch (error) {

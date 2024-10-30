@@ -167,6 +167,21 @@ const buyLives = async () => {
     }
 };
 
+/* LOSE LIFE */
+const loseLife = async () => {
+    try {
+        const response = await instance.put(`${apiUrl}/loseLife`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data) {
+            throw new Error(error.response.data);
+        } else {
+            console.error('Failed to lose life:', error);
+            throw error;
+        }
+    }
+};
+
 const playerService = {
     login,
     register,
@@ -181,7 +196,8 @@ const playerService = {
     sendReactivationEmail,
     reactivateAccount,
     recoverLife,
-    buyLives
+    buyLives,
+    loseLife
 };
 
 export default playerService;
