@@ -20,7 +20,7 @@ const LevelModal = ({ show, onClose, id }) => {
         try {
           const data = await levelService.getLevelById(id);
           setLevel(data);
-          
+
           //Recuperation des etoiles pour chaque joueur / chaque level
           const playerStars = await levelService.getStarsForPlayer(id);
           setStars(playerStars);
@@ -82,6 +82,7 @@ const LevelModal = ({ show, onClose, id }) => {
         {level && (
           <div className="modal-body">
             <h1>{level.title}</h1>
+
             <div className="stars">
               {[...Array(3)].map((_, index) => (
                 <FontAwesomeIcon
@@ -91,6 +92,7 @@ const LevelModal = ({ show, onClose, id }) => {
                 />
               ))}
             </div>
+            
             <p>{level.description}</p>
             <button className="play-button" onClick={handlePlayClick}>
               Jouer

@@ -64,7 +64,7 @@
 .buy-lives {
     display: flex;
     align-items: center;
-    margin: 10px 25px;
+    margin: 10px 10px;
     position: relative;
 }
 
@@ -82,23 +82,80 @@
     font-size: 2em;
     position: absolute;
     top: 275px;
-    left: 26%;
+    left: 22%;
     transform: translateX(-50%);
     text-align: center;
 }
 
 .buy-lives-button {
-    padding: 12px 30px;
-    background-color: #079bf1;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    font-family: "Leckerli One", cursive;
+    background-color: #0780b8;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #ffcc53;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 11px 25px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
     white-space: nowrap;
+    text-shadow: 1.5px 1.5px 1px rgb(7, 7, 120);
+    position: relative;
+    box-shadow: 0 3px 1px rgb(4, 87, 136);
 }
 
-.buy-lives-button:hover {
-    background-color: #ffcc53;
+.buy-lives-button:active {
+    padding-bottom: 10px;
+    box-shadow: 0 3px 1px rgb(4, 87, 136);
+}
+
+.buy-lives-button::before,
+.buy-lives-button::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 15px;
+    background-color: #a3d1e7;
+    border-radius: 50% 50% 50% 50%;
+    top: 10px;
+    transition: all 0.3s ease;
+}
+
+.buy-lives-button::before {
+    left: 10px;
+    top: 8px;
+    transform: rotate(45deg);
+}
+
+.buy-lives-button::after {
+    width: 8px;
+    height: 8px;
+    left: 10px;
+    top: 25px;
+    transform: rotate(45deg);
+}
+
+.buy-lives-button:hover::before,
+.buy-lives-button:hover::after {
+    transform: translateY(5px) rotate(0deg);
+}
+
+.buy-lives-button:active::before,
+.buy-lives-button:active::after {
+    transform: translateY(10px) scale(0.9);
 }

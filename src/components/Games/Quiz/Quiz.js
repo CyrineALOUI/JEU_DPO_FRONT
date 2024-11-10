@@ -10,6 +10,8 @@ import { useScore } from '../../GameHeader/Score/ScoreContext';
 import "./Quiz.css";
 import questionImage from '../../../assets/Pictures/question.png';
 import GameControl from '../../GameControl/GameControl';
+import SuccessLevelModal from '../../Levels/SuccessLevel/SuccessLevelModal';
+import FailureLevelModal from '../../Levels/FailureLevel/FailureLevelModal';
 
 const Quiz = () => {
   const { id: quizId } = useParams();
@@ -26,6 +28,10 @@ const Quiz = () => {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const navigate = useNavigate();
   const [isPaused, setIsPaused] = useState(false);
+  const correctAudioRef = useRef(new Audio(correctSound));
+  const incorrectAudioRef = useRef(new Audio(incorrectSound));
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showFailureModal, setShowFailureModal] = useState(false);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -44,9 +50,6 @@ const Quiz = () => {
       fetchQuiz();
     }
   }, [quizId]);
-
-  const correctAudioRef = useRef(new Audio(correctSound));
-  const incorrectAudioRef = useRef(new Audio(incorrectSound));
 
   const handleAnswerSubmit = async (answer) => {
     setSelectedAnswer(answer);
@@ -84,16 +87,24 @@ const Quiz = () => {
 
   const handleSubmitQuiz = async (finalCorrectAnswersCount) => {
     try {
-      console.log("Submitting quiz with correct answers count:", finalCorrectAnswersCount);
       const result = await quizService.submitQuiz(quizId, finalCorrectAnswersCount);
-      console.log(result);
-      navigate('/map');
+      if (result.status === "success") {
+        setShowSuccessModal(true);
+      } else if (result.status === "failure") {
+        setShowFailureModal(true);
+      }
     } catch (error) {
       console.error('Error submitting quiz:', error);
     }
   };
 
-  const handleTimeUp = () => {
+  const closeModal = () => {
+    setShowSuccessModal(false);
+    setShowFailureModal(false);
+    navigate('/map');
+  };
+
+  /*const handleTimeUp = () => {
     console.log('Temps écoulé!');
     if (currentQuestionIndex < quiz.questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -102,7 +113,7 @@ const Quiz = () => {
     } else {
       navigate('/map');
     }
-  };
+  };*/
 
   const handleStartQuiz = () => {
     setShowIntroduction(false);
@@ -211,7 +222,7 @@ const Quiz = () => {
 
               <QuestionTimer
                 duration={currentQuestion.duration}
-                onTimeUp={handleTimeUp}
+                /*onTimeUp={handleTimeUp}*/
                 isPaused={isPaused}
               />
 
@@ -235,6 +246,10 @@ const Quiz = () => {
           )}
         </div>
       </div>
+
+      {showSuccessModal && <SuccessLevelModal onClose={closeModal} levelId={quizId} />}
+      {showFailureModal && <FailureLevelModal onClose={closeModal} />}
+
     </div>
   );
 };

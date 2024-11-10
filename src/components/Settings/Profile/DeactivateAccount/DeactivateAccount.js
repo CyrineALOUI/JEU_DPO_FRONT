@@ -26,7 +26,7 @@ const DeactivateAccount = ({onBack}) => {
   return (
     <form>
       <div className="settings-body">
-      <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
+      <button className="return-button" onClick={onBack}><FaArrowLeft /></button>
         <div className="deactivate-account-title">
           <h1>Désactiver Compte</h1>
           <div className="deactivate-image">

@@ -7,9 +7,10 @@ const QuestionTimer = ({ duration, onTimeUp, isPaused }) => {
   useEffect(() => {
     if (timeLeft === 0) {
       onTimeUp();
+      return;
     }
 
-    if (isPaused) return; 
+    if (isPaused) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => prevTime - 1);
@@ -32,7 +33,6 @@ const QuestionTimer = ({ duration, onTimeUp, isPaused }) => {
         </div>
       </div>
     </div>
-
   );
 };
 

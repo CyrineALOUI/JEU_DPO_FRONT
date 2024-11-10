@@ -1,12 +1,14 @@
 .crossword-container {
     font-family: "Play", sans-serif;
     height: 100vh;
-    position: relative;
-    background-image: url('../../../assets/Pictures/fond_game.jpg');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
     background-repeat: no-repeat;
-    background-size: 100% 110%;
+    background-size: cover;
     background-attachment: fixed;
-    background-position: top left;
+    background-position: center;
     overflow: hidden;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
@@ -14,19 +16,50 @@
 .crossword-content {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
+    width: 1000px;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.crossword-clues {
+    display: flex;
+    flex-direction: column;
+    margin-right: 200px;
+    color: #333; 
+}
+
+.across-clues,
+.down-clues {
+    margin-bottom: 20px;
+}
+
+.clues-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.clue-item {
+    margin-bottom: 5px;
 }
 
 .crossword-grid {
-    margin-top: 200px;
-    margin-right: 250px;
+    margin: 0 auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .crossword-table {
     border-collapse: collapse;
 }
+
 
 .crossword-cell {
     width: 40px;
@@ -34,6 +67,7 @@
     border: 1px solid #ccc;
     text-align: center;
     position: relative;
+    background-color: white;
 }
 
 
@@ -43,8 +77,16 @@
     border: none;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;  
     text-align: center;
+}
+
+.word-number {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 0.6em; 
+    color: black;
 }
 
 
@@ -56,55 +98,9 @@
     border: 2px solid lightcoral;
 }
 
-.crossword-clues {
-    display: flex;
-    flex-direction: column;
-    margin-left: 300px;
-    margin-top: 220px;
-    color: #fff;
-}
-
-.across-clues,
-.down-clues {
-    margin-bottom: 70px;
-}
-
-.clues-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-    margin-left: 100px;
-}
-
-.clue-item {
-    margin-bottom: 5px;
-    margin-left: -80px;
-}
-
-.crossword-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-.crossword-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
 .empty-cell {
     background-color: transparent;
     border: none;
 }
 
-.word-number {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    font-size: 0.7em;
-    color: black;
-}
+

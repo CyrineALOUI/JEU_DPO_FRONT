@@ -65,7 +65,7 @@ const ChangePassword = ({ onBack }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="settings-body">
-        <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
+        <button className="return-button" onClick={onBack}><FaArrowLeft /></button>
         <div className="change-password-title">
           <h1>Changer Mot de Passe</h1>
           <br />

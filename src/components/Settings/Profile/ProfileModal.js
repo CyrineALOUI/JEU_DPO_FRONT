@@ -28,8 +28,8 @@ const ProfileModal = ({ onBackToSettings }) => {
     <div>
       {currentView === 'profile_main' && (
         <div className="settings-body-profile">
-          <button class="return-button" onClick={onBackToSettings}><FaArrowLeft /></button>
-          <div class="form-title-profile"><h1>Mon Compte</h1></div>
+          <button className="return-button" onClick={onBackToSettings}><FaArrowLeft /></button>
+          <div className="form-title-profile"><h1>Mon Compte</h1></div>
           <div className="settings-container-profile">
 
             <button className="settings-buttons"

@@ -47,7 +47,7 @@ const DeleteAccount = ({onBack}) => {
   return (
     <form onSubmit={handleDeleteAccount}>
       <div className="settings-body">
-      <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
+      <button className="return-button" onClick={onBack}><FaArrowLeft /></button>
         <div className="delete-account-title">
           <h1>Supprimer Compte</h1>
           <div className="delete-image">

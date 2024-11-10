@@ -46,8 +46,8 @@ const EditProfile = ({ playerId, onBack }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="settings-body">
-        <button class="return-button" onClick={onBack}><FaArrowLeft /></button>
-          <div class="form-title-profile"><h1>Editer Profil</h1></div>
+        <button className="return-button" onClick={onBack}><FaArrowLeft /></button>
+          <div className="form-title-profile"><h1>Editer Profil</h1></div>
           <div className="edit-profile-input">
             <label>Nom</label>
             <input

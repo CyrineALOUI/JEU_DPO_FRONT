@@ -26,7 +26,6 @@ const getLevelById = async (id) => {
 const getStarsForPlayer = async (levelId) => {
   try {
     const response = await instance.get(`${apiUrl}/getStars/${levelId}`);
-    console.log('Stars for player:', response.data);
     return response.data; 
   } catch (error) {
     console.error('Error fetching stars for player:', error);

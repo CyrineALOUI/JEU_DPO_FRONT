@@ -1,0 +1,165 @@
+.failure-title h2 {
+    color: #fcb205;
+    font-size: 45px;
+    text-shadow: 1.5px 1.5px 0.5px #4090b5;
+    margin-bottom: 60px;
+    margin-top: 60px;
+}
+
+.failure-title p {
+    color: #fff;
+    font-size: 1.1rem;
+    font-family: "Leckerli One", cursive;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.homefail-button {
+    font-family: "Leckerli One", cursive;
+    background-color: #fdb716;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 40px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-shadow: 1.5px 1.5px 1px rgb(7, 7, 120);
+    position: relative;
+    box-shadow: 0 3px 1px #704f01;
+}
+
+.homefail-button:active {
+    padding-bottom: 10px;
+    box-shadow: 0 3px 1px #704f01;
+}
+
+.homefail-button::before,
+.homefail-button::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 15px;
+    background-color: #a3d1e7;
+    border-radius: 50% 50% 50% 50%;
+    top: 10px;
+    transition: all 0.3s ease;
+}
+
+.homefail-button::before {
+    left: 14px;
+    top: 8px;
+    transform: rotate(45deg);
+}
+
+.homefail-button::after {
+    width: 8px;
+    height: 8px;
+    left: 10px;
+    top: 25px;
+    transform: rotate(45deg);
+}
+
+.homefail-button:hover::before,
+.homefail-button:hover::after {
+    transform: translateY(5px) rotate(0deg);
+}
+
+.homefail-button:active::before,
+.homefail-button:active::after {
+    transform: translateY(10px) scale(0.9);
+}
+
+.replay-button {
+    font-family: "Leckerli One", cursive;
+    background-color: #0780b8;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #ffcc53;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 40px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-shadow: 1.5px 1.5px 1px rgb(7, 7, 120);
+    position: relative;
+    box-shadow: 0 3px 1px rgb(4, 87, 136);
+}
+
+.replay-button:active {
+    padding-bottom: 10px;
+    box-shadow: 0 3px 1px rgb(4, 87, 136);
+}
+
+.replay-button::before,
+.replay-button::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 15px;
+    background-color: #a3d1e7;
+    border-radius: 50% 50% 50% 50%;
+    top: 10px;
+    transition: all 0.3s ease;
+}
+
+.replay-button::before {
+    left: 14px;
+    top: 8px;
+    transform: rotate(45deg);
+}
+
+.replay-button::after {
+    width: 8px;
+    height: 8px;
+    left: 10px;
+    top: 25px;
+    transform: rotate(45deg);
+}
+
+.replay-button:hover::before,
+.replay-button:hover::after {
+    transform: translateY(5px) rotate(0deg);
+}
+
+.replay-button:active::before,
+.replay-button:active::after {
+    transform: translateY(10px) scale(0.9);
+}

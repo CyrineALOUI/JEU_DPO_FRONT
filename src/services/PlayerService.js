@@ -12,7 +12,6 @@ const login = async (email, password) => {
         return response.data;
     } catch (error) {
         if (error.response) {
-            // Récupère le message d'erreur renvoyé par le backend
             throw new Error(error.response.data || 'An error occurred');
         } else {
             throw new Error('Network error');
@@ -152,21 +151,6 @@ const recoverLife = async () => {
     }
 };
 
-/* BUY LIVES */
-const buyLives = async () => {
-    try {
-        const response = await instance.post(`${apiUrl}/buyLives`);
-        return response.data;
-    } catch (error) {
-        if (error.response && error.response.data) {
-            throw new Error(error.response.data); 
-        } else {
-            console.error('Failed to buy lives:', error);
-            throw error;
-        }
-    }
-};
-
 /* LOSE LIFE */
 const loseLife = async () => {
     try {
@@ -177,6 +161,21 @@ const loseLife = async () => {
             throw new Error(error.response.data);
         } else {
             console.error('Failed to lose life:', error);
+            throw error;
+        }
+    }
+};
+
+/* BUY LIVES */
+const buyLives = async () => {
+    try {
+        const response = await instance.post(`${apiUrl}/buyLives`);
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data) {
+            throw new Error(error.response.data); 
+        } else {
+            console.error('Failed to buy lives:', error);
             throw error;
         }
     }
@@ -196,8 +195,8 @@ const playerService = {
     sendReactivationEmail,
     reactivateAccount,
     recoverLife,
-    buyLives,
-    loseLife
+    loseLife,
+    buyLives
 };
 
 export default playerService;
