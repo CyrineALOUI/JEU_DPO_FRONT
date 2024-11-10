@@ -4,7 +4,7 @@ import instance from '../configuration/interceptor';
 const getQuizById = async (id) => {
   try {
     const response = await instance.get(`${apiUrl}/getQuiz/${id}`);
-    console.log('Response from getQuizById:', response.data); 
+    console.log('Response from getQuizById:', response.data);
     return response.data;
   } catch (error) {
     console.error(`Error fetching quiz with id ${id}:`, error);
@@ -14,7 +14,7 @@ const getQuizById = async (id) => {
 
 const verifyAnswer = async (questionId, givenAnswer) => {
   try {
-    const response = await instance.post(`${apiUrl}/verifyAnswer/${questionId}`, null, {params: { givenAnswer },});
+    const response = await instance.post(`${apiUrl}/verifyAnswer/${questionId}`, null, { params: { givenAnswer } });
     console.log('Response from verifyAnswer:', response.data);
     return response.data;
   } catch (error) {
@@ -22,6 +22,7 @@ const verifyAnswer = async (questionId, givenAnswer) => {
     throw error;
   }
 };
+
 
 const submitQuiz = async (quizId, correctAnswers) => {
   try {

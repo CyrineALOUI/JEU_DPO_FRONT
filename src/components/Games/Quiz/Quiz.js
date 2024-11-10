@@ -20,6 +20,7 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answersStatus, setAnswersStatus] = useState({});
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [isAnswered, setIsAnswered] = useState(false);
   const { score, updateScore } = useScore();
   const [showIntroduction, setShowIntroduction] = useState(true);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -52,6 +53,7 @@ const Quiz = () => {
   }, [quizId]);
 
   const handleAnswerSubmit = async (answer) => {
+    setIsAnswered(true);
     setSelectedAnswer(answer);
     const answerKey = answer ? 'yes' : 'no';
 
@@ -59,7 +61,7 @@ const Quiz = () => {
 
     try {
       const response = await quizService.verifyAnswer(currentQuestion.id, answer ? 'oui' : 'non');
-      const isCorrect = response === "Correct answer!";
+      const { isCorrect } = response;
       setAnswersStatus({ [answerKey]: isCorrect ? 'correct' : 'incorrect' });
 
       if (isCorrect) {
@@ -79,6 +81,7 @@ const Quiz = () => {
         } else {
           handleSubmitQuiz(newCorrectAnswersCount);
         }
+        setIsAnswered(false);
       }, 2000);
     } catch (error) {
       console.error('Error verifying answers:', error);
@@ -98,22 +101,17 @@ const Quiz = () => {
     }
   };
 
-  const closeModal = () => {
-    setShowSuccessModal(false);
-    setShowFailureModal(false);
-    navigate('/map');
-  };
-
-  /*const handleTimeUp = () => {
-    console.log('Temps écoulé!');
+  const handleTimeUp = () => {
     if (currentQuestionIndex < quiz.questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setSelectedAnswer(null);
       setAnswersStatus({});
     } else {
-      navigate('/map');
+      if (!showFailureModal && !showSuccessModal) {
+        handleSubmitQuiz(correctAnswersCount);
+      }
     }
-  };*/
+  };
 
   const handleStartQuiz = () => {
     setShowIntroduction(false);
@@ -129,6 +127,12 @@ const Quiz = () => {
       audioRef.current.pause();
       setIsAudioPlaying(false);
     }
+  };
+
+  const closeModal = () => {
+    setShowSuccessModal(false);
+    setShowFailureModal(false);
+    navigate('/map');
   };
 
   useEffect(() => {
@@ -222,7 +226,7 @@ const Quiz = () => {
 
               <QuestionTimer
                 duration={currentQuestion.duration}
-                /*onTimeUp={handleTimeUp}*/
+                onTimeUp={handleTimeUp}
                 isPaused={isPaused}
               />
 
@@ -230,16 +234,19 @@ const Quiz = () => {
                 <button
                   className={`button-quiz ${selectedAnswer === true ? (answersStatus.yes === 'correct' ? 'correct' : 'incorrect') : ''}`}
                   onClick={() => handleAnswerSubmit(true)}
+                  disabled={isAnswered}
                 >
                   Oui
                 </button>
                 <button
                   className={`button-quiz ${selectedAnswer === false ? (answersStatus.no === 'correct' ? 'correct' : 'incorrect') : ''}`}
                   onClick={() => handleAnswerSubmit(false)}
+                  disabled={isAnswered}
                 >
                   Non
                 </button>
               </div>
+
               <br />
               <br />
             </div>
