@@ -132,7 +132,7 @@ const RegisterForm = ({ toggleForm }) => {
           <div className={`password-strength-bar ${passwordStrength?.className}`}>
             <div className="password-strength-progress"></div>
           </div>
-          <p className="password-strength-label">Mot de Passe : {passwordStrength?.display}</p>
+          <p className="password-strength-label-auth">Mot de Passe : {passwordStrength?.display}</p>
         </>
       )}
       <br />

@@ -99,15 +99,6 @@
   margin-top: 10px;
 }
 
-.settings-container input[type=radio] {
-  display: none;
-}
-
-.settings-modal .neon-btn .txt {
-  color: rgb(255, 255, 255);
-  text-shadow: 1px 1px 1px #ffcc53, 1px 1px 1px #4090b5, 0 0 1px rgba(255, 255, 255, 0.616);
-}
-
 .settings-buttons {
   font-family: "Leckerli One", cursive;
   background-color: #0780b8;

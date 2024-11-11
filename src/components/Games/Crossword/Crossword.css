@@ -1,18 +1,3 @@
-.crossword-container {
-    font-family: "Play", sans-serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #333;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    overflow: hidden;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
 .crossword-content {
     display: flex;
     flex-direction: row;
@@ -29,14 +14,17 @@
 .crossword-clues {
     display: flex;
     flex-direction: column;
-    margin-right: 200px;
-    color: #333; 
+    margin-left: 100px; 
 }
 
 .across-clues,
 .down-clues {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 40px;
+    text-align: left;
+    color: #ffcc53;
 }
+
 
 .clues-container {
     display: flex;
@@ -46,10 +34,12 @@
 
 .clue-item {
     margin-bottom: 5px;
+    text-align: left;
+    color: #fff;
 }
 
 .crossword-grid {
-    margin: 0 auto; 
+    margin: 30px auto 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,16 +50,14 @@
     border-collapse: collapse;
 }
 
-
 .crossword-cell {
-    width: 40px;
-    height: 40px;
+    width: 33px;
+    height: 33px;
     border: 1px solid #ccc;
     text-align: center;
     position: relative;
     background-color: white;
 }
-
 
 .crossword-input {
     width: 100%;
@@ -88,7 +76,6 @@
     font-size: 0.6em; 
     color: black;
 }
-
 
 .correct-border {
     border: 2px solid lightgreen;

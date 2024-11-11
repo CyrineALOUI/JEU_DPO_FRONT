@@ -67,24 +67,26 @@ const Crossword = () => {
 
 
   return (
-    <div className="crossword-container">
+    <div className="Map-Container">
       <GameHeader />
-      <div className="crossword-content">
+      <div className="glass-box-quiz">
         <div className="crossword-clues">
-          <div className="across-clues">
-            <h2>Horizontale</h2>
+          <div className="down-clues">
+            <h2>Verticale</h2>
+            <br />
             <div className="clues-container">
-              {crossword.words.filter(word => word.horizontal).map(word => (
+              {crossword.words.filter(word => word.vertical).map(word => (
                 <div key={word.id} className="clue-item">
                   <p>{word.number}. {word.clue}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="down-clues">
-            <h2>Verticale</h2>
+          <div className="across-clues">
+            <h2>Horizontale</h2>
+            <br />
             <div className="clues-container">
-              {crossword.words.filter(word => word.vertical).map(word => (
+              {crossword.words.filter(word => word.horizontal).map(word => (
                 <div key={word.id} className="clue-item">
                   <p>{word.number}. {word.clue}</p>
                 </div>
@@ -99,14 +101,14 @@ const Crossword = () => {
                 <tr key={y}>
                   {Array.from(Array(crossword.gridSize).keys()).map(x => {
                     const cellKey = `${x},${y}`;
-                    const wordAtCell = crossword.words.find(word => 
+                    const wordAtCell = crossword.words.find(word =>
                       (word.horizontal && y === word.startY && x >= word.startX && x < word.startX + word.word.length) ||
                       (word.vertical && x === word.startX && y >= word.startY && y < word.startY + word.word.length)
                     );
                     const cellValue = selectedLetters[cellKey] || '';
                     const isFillable = fillableCells[cellKey];
                     const isCorrect = checkLetter(x, y);
-  
+
                     if (!isFillable) {
                       return <td key={cellKey} className="crossword-cell empty-cell"></td>;
                     }
@@ -133,7 +135,7 @@ const Crossword = () => {
       </div>
     </div>
   );
-  
+
 };
 
 export default Crossword;

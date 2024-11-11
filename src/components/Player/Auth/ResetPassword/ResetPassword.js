@@ -5,11 +5,16 @@ import playerService from '../../../../services/PlayerService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [passwordStrength, setPasswordStrength] = useState(null);
+    const [error] = useState('');
     const [token, setToken] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
@@ -28,10 +33,12 @@ const ResetPassword = () => {
         e.preventDefault();
 
         if (newPassword !== confirmPassword) {
-            setError('Les mots de passe ne correspondent pas.');
+            toast.error('Les mots de passe ne correspondent pas.', {
+                position: "top-right",
+                autoClose: 5000,
+            });
             return;
         }
-
         try {
             await playerService.resetPassword(token, newPassword, confirmPassword);
             toast.success('Votre mot de passe a été réinitialisé avec succès.', {
@@ -49,6 +56,28 @@ const ResetPassword = () => {
         }
     };
 
+    const evaluateStrength = async (password) => {
+        try {
+            const strength = await playerService.evaluatePasswordStrength(password);
+            const strengthDisplay = {
+                'tres-faible': 'Très faible',
+                'faible': 'Faible',
+                'moyen': 'Moyen',
+                'fort': 'Fort',
+                'tres-fort': 'Très fort',
+            };
+            setPasswordStrength({
+                display: strengthDisplay[strength] || strength, // Version Accents
+                className: strength // Version sans Accents
+            });
+        } catch (err) {
+            console.error('Erreur lors de l\'évaluation de la force du mot de passe:', err);
+        }
+    };
+
+    const toggleShowNewPassword = () => setShowNewPassword(prev => !prev);
+    const toggleShowConfirmPassword = () => setShowConfirmPassword(prev => !prev);
+
     return (
         <div className="password-container">
             <div className="reset-password-content">
@@ -58,23 +87,46 @@ const ResetPassword = () => {
                 <h2>Réinitialiser votre Mot de Passe</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="password-input">
-                        <input
-                            className="input"
-                            type="password"
-                            placeholder="Nouveau Mot de Passe"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            required
-                        />
-                        <input
-                            className="input"
-                            type="password"
-                            placeholder="Confirmer Mot de Passe"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
+                        <div className="input-wrapper">
+                            <input
+                                className="input"
+                                type={showNewPassword ? 'text' : 'password'}
+                                placeholder="Nouveau Mot de Passe"
+                                value={newPassword}
+                                onChange={(e) => {
+                                    setNewPassword(e.target.value);
+                                    evaluateStrength(e.target.value);
+                                  }}
+                                required
+                            />
+                            <span className="eye-icon" onClick={toggleShowNewPassword}>
+                                <FontAwesomeIcon icon={showNewPassword ? faEye : faEyeSlash} />
+                            </span>
+                        </div>
+                        {newPassword && (
+                            <>
+                                <div className={`password-strength-bar-settings ${passwordStrength?.className}`}>
+                                    <div className="password-strength-progress-settings"></div>
+                                </div>
+                                <p className="password-strength-label-reset">Mot de Passe : {passwordStrength?.display}</p>
+                            </>
+                        )}
+
+                        <div className="input-wrapper">
+                            <input
+                                className="input"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                placeholder="Confirmer Mot de Passe"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                            <span className="eye-icon" onClick={toggleShowConfirmPassword}>
+                                <FontAwesomeIcon icon={showConfirmPassword ? faEye : faEyeSlash} />
+                            </span>
+                        </div>
                     </div>
+
                     {error && <p className="error-message">{error}</p>}
                     <button className="reset-password-button" type="submit">Sauvegarder</button>
                 </form>

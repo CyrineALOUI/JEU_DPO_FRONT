@@ -57,7 +57,6 @@
 }
 
 form h2 {
-    /*font-family: "Leckerli One", cursive;*/
     font-size: 2.3rem;
     color: #006CA5;
     margin-top: 25px;
@@ -506,6 +505,12 @@ form h2 {
 .password-strength-bar.tres-fort .password-strength-progress {
     width: 100%;
     background-color: green;
+}
+
+.password-strength-label-auth {
+    font-size: 1rem;
+    font-weight: normal;
+    color: #006CA5;
 }
 
 .logo-image-auth {
