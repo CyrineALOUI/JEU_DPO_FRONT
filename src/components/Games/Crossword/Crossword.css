@@ -14,7 +14,7 @@
 .crossword-clues {
     display: flex;
     flex-direction: column;
-    margin-left: 100px; 
+    margin-left: 100px;
 }
 
 .across-clues,
@@ -60,12 +60,13 @@
 }
 
 .crossword-input {
+    background-color: transparent;
     width: 100%;
     height: 100%;
     border: none;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 16px;  
+    font-size: 16px;
     text-align: center;
 }
 
@@ -73,16 +74,16 @@
     position: absolute;
     top: 2px;
     left: 2px;
-    font-size: 0.6em; 
+    font-size: 0.6em;
     color: black;
 }
 
-.correct-border {
-    border: 2px solid lightgreen;
+.correct-cell {
+    background-color: rgb(63, 174, 211);
 }
 
 .incorrect-border {
-    border: 2px solid lightcoral;
+    border-color: red;
 }
 
 .empty-cell {
@@ -90,4 +91,7 @@
     border: none;
 }
 
-
+.completed-word {
+    background-color: #28a745;  /* Vert */
+    color: white;
+}

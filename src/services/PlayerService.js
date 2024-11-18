@@ -151,6 +151,18 @@ const recoverLife = async () => {
     }
 };
 
+/* UNLOCK NEXT LEVEL */
+const unlockNextLevel = async (currentLevelNumber) => {
+    try {
+      const response = await instance.post(`${apiUrl}/unlockNextLevel`, null, { params: { currentLevelNumber }});
+      return response.data;
+    } catch (error) {
+      console.error('Error unlocking the next level:', error);
+      throw error;
+    }
+  };
+  
+
 /* LOSE LIFE */
 const loseLife = async () => {
     try {
@@ -194,6 +206,7 @@ const playerService = {
     deactivateAccount,
     sendReactivationEmail,
     reactivateAccount,
+    unlockNextLevel,
     recoverLife,
     loseLife,
     buyLives

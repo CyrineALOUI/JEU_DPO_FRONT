@@ -25,7 +25,7 @@
     font-family: "Leckerli One", cursive;
     color: #ffcc53;
     font-size: 3.8rem;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     margin-top: 15px;
     text-align: center;
     width: 100%;
@@ -159,9 +159,6 @@
     -moz-transition: box-shadow 0.2s ease-in;
     transition: box-shadow 0.2s ease-in;
 }
-
-
-
 
 .label-container input {
     position: absolute;
@@ -363,11 +360,19 @@
     }
 }
 
-.button-quiz:active {
+.button-text:active {
     box-shadow: 0 0 0 0 transparent;
     -webkit-transition: box-shadow 0.2s ease-in;
     -moz-transition: box-shadow 0.2s ease-in;
     transition: box-shadow 0.2s ease-in;
+}
+
+.button-text:disabled {
+    background: grey; 
+    color: #464646; 
+    cursor: not-allowed; 
+    box-shadow: none;
+    pointer-events: none;
 }
 
 .button-group {
