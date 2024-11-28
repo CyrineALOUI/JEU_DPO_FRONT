@@ -59,6 +59,7 @@
     box-shadow: 0px 0px 5px 0px #fff;
     overflow: hidden;
     margin-left: 110px;
+    margin-top: -15px;
 }
 
 .delete-button,

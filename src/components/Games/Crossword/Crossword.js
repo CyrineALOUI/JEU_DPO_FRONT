@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CrosswordService from '../../../services/CrosswordService';
+import crosswordService from '../../../services/CrosswordService';
 import GameHeader from '../../GameHeader/GameHeader';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,30 +12,16 @@ const Crossword = () => {
   const [selectedLetters, setSelectedLetters] = useState({});
   const [fillableCells, setFillableCells] = useState({});
   const [correctLetters, setCorrectLetters] = useState({});
-  const [revealedWords, setRevealedWords] = useState([]);
+  const [revealedWords, setRevealedWords] = useState(new Set());
 
   useEffect(() => {
     const fetchCrossword = async () => {
       try {
-        // Récupérer les deux données en parallèle
-        const [data, revealedWordsData] = await Promise.all([
-          CrosswordService.getCrosswordById(crosswordId),
-          CrosswordService.getRevealedWords(crosswordId),
-        ]);
-
-        // Mettre à jour les états
+        const data = await crosswordService.getCrosswordById(crosswordId);
         setCrossword(data);
-
-        if (Array.isArray(revealedWordsData)) {
-          setRevealedWords(revealedWordsData);
-        } else {
-          console.error('revealedWordsData is not an array:', revealedWordsData);
-          setRevealedWords([]);
-        }
-
-        initializeSelectedLetters(data, revealedWordsData);
+        initializeSelectedLetters(data);
       } catch (error) {
-        console.error('Error fetching crossword details:', error);
+        console.error('Error fetching crossword:', error);
       }
     };
 
@@ -44,30 +30,23 @@ const Crossword = () => {
     }
   }, [crosswordId]);
 
-  const initializeSelectedLetters = (data, revealedWordsData) => {
+  const initializeSelectedLetters = (data) => {
     const initialSelectedLetters = {};
     const initialFillableCells = {};
     const initialCorrectLetters = {};
 
-    // Vérification que revealedWordsData est bien un tableau
-    if (!Array.isArray(revealedWordsData)) {
-      console.error('revealedWordsData is not an array:', revealedWordsData);
-      return;
+    if (Array.isArray(data.words)) {
+      data.words.forEach(word => {
+        for (let i = 0; i < word.word.length; i++) {
+          const x = word.startX + (word.horizontal ? i : 0);
+          const y = word.startY + (word.vertical ? i : 0);
+          const key = `${x},${y}`;
+          initialFillableCells[key] = true;
+          initialCorrectLetters[key] = word.word[i].toUpperCase();
+          initialSelectedLetters[key] = '';  // Pas de mots révélés initialement
+        }
+      });
     }
-
-    data.words.forEach(word => {
-      for (let i = 0; i < word.word.length; i++) {
-        const x = word.startX + (word.horizontal ? i : 0);
-        const y = word.startY + (word.vertical ? i : 0);
-        const key = `${x},${y}`;
-        initialFillableCells[key] = true;
-        initialCorrectLetters[key] = word.word[i].toUpperCase();
-
-        // Si le mot est révélé, on le marque dans selectedLetters
-        const isRevealed = revealedWordsData.some(revealedWord => revealedWord.word.id === word.id);
-        initialSelectedLetters[key] = isRevealed ? word.word[i].toUpperCase() : '';
-      }
-    });
 
     setSelectedLetters(initialSelectedLetters);
     setFillableCells(initialFillableCells);
@@ -76,97 +55,128 @@ const Crossword = () => {
 
   const handleInputChange = (event, x, y) => {
     const newValue = event.target.value.toUpperCase();
-    setSelectedLetters({
-      ...selectedLetters,
-      [`${x},${y}`]: newValue,
-    });
-  };
-
-  const checkLetter = (x, y) => {
     const key = `${x},${y}`;
-    return selectedLetters[key] === correctLetters[key];
-  };
 
-  const handleShowHint = async () => {
-    try {
-      const updatedCrossword = await CrosswordService.showHint(crosswordId);
-      setCrossword(updatedCrossword);
+    // Mettre à jour les lettres sélectionnées
+    const updatedSelectedLetters = {
+      ...selectedLetters,
+      [key]: newValue,
+    };
 
-      // Récupérer les mots révélés mis à jour
-      let updatedRevealedWords = await CrosswordService.getRevealedWords(crosswordId);
-      
-      // Vérifiez si updatedRevealedWords est un tableau
-      if (!Array.isArray(updatedRevealedWords)) {
-        console.error('updatedRevealedWords is not an array:', updatedRevealedWords);
-        updatedRevealedWords = []; // Utiliser un tableau vide par défaut pour éviter les erreurs
-      }
-      
-      // Mettre à jour selectedLetters avec les mots révélés
-      setSelectedLetters(prevState => {
-        const updatedSelectedLetters = { ...prevState };
-        updatedRevealedWords.forEach(revealedWord => {
-          const word = crossword.words.find(w => w.id === revealedWord.word.id); // Utilisez revealedWord.word.id
-          if (word) {
-            for (let i = 0; i < word.word.length; i++) {
-              const x = word.startX + (word.horizontal ? i : 0);
-              const y = word.startY + (word.vertical ? i : 0);
-              const key = `${x},${y}`;
-              updatedSelectedLetters[key] = word.word[i].toUpperCase();
-            }
-          }
-        });
+    setSelectedLetters(updatedSelectedLetters);  // Mise à jour de l'état des lettres saisies
 
-        return updatedSelectedLetters;
+    // Vérifier si toutes les lettres d'un mot sont remplies
+    const word = crossword.words.find(w => {
+      return (
+        (w.horizontal && w.startY === y && x >= w.startX && x < w.startX + w.word.length) ||
+        (w.vertical && w.startX === x && y >= w.startY && y < w.startY + w.word.length)
+      );
+    });
+
+    if (word) {
+      const wordComplete = word.word.split('').every((letter, index) => {
+        const xOffset = word.horizontal ? index : 0;
+        const yOffset = word.vertical ? index : 0;
+        const key = `${word.startX + xOffset},${word.startY + yOffset}`;
+        return updatedSelectedLetters[key] !== '' && updatedSelectedLetters[key] === letter.toUpperCase();
       });
-    } catch (error) {
-      console.error('Error revealing hint:', error);
-      if (error.message.includes('Coins insuffisants')) {
-        toast.error('Vous n\'avez pas assez de coins pour un indice. Vous avez besoin de 30 coins.');
-      } else {
-        alert('Erreur lors de la tentative d’indice. Veuillez réessayer plus tard.');
+
+      // Si toutes les lettres sont saisies, valider le mot
+      if (wordComplete) {
+        validateWord(word, updatedSelectedLetters);  // Passer l'état mis à jour pour validation
       }
     }
   };
 
-  // Utilisation de useMemo pour initialiser les lettres sélectionnées, les cellules remplissables et les lettres correctes
-  const initializeSelectedLettersMemoized = useMemo(() => {
-    if (!crossword) return {};  // Si crossword est null, ne pas exécuter ce calcul
+  const validateWord = async (word, updatedSelectedLetters) => {
+    const isCorrect = word.word.split('').every((letter, index) => {
+      const x = word.startX + (word.horizontal ? index : 0);
+      const y = word.startY + (word.vertical ? index : 0);
+      const key = `${x},${y}`;
+      return updatedSelectedLetters[key] === letter.toUpperCase();  // Utilisation des lettres mises à jour
+    });
 
-    const initialSelectedLetters = {};
-    const initialFillableCells = {};
-    const initialCorrectLetters = {};
+    if (isCorrect) {
+      setRevealedWords(prev => new Set(prev.add(word.word)));
 
-    if (!Array.isArray(revealedWords)) {
-      console.error('revealedWordsData is not an array:', revealedWords);
-      return {};
-    }
-
-    crossword.words.forEach(word => {
+      const updatedGrid = { ...updatedSelectedLetters };
       for (let i = 0; i < word.word.length; i++) {
         const x = word.startX + (word.horizontal ? i : 0);
         const y = word.startY + (word.vertical ? i : 0);
         const key = `${x},${y}`;
-        initialFillableCells[key] = true;
-        initialCorrectLetters[key] = word.word[i].toUpperCase();
-
-        // Si le mot est révélé, on le marque dans selectedLetters
-        const isRevealed = revealedWords.some(revealedWord => revealedWord.word.id === word.id);
-        initialSelectedLetters[key] = isRevealed ? word.word[i].toUpperCase() : '';
+        updatedGrid[key] = word.word[i].toUpperCase();  // Met à jour la grille avec le mot révélé
       }
+      setSelectedLetters(updatedGrid);  // Met à jour l'état de la grille
+
+      try {
+        await crosswordService.revealWordManually(crosswordId, word.word);
+        toast.success(`Le mot "${word.word}" est correct et révélé !`);
+      } catch (error) {
+        console.error("Erreur lors de la révélation manuelle:", error);
+      }
+    } else {
+      toast.error(`Le mot "${word.word}" est incorrect.`);
+    }
+  };
+
+
+
+
+  const getCellClass = (x, y) => {
+    const key = `${x},${y}`;
+
+    // Vérifier si la cellule fait partie d'un mot révélé
+    const isRevealed = crossword.words.some((word) => {
+      for (let i = 0; i < word.word.length; i++) {
+        const wordX = word.startX + (word.horizontal ? i : 0);
+        const wordY = word.startY + (word.vertical ? i : 0);
+        const cellKey = `${wordX},${wordY}`;
+        if (cellKey === key && revealedWords.has(word.word)) {
+          return true;  // Cette cellule fait partie d'un mot révélé
+        }
+      }
+      return false;
     });
 
-    return { initialSelectedLetters, initialFillableCells, initialCorrectLetters };
-  }, [crossword, revealedWords]);
+    if (isRevealed) return 'revealed';
+    return checkLetter(x, y) ? 'correct-border' : 'incorrect-border';
+  };
 
-  const { initialSelectedLetters, initialFillableCells, initialCorrectLetters } = initializeSelectedLettersMemoized;
+  const handleRevealWordWithHint = async () => {
+    try {
+      const revealedWord = await crosswordService.revealWordWithHint(crosswordId);
 
-  useEffect(() => {
-    if (crossword) {  // On met à jour les états seulement si crossword est défini
-      setSelectedLetters(initialSelectedLetters);
-      setFillableCells(initialFillableCells);
-      setCorrectLetters(initialCorrectLetters);
+      if (revealedWord) {
+        const word = crossword.words.find(w => w.word === revealedWord);
+
+        if (word) {
+          setRevealedWords(prev => new Set(prev.add(revealedWord)));
+
+          const updatedSelectedLetters = { ...selectedLetters };
+          for (let i = 0; i < word.word.length; i++) {
+            const x = word.startX + (word.horizontal ? i : 0);
+            const y = word.startY + (word.vertical ? i : 0);
+            const key = `${x},${y}`;
+            updatedSelectedLetters[key] = word.word[i].toUpperCase();
+          }
+          setSelectedLetters(updatedSelectedLetters);
+          toast.success(`Le mot "${revealedWord}" a été révélé !`);
+        } else {
+          toast.error('Mot non trouvé dans la grille.');
+        }
+      } else {
+        toast.error('Aucun mot révélé par l\'indice.');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la tentative d’indice:', error);
+      toast.error('Erreur lors de la tentative d’indice.');
     }
-  }, [initialSelectedLetters, initialFillableCells, initialCorrectLetters, crossword]);
+  };
+
+  const checkLetter = (x, y) => {
+    const key = `${x},${y}`;
+    return selectedLetters[key] === correctLetters[key];  // Vérification de la lettre correcte
+  };
 
   if (!crossword) {
     return <div>Loading...</div>;
@@ -179,7 +189,6 @@ const Crossword = () => {
         <div className="crossword-clues">
           <div className="down-clues">
             <h2>Verticale</h2>
-            <br />
             <div className="clues-container">
               {crossword.words.filter(word => word.vertical).map(word => (
                 <div key={word.id} className="clue-item">
@@ -190,7 +199,6 @@ const Crossword = () => {
           </div>
           <div className="across-clues">
             <h2>Horizontale</h2>
-            <br />
             <div className="clues-container">
               {crossword.words.filter(word => word.horizontal).map(word => (
                 <div key={word.id} className="clue-item">
@@ -207,29 +215,25 @@ const Crossword = () => {
                 <tr key={y}>
                   {Array.from(Array(crossword.gridSize).keys()).map(x => {
                     const cellKey = `${x},${y}`;
-                    const wordAtCell = crossword.words.find(word =>
-                      (word.horizontal && y === word.startY && x >= word.startX && x < word.startX + word.word.length) ||
-                      (word.vertical && x === word.startX && y >= word.startY && y < word.startY + word.word.length)
-                    );
                     const cellValue = selectedLetters[cellKey] || '';
                     const isFillable = fillableCells[cellKey];
-                    const isCorrect = checkLetter(x, y);
+
+                    const wordNumber = crossword.words.find(word => word.startX === x && word.startY === y)?.number;
 
                     if (!isFillable) {
                       return <td key={cellKey} className="crossword-cell empty-cell"></td>;
                     }
 
                     return (
-                      <td key={cellKey} className={`crossword-cell ${isCorrect ? 'correct-border' : 'incorrect-border'}`}>
-                        {wordAtCell && wordAtCell.startX === x && wordAtCell.startY === y && (
-                          <span className="word-number">{wordAtCell.number}</span>
-                        )}
+                      <td key={cellKey} className={`crossword-cell ${getCellClass(x, y)}`}>
+                        {wordNumber && <div className="word-number">{wordNumber}</div>}
                         <input
                           type="text"
                           maxLength="1"
                           className="crossword-input"
                           value={cellValue}
                           onChange={(event) => handleInputChange(event, x, y)}
+                          disabled={revealedWords.has(crossword.words.find(word => word.startX === x && word.startY === y)?.word)}
                         />
                       </td>
                     );
@@ -240,11 +244,8 @@ const Crossword = () => {
           </table>
         </div>
         <div className="button-group">
-          <button className="button-text" onClick={handleShowHint}>
-            Indice
-          </button>
-          <button className="button-text">
-            Valider
+          <button className="button-text" onClick={handleRevealWordWithHint}>
+            Afficher Un Mot (-25)
           </button>
         </div>
       </div>

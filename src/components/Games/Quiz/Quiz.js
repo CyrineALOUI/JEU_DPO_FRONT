@@ -246,7 +246,6 @@ const Quiz = () => {
                   Non
                 </button>
               </div>
-
               <br />
               <br />
             </div>

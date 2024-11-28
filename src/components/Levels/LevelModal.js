@@ -5,6 +5,7 @@ import './LevelModal.css';
 import NoLivesModal from '../NoLives/NoLivesModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import bonusIcon from '../../assets/Pictures/bonus.png';
 
 const LevelModal = ({ show, onClose, id }) => {
   const [level, setLevel] = useState(null);
@@ -12,7 +13,7 @@ const LevelModal = ({ show, onClose, id }) => {
   const [lives, setLives] = useState(null);
   const [stars, setStars] = useState(0);
   const [isCrossword, setIsCrossword] = useState(false);
-  const [isScenarioGame, setIsScenarioGame] = useState(false); 
+  const [isScenarioGame, setIsScenarioGame] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -27,7 +28,7 @@ const LevelModal = ({ show, onClose, id }) => {
           const scenarioGame = data.games?.some(game => game.scenarioLevelNumber !== undefined);
           setIsScenarioGame(!!scenarioGame);
 
-          //Recuperation des etoiles pour chaque joueur / chaque level
+          //Recuperation des etoiles pour chaque joueur / chaque level sauf levels bonus
           if (!crosswordGame && !scenarioGame) {
             const playerStars = await levelService.getStarsForPlayer(id);
             setStars(playerStars);
@@ -58,14 +59,13 @@ const LevelModal = ({ show, onClose, id }) => {
         // Types de jeux (Quiz, Crossword, Scenario)
         const quizGame = level.games.find(game => game.introductionText !== undefined);
         const crosswordGame = level.games.find(game => game.gridSize !== undefined);
-        const scenarioGame = level.games.find(game => game.scenarioLevelNumber !== undefined); 
-  
+        const scenarioGame = level.games.find(game => game.scenarioLevelNumber !== undefined);
+
         if (crosswordGame) {
           window.location.href = `/crossword/${crosswordGame.id}`;
         } else if (quizGame) {
           window.location.href = `/quiz/${quizGame.id}`;
         } else if (scenarioGame) {
-          // Assure-toi que c'est bien une route de scénario
           window.location.href = `/scenario/${scenarioGame.id}`;
         } else {
           console.error('Aucun jeu valide trouvé');
@@ -73,17 +73,17 @@ const LevelModal = ({ show, onClose, id }) => {
       }
     }
   };
-  
+
 
   const handlePassClick = async () => {
     try {
-      await playerService.unlockNextLevel(level.levelNumber); 
-      window.location.reload(); 
+      await playerService.unlockNextLevel(level.levelNumber);
+      window.location.reload();
     } catch (error) {
       console.error('Erreur lors du déverrouillage du niveau suivant:', error);
     }
   };
-  
+
   if (!show) {
     return null;
   }
@@ -103,16 +103,22 @@ const LevelModal = ({ show, onClose, id }) => {
           <div className="modal-body">
             <h1>{level.title}</h1>
 
-            {!isCrossword && !isScenarioGame && (
-              <div className="stars">
-                {[...Array(3)].map((_, index) => (
-                  <FontAwesomeIcon
-                    key={index}
-                    icon={faStar}
-                    className={`star ${index < stars ? 'yellow' : 'grey'}`}
-                  />
-                ))}
+            {(isCrossword || isScenarioGame) ? (
+              <div className="bonus-image">
+                <img src={bonusIcon} alt="bonus-icon" />
               </div>
+            ) : (
+              !isCrossword && !isScenarioGame && (
+                <div className="stars">
+                  {[...Array(3)].map((_, index) => (
+                    <FontAwesomeIcon
+                      key={index}
+                      icon={faStar}
+                      className={`star ${index < stars ? 'yellow' : 'grey'}`}
+                    />
+                  ))}
+                </div>
+              )
             )}
 
             <p>{level.description}</p>
@@ -121,7 +127,7 @@ const LevelModal = ({ show, onClose, id }) => {
                 Jouer
               </button>
 
-              {isCrossword && (
+              {(isCrossword || isScenarioGame) && (
                 <button className="skip-button" onClick={handlePassClick}>
                   Passer
                 </button>

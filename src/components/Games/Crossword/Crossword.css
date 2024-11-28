@@ -76,6 +76,8 @@
     left: 2px;
     font-size: 0.6em;
     color: black;
+    pointer-events: none;
+    font-weight: bold;
 }
 
 .correct-cell {
@@ -91,7 +93,14 @@
     border: none;
 }
 
-.completed-word {
-    background-color: #28a745;  /* Vert */
+.revealed {
+    background-color: #03C04A;
+  }
+  
+
+  .crossword-cell.revealed {
+    background-color: #7CFC00; /* Vert clair */
     color: white;
-}
+    border: 1px solid #32CD32; /* Bordure verte */
+  }
+  

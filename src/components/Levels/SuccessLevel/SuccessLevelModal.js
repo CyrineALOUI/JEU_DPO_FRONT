@@ -1,40 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import levelService from '../../../services/LevelService';
+import badgeService from '../../../services/BadgeService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './SuccessLevelModal.css';
 
 const SuccessLevelModal = ({ onClose, levelId }) => {
     const [stars, setStars] = useState(0);
+    const badgeUnlockCalled = useRef(false);
 
     useEffect(() => {
-        const fetchStars = async () => {
-            if (levelId) {
+        const fetchStarsAndCheckBadge = async () => {
+            if (levelId && !badgeUnlockCalled.current) {
+                badgeUnlockCalled.current = true;
+
                 try {
                     const starsData = await levelService.getStarsForPlayer(levelId);
                     setStars(starsData);
 
-                    // Vérifier si le badge a déjà été débloqué pour ce niveau
-                    const badgeUnlockedKey = `badgeUnlocked_${levelId}`;
-                    const isBadgeUnlocked = sessionStorage.getItem(badgeUnlockedKey);
+                    const response = await badgeService.unlockBadgeForQuiz(levelId);
 
-                    // Si le joueur a 3 étoiles et que le badge n'est pas encore déverrouillé
-                    if (starsData === 3 && !isBadgeUnlocked) {
-                        toast.success("Bravo, vous avez débloqué un nouveau badge!");
-                        // Marquer le badge comme débloqué dans la session
-                        sessionStorage.setItem(badgeUnlockedKey, 'true');
+                    if (response?.data === "Badge successfully unlocked for quiz level.") {
+                        toast.success("Bravo !🎉 Vous avez débloqué un nouveau badge !");
                     }
                 } catch (error) {
-                    console.error("Erreur lors de la récupération des étoiles:", error);
+                    if (error.response?.data === "Badge already unlocked.") {
+                        console.info("Badge déjà débloqué pour ce niveau.");
+                    } else {
+                        console.error("Erreur lors de la récupération des étoiles ou du badge:", error);
+                    }
                 }
-            } else {
+            } else if (!levelId) {
                 console.warn("levelId est undefined.");
             }
         };
 
-        fetchStars();
+        fetchStarsAndCheckBadge();
+
+        return () => {
+            badgeUnlockCalled.current = false;
+        };
     }, [levelId]);
 
     return (

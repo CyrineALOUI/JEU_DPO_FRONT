@@ -18,12 +18,11 @@ export const playClickSound = (soundFile) => {
 export const textAudios = {
     1: textAudio1,   /* Données Personnelles */
     2: textAudio2,   /* Données Sensibles */
-    3: textAudio3,   /* Traitement des Données à caractère Personnel */
-    4: textAudio4,   /* Personne Concernée */
-    5: textAudio5,
-    6: textAudio6,
-    8: textAudio7,
-    9: textAudio8,
-    10: textAudio9
-    
+    4: textAudio3,   /* Traitement des Données à caractère Personnel */
+    6: textAudio4,   /* Personne Concernée */
+    7: textAudio5,   /* Les principes de Traitement */
+    8: textAudio6,   /* Intégrité et confidentialité des données */
+    10: textAudio7,  /* Le consentement */
+    11: textAudio8,  /* Le droit d’accès */
+    12: textAudio9   /*Le droit d’opposition */   
 };

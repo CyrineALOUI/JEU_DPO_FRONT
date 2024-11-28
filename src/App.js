@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import ResetPassword from "./components/Player/Auth/ResetPassword/ResetPassword";
 import PrivateRoute from "./components/PrivateRoute";
 import ScenarioGame from "./components/Games/ScenarioGame/ScenarioGame";
+import BonusModal from "./components/Levels/BonusModal/BonusModal";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
                   <Route path="/scenario/:id" element={<PrivateRoute element={<ScenarioGame />} />} />
                   <Route path="/ProfileModal" element={<PrivateRoute element={<ProfileModal />} />} />
                   <Route path="/hint" element={<PrivateRoute element={<Hint />} />} />
+                  <Route path="/bonus" element={<PrivateRoute element={<BonusModal />} />} />
                 </Routes>
               </ScoreProvider>
               </LifeTimerProvider>
