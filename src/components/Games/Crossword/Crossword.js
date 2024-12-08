@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import crosswordService from '../../../services/CrosswordService';
+import badgeService from '../../../services/BadgeService';
 import GameHeader from '../../GameHeader/GameHeader';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useScore } from '../../GameHeader/Score/ScoreContext';
 import './Crossword.css';
 
 const Crossword = () => {
@@ -13,6 +15,8 @@ const Crossword = () => {
   const [fillableCells, setFillableCells] = useState({});
   const [correctLetters, setCorrectLetters] = useState({});
   const [revealedWords, setRevealedWords] = useState(new Set());
+  const { score, updateScore } = useScore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCrossword = async () => {
@@ -43,7 +47,7 @@ const Crossword = () => {
           const key = `${x},${y}`;
           initialFillableCells[key] = true;
           initialCorrectLetters[key] = word.word[i].toUpperCase();
-          initialSelectedLetters[key] = '';  // Pas de mots révélés initialement
+          initialSelectedLetters[key] = '';  
         }
       });
     }
@@ -98,6 +102,7 @@ const Crossword = () => {
 
     if (isCorrect) {
       setRevealedWords(prev => new Set(prev.add(word.word)));
+      updateScore(score + 100);
 
       const updatedGrid = { ...updatedSelectedLetters };
       for (let i = 0; i < word.word.length; i++) {
@@ -110,7 +115,7 @@ const Crossword = () => {
 
       try {
         await crosswordService.revealWordManually(crosswordId, word.word);
-        toast.success(`Le mot "${word.word}" est correct et révélé !`);
+        toast.success(`Le mot "${word.word}" est révélé !`);
       } catch (error) {
         console.error("Erreur lors de la révélation manuelle:", error);
       }
@@ -118,9 +123,6 @@ const Crossword = () => {
       toast.error(`Le mot "${word.word}" est incorrect.`);
     }
   };
-
-
-
 
   const getCellClass = (x, y) => {
     const key = `${x},${y}`;
@@ -151,6 +153,7 @@ const Crossword = () => {
 
         if (word) {
           setRevealedWords(prev => new Set(prev.add(revealedWord)));
+          updateScore(score - 50);
 
           const updatedSelectedLetters = { ...selectedLetters };
           for (let i = 0; i < word.word.length; i++) {
@@ -160,7 +163,7 @@ const Crossword = () => {
             updatedSelectedLetters[key] = word.word[i].toUpperCase();
           }
           setSelectedLetters(updatedSelectedLetters);
-          toast.success(`Le mot "${revealedWord}" a été révélé !`);
+          toast.success(`Le mot "${revealedWord}" est révélé avec indice !`);
         } else {
           toast.error('Mot non trouvé dans la grille.');
         }
@@ -169,13 +172,32 @@ const Crossword = () => {
       }
     } catch (error) {
       console.error('Erreur lors de la tentative d’indice:', error);
-      toast.error('Erreur lors de la tentative d’indice.');
+      toast.error('Tous les mots ont été révélés.');
     }
   };
 
   const checkLetter = (x, y) => {
     const key = `${x},${y}`;
     return selectedLetters[key] === correctLetters[key];  // Vérification de la lettre correcte
+  };
+
+  const handlePassClick = async () => {
+    const allRevealed = crossword.words.every(word => revealedWords.has(word.word));
+    if (allRevealed) {
+      try {
+        const response = await badgeService.unlockBadgeForCrossword(crosswordId);
+        if (response?.data === "Badge successfully unlocked for crossword level.") {
+          toast.success("Bravo !🎉 Vous avez débloqué un nouveau badge !");
+        }
+      } catch (error) {
+        console.error("Erreur lors du déblocage du badge :", error);
+        toast.error("Une erreur est survenue lors du déblocage du badge.");
+      }
+    } else {
+      toast.info("Vous n'avez pas encore révélé tous les mots !");
+    }
+
+    navigate("/map"); 
   };
 
   if (!crossword) {
@@ -245,7 +267,10 @@ const Crossword = () => {
         </div>
         <div className="button-group">
           <button className="button-text" onClick={handleRevealWordWithHint}>
-            Afficher Un Mot (-25)
+            Afficher Un Mot (-50)
+          </button>
+          <button className="button-text" onClick={handlePassClick} >
+            Passer
           </button>
         </div>
       </div>

@@ -56,7 +56,7 @@ const NoLivesModal = ({ onClose }) => {
 
               <div className="buy-lives">
                 <button className="buy-lives-button" onClick={handleBuyLives}>
-                  Recharger x2000
+                  Recharger x1500
                 </button>
               </div>
             </div>

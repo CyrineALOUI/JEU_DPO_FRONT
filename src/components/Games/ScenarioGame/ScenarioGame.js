@@ -75,7 +75,6 @@ const ScenarioGame = () => {
         correctOptions.some((option) => option.id === Number(optionId))
       );
 
-      const isCurrentScenarioCorrect =
         correctSelections.length === correctOptions.length &&
         correctOptions.every((option) => correctSelections.includes(option.id));
 

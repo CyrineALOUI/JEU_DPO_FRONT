@@ -6,6 +6,7 @@ import { playClickSound } from '../Utils/SoundUtils';
 import { IoCloseSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import LevelBadges from './Badges/LevelBadges';
+import LeaderBoard from './LeaderBoard/LeaderBoard';
 
 const SettingsModal = ({ show, onClose }) => {
   const [currentView, setCurrentView] = useState('settings_main');
@@ -65,6 +66,14 @@ const SettingsModal = ({ show, onClose }) => {
               <button className="settings-buttons"
                 onClick={() => {
                   playSound();
+                  handleNavigation('leader-board');
+                }}>
+                Classement
+              </button>
+
+              <button className="settings-buttons"
+                onClick={() => {
+                  playSound();
                   handleLogout();
                 }}>
                 Se déconnecter
@@ -76,6 +85,7 @@ const SettingsModal = ({ show, onClose }) => {
 
         {currentView === 'profile' && <ProfileModal onBackToSettings={handleBackToSettings} />}
         {currentView === 'rewards' && <LevelBadges onBackToSettings={handleBackToSettings} />}
+        {currentView === 'leader-board' && <LeaderBoard onBackToSettings={handleBackToSettings} />}
 
       </div>
     </div>

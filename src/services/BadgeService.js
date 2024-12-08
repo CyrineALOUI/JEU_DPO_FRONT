@@ -23,6 +23,17 @@ const unlockBadgeForScenario = async (scenarioId) => {
     }
 };
 
+const unlockBadgeForCrossword = async (crosswordId) => {
+    try {
+        const response = await instance.post(`${apiUrl}/unlockBadgeForCrossword/${crosswordId}`);
+        console.log(response.data);
+        return response; 
+    } catch (error) {
+        console.error("Erreur lors du déblocage du badge:", error);
+        throw error; 
+    }
+};
+
 const getUnlockedBadgesForPlayer = async () => {
     try {
         const response = await instance.get(`${apiUrl}/unlockedBadgesForPlayer`);
@@ -37,8 +48,9 @@ const getUnlockedBadgesForPlayer = async () => {
 
 const badgeService = {
     unlockBadgeForQuiz,
-    getUnlockedBadgesForPlayer,
-    unlockBadgeForScenario
+    unlockBadgeForScenario,
+    unlockBadgeForCrossword,
+    getUnlockedBadgesForPlayer  
 };
 
 export default badgeService;

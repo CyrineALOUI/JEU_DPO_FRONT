@@ -143,7 +143,7 @@ const recoverLife = async () => {
     } catch (error) {
         if (error.response && error.response.data) {
             // Affiche le message d'erreur du backend
-            throw new Error(error.response.data); 
+            throw new Error(error.response.data);
         } else {
             console.error('Failed to recover life:', error);
             throw error;
@@ -154,14 +154,14 @@ const recoverLife = async () => {
 /* UNLOCK NEXT LEVEL */
 const unlockNextLevel = async (currentLevelNumber) => {
     try {
-      const response = await instance.post(`${apiUrl}/unlockNextLevel`, null, { params: { currentLevelNumber }});
-      return response.data;
+        const response = await instance.post(`${apiUrl}/unlockNextLevel`, null, { params: { currentLevelNumber } });
+        return response.data;
     } catch (error) {
-      console.error('Error unlocking the next level:', error);
-      throw error;
+        console.error('Error unlocking the next level:', error);
+        throw error;
     }
-  };
-  
+};
+
 
 /* LOSE LIFE */
 const loseLife = async () => {
@@ -185,12 +185,18 @@ const buyLives = async () => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.data) {
-            throw new Error(error.response.data); 
+            throw new Error(error.response.data);
         } else {
             console.error('Failed to buy lives:', error);
             throw error;
         }
     }
+};
+
+/* LEADERBOARD */
+const getLeaderboard = async () => {
+    const response = await instance.get(`${apiUrl}/leaderBoard`);
+    return response.data; 
 };
 
 const playerService = {
@@ -209,7 +215,8 @@ const playerService = {
     unlockNextLevel,
     recoverLife,
     loseLife,
-    buyLives
+    buyLives,
+    getLeaderboard
 };
 
 export default playerService;
