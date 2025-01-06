@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './GameHeader.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import SettingsModal from '../Settings/settingsModal';
 import { LifeTimerContext } from './LifeTimer/LifeTimerContext';
 import { useScore } from './Score/ScoreContext';
@@ -11,7 +11,7 @@ const GameHeader = () => {
   const { score } = useScore();
   const { playerData, totalTimer } = useContext(LifeTimerContext);
   const [showModal, setShowModal] = useState(false);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
 
   const handleSettingsClick = () => {
     setShowModal(true);
@@ -62,17 +62,11 @@ const GameHeader = () => {
       </div>
 
       <div className="game-settings">
-        <div className="button-container">
-          <a title="Home" href="/map">
-            <FontAwesomeIcon icon={faHome} />
-          </a>
-
-          <a title="Settings" onClick={handleSettingsClick}>
-            <FontAwesomeIcon icon={faCog} />
-          </a>
-        </div>
-        <SettingsModal show={showModal} onClose={handleCloseModal} />
+        <button title="Settings" onClick={handleSettingsClick}>
+          <FontAwesomeIcon icon={faCog} />
+        </button>
       </div>
+      <SettingsModal show={showModal} onClose={handleCloseModal} />
     </div>
   );
 };

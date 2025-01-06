@@ -95,12 +95,11 @@
 
 .revealed {
     background-color: #03C04A;
-  }
-  
+}
 
-  .crossword-cell.revealed {
-    background-color: #7CFC00; /* Vert clair */
+
+.crossword-cell.revealed {
+    background-color: #7CFC00;
     color: white;
-    border: 1px solid #32CD32; /* Bordure verte */
-  }
-  
+    border: 1px solid #32CD32;
+}

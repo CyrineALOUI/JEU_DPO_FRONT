@@ -142,7 +142,6 @@ const recoverLife = async () => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.data) {
-            // Affiche le message d'erreur du backend
             throw new Error(error.response.data);
         } else {
             console.error('Failed to recover life:', error);

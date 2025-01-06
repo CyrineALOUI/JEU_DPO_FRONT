@@ -8,6 +8,10 @@ import textAudio7 from '../../assets/TextAudio/text7.mp3';
 import textAudio8 from '../../assets/TextAudio/text8.mp3';
 import textAudio9 from '../../assets/TextAudio/text9.mp3';
 
+import audioOption1 from '../../assets/AudioGame/audio1.mp3';
+import audioOption2 from '../../assets/AudioGame/audio2.mp3';
+import audioOption3 from '../../assets/AudioGame/audio3.mp3';
+
 
 /*Audio Player */
 export const playClickSound = (soundFile) => {
@@ -25,4 +29,10 @@ export const textAudios = {
     10: textAudio7,  /* Le consentement */
     11: textAudio8,  /* Le droit d’accès */
     12: textAudio9   /*Le droit d’opposition */   
+};
+
+export const audioOptions = {
+    1: audioOption1,   
+    2: audioOption2,   
+    3: audioOption3,   
 };

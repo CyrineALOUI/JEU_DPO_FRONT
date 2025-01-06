@@ -14,6 +14,7 @@ import ResetPassword from "./components/Player/Auth/ResetPassword/ResetPassword"
 import PrivateRoute from "./components/PrivateRoute";
 import ScenarioGame from "./components/Games/ScenarioGame/ScenarioGame";
 import BonusModal from "./components/Levels/BonusModal/BonusModal";
+import AudioGame from "./components/Games/AudioGame/AudioGame";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
                   <Route path="/quiz/:id" element={<PrivateRoute element={<Quiz />} />} />
                   <Route path="/crossword/:id" element={<PrivateRoute element={<Crossword />} />} />
                   <Route path="/scenario/:id" element={<PrivateRoute element={<ScenarioGame />} />} />
+                  <Route path="/audio/:id" element={<PrivateRoute element={<AudioGame />} />} />
                   <Route path="/ProfileModal" element={<PrivateRoute element={<ProfileModal />} />} />
                   <Route path="/hint" element={<PrivateRoute element={<Hint />} />} />
                   <Route path="/bonus" element={<PrivateRoute element={<BonusModal />} />} />

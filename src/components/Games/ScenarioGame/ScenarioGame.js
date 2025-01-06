@@ -4,6 +4,7 @@ import badgeService from '../../../services/BadgeService';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import GameHeader from '../../GameHeader/GameHeader';
+import GameControl from '../../GameControl/GameControl';
 import { toast } from 'react-toastify';
 import './ScenarioGame.css';
 import BonusModal from '../../Levels/BonusModal/BonusModal';
@@ -15,10 +16,11 @@ const ScenarioGame = () => {
   const [selectedOptionsByText, setSelectedOptionsByText] = useState(new Map());
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [hasValidated, setHasValidated] = useState(false);
-  const [totalScore, setTotalScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(0); 
   const [showModal, setShowModal] = useState(false);
   const badgeUnlockCalled = useRef(false);
   const { updateScore } = useScore();
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const fetchScenario = async () => {
@@ -74,11 +76,9 @@ const ScenarioGame = () => {
       const correctSelections = (selectedOptionsByText.get(currentScenarioIndex) || []).filter((optionId) =>
         correctOptions.some((option) => option.id === Number(optionId))
       );
-
-        correctSelections.length === correctOptions.length &&
-        correctOptions.every((option) => correctSelections.includes(option.id));
-
-      setTotalScore((prevScore) => prevScore + correctSelections.length * 50);
+    
+      const scoreForCurrentScenario = correctSelections.length * 50;
+      setTotalScore((prevScore) => prevScore + scoreForCurrentScenario);
 
       if (currentScenarioIndex === scenario.scenarioTexts.length - 1) {
         const allCorrect = areAllTextsCorrect();
@@ -116,10 +116,16 @@ const ScenarioGame = () => {
     navigate('/map');
   };
 
-  const handleConfirmScore = () => {
-    updateScore((prevScore) => prevScore + totalScore);
-    navigate('/map');
-  };
+  const handleConfirmScore = async () => {
+    try {
+        await scenarioGameService.saveScenarioScore(scenarioId, totalScore);
+        updateScore((prevScore) => prevScore + totalScore);
+        navigate('/map');
+    } catch (error) {
+        toast.error("Erreur lors de l'enregistrement du score");
+    }
+};
+
 
   if (!scenario) {
     return <div className="loading-message">Chargement...</div>;
@@ -131,6 +137,7 @@ const ScenarioGame = () => {
   return (
     <div className="Map-Container">
       <GameHeader />
+      <GameControl isPaused={isPaused} setIsPaused={setIsPaused} />
       <div className="glass-box-scenario">
         <h1 className="scenario-title">{currentScenarioText.scenarioTitle}</h1>
         <p className="scenario-text">{currentScenarioText.scenarioText}</p>
@@ -192,6 +199,5 @@ const ScenarioGame = () => {
     </div>
   );
 };
-
 
 export default ScenarioGame;

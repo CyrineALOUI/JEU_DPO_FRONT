@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin-top: -20px;
+    margin-top: -40px;
 }
 
 .badge-image {
@@ -20,4 +20,31 @@
     transition: filter 0.3s ease;
     opacity: 0.7;
 }
+
+.info {
+    position: absolute;
+    top: 580px;
+    right: 15px;
+}
+
+.info__icon {
+    width: 20px;
+    height: 20px;
+    transform: translateY(-2px);
+
+}
+
+.info__icon path {
+    fill: #ffcc53;
+    cursor: pointer;
+}
+
+.info__title {
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+}
+
+
+
 

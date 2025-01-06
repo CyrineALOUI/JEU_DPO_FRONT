@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useScore } from '../../GameHeader/Score/ScoreContext';
 import './Crossword.css';
+import GameControl from '../../GameControl/GameControl';
 
 const Crossword = () => {
   const { id: crosswordId } = useParams();
@@ -17,6 +18,7 @@ const Crossword = () => {
   const [revealedWords, setRevealedWords] = useState(new Set());
   const { score, updateScore } = useScore();
   const navigate = useNavigate();
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const fetchCrossword = async () => {
@@ -61,7 +63,6 @@ const Crossword = () => {
     const newValue = event.target.value.toUpperCase();
     const key = `${x},${y}`;
 
-    // Mettre à jour les lettres sélectionnées
     const updatedSelectedLetters = {
       ...selectedLetters,
       [key]: newValue,
@@ -134,7 +135,7 @@ const Crossword = () => {
         const wordY = word.startY + (word.vertical ? i : 0);
         const cellKey = `${wordX},${wordY}`;
         if (cellKey === key && revealedWords.has(word.word)) {
-          return true;  // Cette cellule fait partie d'un mot révélé
+          return true;  
         }
       }
       return false;
@@ -207,6 +208,7 @@ const Crossword = () => {
   return (
     <div className="Map-Container">
       <GameHeader />
+      <GameControl isPaused={isPaused} setIsPaused={setIsPaused} />
       <div className="glass-box-quiz">
         <div className="crossword-clues">
           <div className="down-clues">

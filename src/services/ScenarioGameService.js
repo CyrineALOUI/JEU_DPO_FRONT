@@ -21,9 +21,21 @@ const verifyAnswerScenario = async (scenarioId, scenarioTextId, selectedOptionId
     }
 };
 
+const saveScenarioScore = async (scenarioId, score) => {
+    try {
+        const response = await instance.post(`${apiUrl}/saveScenarioScore`, null, { params: { scenarioId, score }});
+        return response.data; 
+    } catch (error) {
+        console.error('Error saving scenario score:', error);
+        throw error;
+    }
+};
+
+
 const scenarioGameService = {
     getScenarioGameById,
-    verifyAnswerScenario
+    verifyAnswerScenario,
+    saveScenarioScore
 };
 
 export default scenarioGameService;

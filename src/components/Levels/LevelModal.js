@@ -14,6 +14,7 @@ const LevelModal = ({ show, onClose, id }) => {
   const [stars, setStars] = useState(0);
   const [isCrossword, setIsCrossword] = useState(false);
   const [isScenarioGame, setIsScenarioGame] = useState(false);
+  const [isAudioGame, setIsAudioGame] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -28,8 +29,11 @@ const LevelModal = ({ show, onClose, id }) => {
           const scenarioGame = data.games?.some(game => game.scenarioLevelNumber !== undefined);
           setIsScenarioGame(!!scenarioGame);
 
+          const audioGame = data.games?.some(game => game.audioLevelNumber !== undefined);
+          setIsAudioGame(!!audioGame);
+
           //Recuperation des etoiles pour chaque joueur / chaque level sauf levels bonus
-          if (!crosswordGame && !scenarioGame) {
+          if (!crosswordGame && !scenarioGame && !audioGame) {
             const playerStars = await levelService.getStarsForPlayer(id);
             setStars(playerStars);
           }
@@ -60,6 +64,7 @@ const LevelModal = ({ show, onClose, id }) => {
         const quizGame = level.games.find(game => game.introductionText !== undefined);
         const crosswordGame = level.games.find(game => game.gridSize !== undefined);
         const scenarioGame = level.games.find(game => game.scenarioLevelNumber !== undefined);
+        const audioGame = level.games.find(game => game.audioLevelNumber !== undefined);
 
         if (crosswordGame) {
           window.location.href = `/crossword/${crosswordGame.id}`;
@@ -67,6 +72,8 @@ const LevelModal = ({ show, onClose, id }) => {
           window.location.href = `/quiz/${quizGame.id}`;
         } else if (scenarioGame) {
           window.location.href = `/scenario/${scenarioGame.id}`;
+        } else if (audioGame) {
+          window.location.href = `/audio/${audioGame.id}`;
         } else {
           console.error('Aucun jeu valide trouvé');
         }
@@ -103,12 +110,12 @@ const LevelModal = ({ show, onClose, id }) => {
           <div className="modal-body">
             <h1>{level.title}</h1>
 
-            {(isCrossword || isScenarioGame) ? (
+            {(isCrossword || isScenarioGame || isAudioGame) ? (
               <div className="bonus-image">
                 <img src={bonusIcon} alt="bonus-icon" />
               </div>
             ) : (
-              !isCrossword && !isScenarioGame && (
+              !isCrossword && !isScenarioGame && !isAudioGame &&(
                 <div className="stars">
                   {[...Array(3)].map((_, index) => (
                     <FontAwesomeIcon
@@ -127,7 +134,7 @@ const LevelModal = ({ show, onClose, id }) => {
                 Jouer
               </button>
 
-              {(isCrossword || isScenarioGame) && (
+              {(isCrossword || isScenarioGame || isAudioGame) && (
                 <button className="skip-button" onClick={handlePassClick}>
                   Passer
                 </button>
